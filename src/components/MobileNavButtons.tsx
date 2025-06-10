@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface MobileNavButtonsProps {
-  onNavButtonClick: (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin') => void;
-  currentScreen: 'welcome' | 'settings' | 'chat' | 'daily-checkin';
+  onNavButtonClick: (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if') => void;
+  currentScreen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if';
 }
 
 function MobileNavButtons({ onNavButtonClick, currentScreen }: MobileNavButtonsProps) {
@@ -23,7 +23,10 @@ function MobileNavButtons({ onNavButtonClick, currentScreen }: MobileNavButtonsP
           <img src="/Mood-icon.png" alt="Daily Check-In" className="nav-button-icon" />
           <span className="nav-button-text nav-button-text-multiline">Daily<br />Check-In</span>
         </button>
-        <button className="nav-button" onClick={() => onNavButtonClick('welcome')}>
+        <button 
+          className={`nav-button ${currentScreen === 'what-if' ? 'nav-button-active' : ''}`}
+          onClick={() => onNavButtonClick('what-if')}
+        >
           <img src="/Pencil-icon.png" alt="What If...?" className="nav-button-icon" />
           <span className="nav-button-text max-lg:whitespace-normal max-lg:text-center">What If...?</span>
         </button>

@@ -3,13 +3,14 @@ import MobileNavButtons from './components/MobileNavButtons';
 import SettingsSection from './components/SettingsSection';
 import ChatSection from './components/ChatSection';
 import DailyCheckInSection from './components/DailyCheckInSection';
+import WhatIfSection from './components/WhatIfSection';
 import GrownUpAccessModal from './components/GrownUpAccessModal';
 import ChatHistoryModal from './components/ChatHistoryModal';
 import MoodHistoryModal from './components/MoodHistoryModal';
 import { ConversationTurn, MoodEntry } from './types';
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin'>('welcome');
+  const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if'>('welcome');
   const [showGrownUpModal, setShowGrownUpModal] = useState(false);
   const [showChatHistoryModal, setShowChatHistoryModal] = useState(false);
   const [showMoodHistoryModal, setShowMoodHistoryModal] = useState(false);
@@ -29,7 +30,7 @@ function App() {
     }
   };
 
-  const handleNavButtonClick = (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin') => {
+  const handleNavButtonClick = (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if') => {
     setCurrentScreen(screen);
     
     switch (screen) {
@@ -38,6 +39,9 @@ function App() {
         break;
       case 'daily-checkin':
         setRobotSpeech("Time for your daily check-in! How are you feeling today? Pick an emoji that matches your mood, or just tell me what's going on.");
+        break;
+      case 'what-if':
+        setRobotSpeech("Time to let your imagination soar! I've got some wild What If questions that'll get your creative wheels turning. Ready to think outside the box?");
         break;
       case 'settings':
         setRobotSpeech("Tuning things just the way you like them? Smart move! You can save your session, adjust sounds-or even start fresh. Your ReflectoBot, your rules!");
@@ -80,7 +84,10 @@ function App() {
                   <img src="/Mood-icon.png" alt="Daily Check-In" className="nav-button-icon" />
                   <span className="nav-button-text nav-button-text-multiline">Daily<br />Check-In</span>
                 </button>
-                <button className="nav-button" onClick={() => handleNavButtonClick('welcome')}>
+                <button 
+                  className={`nav-button ${currentScreen === 'what-if' ? 'nav-button-active' : ''}`}
+                  onClick={() => handleNavButtonClick('what-if')}
+                >
                   <img src="/Pencil-icon.png" alt="What If...?" className="nav-button-icon" />
                   <span className="nav-button-text max-lg:whitespace-normal max-lg:text-center">What If...?</span>
                 </button>
@@ -157,6 +164,11 @@ function App() {
             moodHistory={moodHistory}
             setMoodHistory={setMoodHistory}
             onShowMoodHistory={() => setShowMoodHistoryModal(true)}
+          />
+        ) : currentScreen === 'what-if' ? (
+          <WhatIfSection 
+            onClose={() => setCurrentScreen('welcome')}
+            setRobotSpeech={setRobotSpeech}
           />
         ) : (
           <div className="info-section">

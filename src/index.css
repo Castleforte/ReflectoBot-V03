@@ -475,6 +475,20 @@
   transform: scale(1.1) rotate(-5deg);
 }
 
+.settings-button.reading-active {
+  @apply bg-[#9FE7F5] text-[#1c1a30];
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 20px rgba(159, 231, 245, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 30px rgba(159, 231, 245, 0.6);
+  }
+}
+
 .toggle-switch {
   @apply relative inline-flex items-center;
 }
@@ -850,6 +864,119 @@
     margin-top: 1.5rem;
     min-height: 65px;
     font-size: 1.5rem;
+  }
+}
+
+/* What If Section Styles */
+.what-if-section {
+  @apply w-full max-w-[900px] bg-[url('/ReflectoBot-Welcome_0001_Layer-34.png')] bg-center bg-no-repeat;
+  @apply p-6 lg:p-12;
+  position: relative;
+  background-size: contain;
+  margin-top: -50px;
+  min-height: 700px;
+  
+  @media (max-width: 1023px) {
+    background-size: 100% 100%;
+    margin-top: -12px;
+    padding: 1rem;
+    min-height: 500px;
+  }
+}
+
+.what-if-content {
+  @apply w-full max-w-[890px] mx-auto;
+  padding: clamp(5px, 2vw, 15px);
+  padding-top: 1rem;
+  
+  @media (min-width: 1024px) {
+    padding-top: 3.5rem;
+  }
+}
+
+.what-if-header {
+  @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
+  @apply gap-4 lg:gap-0;
+  margin-bottom: 1.5rem;
+  
+  @media (min-width: 1024px) {
+    margin-bottom: 2rem;
+  }
+}
+
+.what-if-title {
+  @apply text-4xl font-bold bg-gradient-to-r from-[#E0F2F7] to-[#9FE7F5] text-transparent bg-clip-text;
+  @apply lg:text-4xl;
+  text-align: center;
+  @apply lg:text-left;
+  white-space: nowrap;
+  font-size: clamp(1.75rem, 6vw, 2.25rem);
+  
+  @media (min-width: 1024px) {
+    font-size: 2.25rem;
+  }
+}
+
+.what-if-buttons {
+  @apply flex gap-4 flex-wrap justify-center lg:justify-end;
+  gap: 0.5rem;
+  
+  @media (min-width: 1024px) {
+    gap: 1rem;
+  }
+}
+
+.what-if-prompt-display {
+  @apply bg-[#1c1a30] rounded-xl text-white;
+  @apply transition-all duration-300;
+  font-family: "magistral", sans-serif;
+  font-weight: 500;
+  line-height: 1.4;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  
+  @media (min-width: 1024px) {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+  }
+}
+
+.what-if-prompt-display.reading-animation {
+  animation: reading-pulse 2s ease-in-out infinite;
+  border-color: rgba(159, 231, 245, 0.5);
+}
+
+@keyframes reading-pulse {
+  0%, 100% {
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 20px rgba(159, 231, 245, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2), 0 0 30px rgba(159, 231, 245, 0.6);
+    transform: scale(1.02);
+  }
+}
+
+.what-if-encouragement {
+  @apply text-center;
+  margin-top: 1rem;
+  
+  @media (min-width: 1024px) {
+    margin-top: 1.5rem;
+  }
+}
+
+.what-if-encouragement p {
+  font-family: "magistral", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  
+  @media (min-width: 1024px) {
+    font-size: 1.25rem;
   }
 }
 
