@@ -11,7 +11,7 @@ function DrawingPreviewModal({ onClose, drawingDataUrl, onDownload }: DrawingPre
   return (
     <div className="grown-up-modal-overlay" onClick={onClose}>
       <div className="grown-up-modal-container">
-        <div className="grown-up-modal-content" onClick={e => e.stopPropagation()}>
+        <div className="drawing-preview-modal-content" onClick={e => e.stopPropagation()}>
           <button 
             className="absolute top-5 right-5 w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all duration-200 lg:w-12 lg:h-12 grown-up-modal-close-button"
             onClick={onClose}
@@ -25,8 +25,8 @@ function DrawingPreviewModal({ onClose, drawingDataUrl, onDownload }: DrawingPre
             <h1 className="grown-up-modal-title">Your Amazing Drawing!</h1>
           </div>
 
-          <div className="grown-up-modal-body">
-            <p className="grown-up-modal-intro">
+          <div className="drawing-preview-body">
+            <p className="drawing-preview-intro">
               Look at this incredible artwork you've created! Your feelings and creativity really shine through.
             </p>
 
