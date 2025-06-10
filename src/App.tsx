@@ -4,13 +4,14 @@ import SettingsSection from './components/SettingsSection';
 import ChatSection from './components/ChatSection';
 import DailyCheckInSection from './components/DailyCheckInSection';
 import WhatIfSection from './components/WhatIfSection';
+import DrawItOutSection from './components/DrawItOutSection';
 import GrownUpAccessModal from './components/GrownUpAccessModal';
 import ChatHistoryModal from './components/ChatHistoryModal';
 import MoodHistoryModal from './components/MoodHistoryModal';
 import { ConversationTurn, MoodEntry } from './types';
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if'>('welcome');
+  const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out'>('welcome');
   const [showGrownUpModal, setShowGrownUpModal] = useState(false);
   const [showChatHistoryModal, setShowChatHistoryModal] = useState(false);
   const [showMoodHistoryModal, setShowMoodHistoryModal] = useState(false);
@@ -30,7 +31,7 @@ function App() {
     }
   };
 
-  const handleNavButtonClick = (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if') => {
+  const handleNavButtonClick = (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out') => {
     setCurrentScreen(screen);
     
     switch (screen) {
@@ -42,6 +43,9 @@ function App() {
         break;
       case 'what-if':
         setRobotSpeech("Time to let your imagination soar! I've got some wild What If questions that'll get your creative wheels turning. Ready to think outside the box?");
+        break;
+      case 'draw-it-out':
+        setRobotSpeech("Sometimes feelings are hard to explain with words—so let's draw them instead!");
         break;
       case 'settings':
         setRobotSpeech("Tuning things just the way you like them? Smart move! You can save your session, adjust sounds-or even start fresh. Your ReflectoBot, your rules!");
@@ -91,7 +95,10 @@ function App() {
                   <img src="/Pencil-icon.png" alt="What If...?" className="nav-button-icon" />
                   <span className="nav-button-text max-lg:whitespace-normal max-lg:text-center">What If...?</span>
                 </button>
-                <button className="nav-button" onClick={() => handleNavButtonClick('welcome')}>
+                <button 
+                  className={`nav-button ${currentScreen === 'draw-it-out' ? 'nav-button-active' : ''}`}
+                  onClick={() => handleNavButtonClick('draw-it-out')}
+                >
                   <img src="/Palette-icon.png" alt="Draw It Out" className="nav-button-icon" />
                   <span className="nav-button-text max-lg:whitespace-normal max-lg:text-center">Draw It<br />Out</span>
                 </button>
@@ -167,6 +174,11 @@ function App() {
           />
         ) : currentScreen === 'what-if' ? (
           <WhatIfSection 
+            onClose={() => setCurrentScreen('welcome')}
+            setRobotSpeech={setRobotSpeech}
+          />
+        ) : currentScreen === 'draw-it-out' ? (
+          <DrawItOutSection 
             onClose={() => setCurrentScreen('welcome')}
             setRobotSpeech={setRobotSpeech}
           />

@@ -1013,6 +1013,218 @@
   }
 }
 
+/* Draw It Out Section Styles */
+.draw-it-out-section {
+  @apply w-full max-w-[900px] bg-[url('/ReflectoBot-Welcome_0001_Layer-34.png')] bg-center bg-no-repeat;
+  @apply p-6 lg:p-12;
+  position: relative;
+  background-size: contain;
+  margin-top: -50px;
+  min-height: 700px;
+  
+  @media (max-width: 1023px) {
+    background-size: 100% 100%;
+    margin-top: -12px;
+    padding: 1rem;
+    min-height: 500px;
+  }
+}
+
+.draw-it-out-content {
+  @apply w-full max-w-[890px] mx-auto;
+  padding: clamp(5px, 2vw, 15px);
+  padding-top: 1rem;
+  
+  @media (min-width: 1024px) {
+    padding-top: 3.5rem;
+  }
+}
+
+.draw-it-out-header {
+  @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
+  @apply gap-4 lg:gap-0;
+  margin-bottom: 1.5rem;
+  
+  @media (min-width: 1024px) {
+    margin-bottom: 2rem;
+  }
+}
+
+.draw-it-out-title {
+  @apply text-4xl font-bold bg-gradient-to-r from-[#E0F2F7] to-[#9FE7F5] text-transparent bg-clip-text;
+  @apply lg:text-4xl;
+  text-align: center;
+  @apply lg:text-left;
+  white-space: nowrap;
+  font-size: clamp(1.75rem, 6vw, 2.25rem);
+  
+  @media (min-width: 1024px) {
+    font-size: 2.25rem;
+  }
+}
+
+.save-drawing-button {
+  @apply bg-[#7f77b8] text-white px-6 py-3 rounded-lg;
+  @apply flex items-center justify-center transition-all duration-300;
+  min-width: 120px;
+  min-height: 54px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
+  font-weight: bold;
+}
+
+.save-drawing-button .button-icon {
+  @apply w-6 h-6 mr-2;
+  transition: all 0.3s ease-in-out;
+}
+
+.save-drawing-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.save-drawing-button:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.save-drawing-button:hover::before {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+}
+
+.save-drawing-button:hover .button-icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.drawing-canvas-container {
+  @apply flex justify-center mb-6;
+  @apply lg:mb-8;
+}
+
+.drawing-canvas {
+  @apply rounded-xl cursor-crosshair;
+  background-color: #111122;
+  border: 2px solid #2a2d47;
+  box-shadow: 0 0 20px rgba(153, 102, 255, 0.3);
+  max-width: 100%;
+  height: auto;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 350px;
+    height: 200px;
+  }
+  
+  @media (min-width: 769px) and (max-width: 1023px) {
+    width: 500px;
+    height: 285px;
+  }
+  
+  @media (min-width: 1024px) {
+    width: 700px;
+    height: 400px;
+  }
+}
+
+.drawing-controls {
+  @apply flex flex-col gap-4;
+  @apply lg:flex-row lg:items-center lg:justify-between;
+}
+
+.color-swatches {
+  @apply flex gap-3 justify-center flex-wrap;
+  @apply lg:justify-start;
+}
+
+.color-swatch {
+  @apply w-12 h-12 rounded-full cursor-pointer border-2 border-transparent;
+  @apply transition-all duration-300 hover:transform hover:scale-110;
+  position: relative;
+  overflow: hidden;
+}
+
+.color-swatch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.color-swatch:hover::before {
+  background: radial-gradient(circle at center, rgba(170, 223, 237, 0.35), rgba(170, 223, 237, 0));
+  box-shadow: inset 0 0 0 2px #aadfed;
+}
+
+.color-swatch.active {
+  transform: scale(1.2);
+  box-shadow: inset 0 0 0 2px #aadfed, 0 0 16px rgba(170, 223, 237, 0.35);
+}
+
+.color-swatch.active::before {
+  background: radial-gradient(circle at center, rgba(170, 223, 237, 0.35), rgba(170, 223, 237, 0));
+}
+
+.tool-buttons {
+  @apply flex gap-3 justify-center;
+  @apply lg:justify-end;
+}
+
+.tool-button {
+  @apply w-12 h-12 bg-[#1c1a30] rounded-lg border-2 border-transparent;
+  @apply flex items-center justify-center cursor-pointer text-white;
+  @apply transition-all duration-300 hover:bg-[#252847] hover:transform hover:scale-110;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.tool-button:hover::before {
+  background: radial-gradient(circle at center, rgba(75, 123, 255, 0.2), rgba(75, 123, 255, 0));
+}
+
+.tool-button.active {
+  @apply bg-[#4B7BFF] border-[#9FE7F5];
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(75, 123, 255, 0.4);
+}
+
+.tool-button.active::before {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+}
+
+.tool-button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+  transform: none !important;
+}
+
+.tool-button:disabled:hover {
+  transform: none !important;
+  background-color: #1c1a30 !important;
+}
+
+.tool-button:disabled::before {
+  background: none !important;
+}
+
 /* Chat History Modal Styles */
 .chat-history-text-box {
   @apply w-full max-h-96 overflow-y-auto bg-[#1c1a30] rounded-xl p-4;
