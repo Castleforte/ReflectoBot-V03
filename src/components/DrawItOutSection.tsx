@@ -44,6 +44,7 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
   const [showEraserSizeSelector, setShowEraserSizeSelector] = useState(false);
   const [showDrawingPreview, setShowDrawingPreview] = useState(false);
   const [savedDrawingDataUrl, setSavedDrawingDataUrl] = useState('');
+  const [selectorTimeout, setSelectorTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -228,16 +229,47 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
 
   const handleBrushTool = () => {
     setCurrentTool('brush');
+    // Toggle brush size selector
+    if (showBrushSizeSelector) {
+      setShowBrushSizeSelector(false);
+    } else {
+      setShowBrushSizeSelector(true);
+      setShowEraserSizeSelector(false);
+    }
   };
 
   const handleEraserTool = () => {
     setCurrentTool('eraser');
+    // Toggle eraser size selector
+    if (showEraserSizeSelector) {
+      setShowEraserSizeSelector(false);
+    } else {
+      setShowEraserSizeSelector(true);
+      setShowBrushSizeSelector(false);
+    }
   };
 
   const handleBrushSizeChange = (size: number) => {
     setCurrentBrushSize(size);
     setShowBrushSizeSelector(false);
     setShowEraserSizeSelector(false);
+  };
+
+  const handleSelectorMouseLeave = () => {
+    // Start a timer to hide the selector after 2 seconds
+    const timeout = setTimeout(() => {
+      setShowBrushSizeSelector(false);
+      setShowEraserSizeSelector(false);
+    }, 2000);
+    setSelectorTimeout(timeout);
+  };
+
+  const handleSelectorMouseEnter = () => {
+    // Clear the timeout if mouse re-enters
+    if (selectorTimeout) {
+      clearTimeout(selectorTimeout);
+      setSelectorTimeout(null);
+    }
   };
 
   return (
@@ -282,12 +314,14 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
           </div>
 
           <div className="tool-buttons">
-            <div className="tool-button-container">
+            <div 
+              className="tool-button-container"
+              onMouseLeave={handleSelectorMouseLeave}
+              onMouseEnter={handleSelectorMouseEnter}
+            >
               <button
                 className={`tool-button ${currentTool === 'brush' ? 'active' : ''}`}
                 onClick={handleBrushTool}
-                onMouseEnter={() => setShowBrushSizeSelector(true)}
-                onMouseLeave={() => setShowBrushSizeSelector(false)}
                 aria-label="Brush tool"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -295,11 +329,7 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
                 </svg>
               </button>
               {showBrushSizeSelector && (
-                <div 
-                  className="brush-size-selector"
-                  onMouseEnter={() => setShowBrushSizeSelector(true)}
-                  onMouseLeave={() => setShowBrushSizeSelector(false)}
-                >
+                <div className="brush-size-selector">
                   {brushSizes.map((size, index) => (
                     <button
                       key={size}
@@ -320,12 +350,14 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
               )}
             </div>
             
-            <div className="tool-button-container">
+            <div 
+              className="tool-button-container"
+              onMouseLeave={handleSelectorMouseLeave}
+              onMouseEnter={handleSelectorMouseEnter}
+            >
               <button
                 className={`tool-button ${currentTool === 'eraser' ? 'active' : ''}`}
                 onClick={handleEraserTool}
-                onMouseEnter={() => setShowEraserSizeSelector(true)}
-                onMouseLeave={() => setShowEraserSizeSelector(false)}
                 aria-label="Eraser tool"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -333,11 +365,7 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
                 </svg>
               </button>
               {showEraserSizeSelector && (
-                <div 
-                  className="brush-size-selector"
-                  onMouseEnter={() => setShowEraserSizeSelector(true)}
-                  onMouseLeave={() => setShowEraserSizeSelector(false)}
-                >
+                <div className="brush-size-selector">
                   {brushSizes.map((size, index) => (
                     <button
                       key={size}
