@@ -1289,9 +1289,9 @@
 .drawing-preview-modal-content .grown-up-modal-header {
   @apply flex items-center gap-4 mb-6;
   @apply lg:mb-8;
-  /* Move the icon to the right to position it in front of the Y */
-  justify-content: flex-start;
-  padding-left: 2rem;
+  /* Center the header content and move it to the right */
+  justify-content: center;
+  margin-left: 4rem;
 }
 
 .drawing-preview-body {
