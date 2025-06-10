@@ -1504,7 +1504,7 @@
 }
 
 .grown-up-modal-header {
-  @apply flex items-center justify-center gap-2 mb-6; /* Reduced gap from 4 to 2 */
+  @apply flex items-center justify-center gap-1 mb-6; /* Changed gap from 2 to 1 for even closer spacing */
   @apply lg:mb-8;
 }
 
