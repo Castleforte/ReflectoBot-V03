@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import DrawingPreviewModal from './DrawingPreviewModal';
 
 interface DrawItOutSectionProps {
   onClose: () => void;
@@ -27,15 +28,22 @@ const colors = [
   '#99ff33'  // Green
 ];
 
+const brushSizes = [2, 4, 8]; // Small, Medium, Large
+
 function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentColor, setCurrentColor] = useState('#ff3333');
   const [currentTool, setCurrentTool] = useState<'brush' | 'eraser'>('brush');
+  const [currentBrushSize, setCurrentBrushSize] = useState(4);
   const [strokes, setStrokes] = useState<Stroke[]>([]);
   const [currentStroke, setCurrentStroke] = useState<Stroke | null>(null);
   const [undoStack, setUndoStack] = useState<Stroke[][]>([]);
   const [redoStack, setRedoStack] = useState<Stroke[][]>([]);
+  const [showBrushSizeSelector, setShowBrushSizeSelector] = useState(false);
+  const [showEraserSizeSelector, setShowEraserSizeSelector] = useState(false);
+  const [showDrawingPreview, setShowDrawingPreview] = useState(false);
+  const [savedDrawingDataUrl, setSavedDrawingDataUrl] = useState('');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -87,7 +95,7 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
     const point = getCanvasCoordinates(e);
     const newStroke: Stroke = {
       color: currentTool === 'eraser' ? '#111122' : currentColor,
-      size: 4,
+      size: currentBrushSize,
       points: [point]
     };
     
@@ -190,14 +198,27 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Create download link
-    const link = document.createElement('a');
-    link.download = 'my-drawing.png';
-    link.href = canvas.toDataURL();
-    link.click();
+    // Capture canvas as data URL
+    const dataUrl = canvas.toDataURL('image/png');
+    setSavedDrawingDataUrl(dataUrl);
+    setShowDrawingPreview(true);
 
     // Update robot speech
-    setRobotSpeech("Amazing artwork! I've saved your drawing for you. You're such a creative artist!");
+    setRobotSpeech("Amazing artwork! I love seeing your creativity come to life. Your drawing is ready to save!");
+  };
+
+  const handleDownloadDrawing = () => {
+    if (!savedDrawingDataUrl) return;
+
+    // Create download link
+    const link = document.createElement('a');
+    link.download = 'my-reflectobot-drawing.png';
+    link.href = savedDrawingDataUrl;
+    link.click();
+
+    // Close modal and update robot speech
+    setShowDrawingPreview(false);
+    setRobotSpeech("Perfect! Your drawing has been saved to your device. You're such a talented artist!");
   };
 
   const handleColorChange = (color: string) => {
@@ -211,6 +232,12 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
 
   const handleEraserTool = () => {
     setCurrentTool('eraser');
+  };
+
+  const handleBrushSizeChange = (size: number) => {
+    setCurrentBrushSize(size);
+    setShowBrushSizeSelector(false);
+    setShowEraserSizeSelector(false);
   };
 
   return (
@@ -255,24 +282,82 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
           </div>
 
           <div className="tool-buttons">
-            <button
-              className={`tool-button ${currentTool === 'brush' ? 'active' : ''}`}
-              onClick={handleBrushTool}
-              aria-label="Brush tool"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3zm13.71-9.37l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41z"/>
-              </svg>
-            </button>
-            <button
-              className={`tool-button ${currentTool === 'eraser' ? 'active' : ''}`}
-              onClick={handleEraserTool}
-              aria-label="Eraser tool"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.008 4.008 0 0 1-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l10.6-10.6c.79-.78 2.05-.78 2.83 0M4.22 15.58l3.54 3.53c.78.79 2.04.79 2.83 0l3.53-3.53-6.36-6.36-3.54 3.36z"/>
-              </svg>
-            </button>
+            <div className="tool-button-container">
+              <button
+                className={`tool-button ${currentTool === 'brush' ? 'active' : ''}`}
+                onClick={handleBrushTool}
+                onMouseEnter={() => setShowBrushSizeSelector(true)}
+                onMouseLeave={() => setShowBrushSizeSelector(false)}
+                aria-label="Brush tool"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3zm13.71-9.37l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41z"/>
+                </svg>
+              </button>
+              {showBrushSizeSelector && (
+                <div 
+                  className="brush-size-selector"
+                  onMouseEnter={() => setShowBrushSizeSelector(true)}
+                  onMouseLeave={() => setShowBrushSizeSelector(false)}
+                >
+                  {brushSizes.map((size, index) => (
+                    <button
+                      key={size}
+                      className={`brush-size-option ${currentBrushSize === size ? 'active' : ''}`}
+                      onClick={() => handleBrushSizeChange(size)}
+                      aria-label={`${index === 0 ? 'Small' : index === 1 ? 'Medium' : 'Large'} brush size`}
+                    >
+                      <div 
+                        className="brush-size-circle"
+                        style={{ 
+                          width: `${8 + index * 4}px`, 
+                          height: `${8 + index * 4}px` 
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            <div className="tool-button-container">
+              <button
+                className={`tool-button ${currentTool === 'eraser' ? 'active' : ''}`}
+                onClick={handleEraserTool}
+                onMouseEnter={() => setShowEraserSizeSelector(true)}
+                onMouseLeave={() => setShowEraserSizeSelector(false)}
+                aria-label="Eraser tool"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.008 4.008 0 0 1-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l10.6-10.6c.79-.78 2.05-.78 2.83 0M4.22 15.58l3.54 3.53c.78.79 2.04.79 2.83 0l3.53-3.53-6.36-6.36-3.54 3.36z"/>
+                </svg>
+              </button>
+              {showEraserSizeSelector && (
+                <div 
+                  className="brush-size-selector"
+                  onMouseEnter={() => setShowEraserSizeSelector(true)}
+                  onMouseLeave={() => setShowEraserSizeSelector(false)}
+                >
+                  {brushSizes.map((size, index) => (
+                    <button
+                      key={size}
+                      className={`brush-size-option ${currentBrushSize === size ? 'active' : ''}`}
+                      onClick={() => handleBrushSizeChange(size)}
+                      aria-label={`${index === 0 ? 'Small' : index === 1 ? 'Medium' : 'Large'} eraser size`}
+                    >
+                      <div 
+                        className="brush-size-circle"
+                        style={{ 
+                          width: `${8 + index * 4}px`, 
+                          height: `${8 + index * 4}px` 
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            
             <button
               className="tool-button"
               onClick={handleUndo}
@@ -296,6 +381,15 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
           </div>
         </div>
       </div>
+
+      {/* Drawing Preview Modal */}
+      {showDrawingPreview && (
+        <DrawingPreviewModal 
+          onClose={() => setShowDrawingPreview(false)}
+          drawingDataUrl={savedDrawingDataUrl}
+          onDownload={handleDownloadDrawing}
+        />
+      )}
     </div>
   );
 }

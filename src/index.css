@@ -1019,12 +1019,12 @@
   @apply p-6 lg:p-12;
   position: relative;
   background-size: contain;
-  margin-top: -50px;
+  margin-top: -70px; /* Moved up 20px from -50px */
   min-height: 700px;
   
   @media (max-width: 1023px) {
     background-size: 100% 100%;
-    margin-top: -12px;
+    margin-top: -32px; /* Moved up 20px from -12px */
     padding: 1rem;
     min-height: 500px;
   }
@@ -1033,20 +1033,20 @@
 .draw-it-out-content {
   @apply w-full max-w-[890px] mx-auto;
   padding: clamp(5px, 2vw, 15px);
-  padding-top: 1rem;
+  padding-top: 0.5rem; /* Moved up 20px from 1rem */
   
   @media (min-width: 1024px) {
-    padding-top: 3.5rem;
+    padding-top: 3rem; /* Moved up 20px from 3.5rem */
   }
 }
 
 .draw-it-out-header {
   @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
   @apply gap-4 lg:gap-0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem; /* Moved up 20px from 1.5rem */
   
   @media (min-width: 1024px) {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem; /* Moved up 20px from 2rem */
   }
 }
 
@@ -1064,7 +1064,7 @@
 }
 
 .save-drawing-button {
-  @apply bg-[#7f77b8] text-white px-6 py-3 rounded-lg;
+  @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg; /* Changed from #7f77b8 to #4B7BFF */
   @apply flex items-center justify-center transition-all duration-300;
   min-width: 120px;
   min-height: 54px;
@@ -1105,8 +1105,8 @@
 }
 
 .drawing-canvas-container {
-  @apply flex justify-center mb-6;
-  @apply lg:mb-8;
+  @apply flex justify-center mb-4; /* Moved up 20px from mb-6 */
+  @apply lg:mb-6; /* Moved up 20px from lg:mb-8 */
 }
 
 .drawing-canvas {
@@ -1137,6 +1137,8 @@
 .drawing-controls {
   @apply flex flex-col gap-4;
   @apply lg:flex-row lg:items-center lg:justify-between;
+  /* Ensure controls stay within the main window */
+  margin-bottom: 2rem;
 }
 
 .color-swatches {
@@ -1178,6 +1180,11 @@
 .tool-buttons {
   @apply flex gap-3 justify-center;
   @apply lg:justify-end;
+}
+
+.tool-button-container {
+  position: relative;
+  display: inline-block;
 }
 
 .tool-button {
@@ -1223,6 +1230,88 @@
 
 .tool-button:disabled::before {
   background: none !important;
+}
+
+.brush-size-selector {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  background: #1c1a30;
+  border: 2px solid #2a2d47;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.brush-size-option {
+  @apply w-8 h-8 bg-transparent border-2 border-transparent rounded-lg;
+  @apply flex items-center justify-center cursor-pointer;
+  @apply transition-all duration-300 hover:bg-[#252847] hover:border-[#4B7BFF];
+  position: relative;
+}
+
+.brush-size-option.active {
+  @apply bg-[#4B7BFF] border-[#9FE7F5];
+  box-shadow: 0 0 8px rgba(75, 123, 255, 0.4);
+}
+
+.brush-size-circle {
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.brush-size-option:hover .brush-size-circle {
+  background: #aadfed;
+}
+
+.brush-size-option.active .brush-size-circle {
+  background: white;
+}
+
+/* Drawing Preview Modal Styles */
+.drawing-preview-modal-content {
+  @apply w-full mx-auto;
+  @apply bg-[url('/ReflectoBot-Grown-Up-Access_0002s_0002_Rectangle-5.png')] bg-center bg-no-repeat;
+  @apply p-6 lg:p-10;
+  background-size: 100% 100%;
+  border-radius: 2rem;
+  position: relative;
+  max-width: 832px;
+  transform: scale(1.0);
+}
+
+.drawing-preview-body {
+  @apply space-y-8;
+  @apply lg:space-y-10;
+}
+
+.drawing-preview-intro {
+  @apply text-lg text-white text-center leading-relaxed;
+  @apply lg:text-xl lg:leading-relaxed;
+  font-family: "Kallisto", sans-serif;
+  font-weight: bold;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.drawing-preview-container {
+  @apply flex justify-center items-center;
+  @apply bg-[#1c1a30] rounded-xl p-4;
+  @apply border-2 border-[#2a2d47];
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.drawing-preview-image {
+  @apply max-w-full max-h-full object-contain;
+  @apply rounded-lg;
+  background-color: #111122;
 }
 
 /* Chat History Modal Styles */
