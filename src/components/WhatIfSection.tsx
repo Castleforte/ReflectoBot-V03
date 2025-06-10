@@ -10,6 +10,7 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
   const [currentPromptIndex, setCurrentPromptIndex] = useState<number>(0);
   const [isRefreshDisabled, setIsRefreshDisabled] = useState<boolean>(false);
   const [isReading, setIsReading] = useState<boolean>(false);
+  const [whatIfText, setWhatIfText] = useState<string>('');
 
   const handleRefreshPrompt = () => {
     if (isRefreshDisabled) return;
@@ -40,6 +41,25 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
       
       // Update robot speech to acknowledge the action
       setRobotSpeech("Listen up! I'm reading your What If prompt out loud. Let your imagination run wild!");
+    }
+  };
+
+  const handleSendResponse = () => {
+    const trimmedText = whatIfText.trim();
+    if (!trimmedText) return;
+
+    // TODO: Save the response or handle it as needed
+    // For now, we'll just show a confirmation in the robot speech
+    setRobotSpeech("Wow! I love your creative thinking! That's such an imaginative answer. Want to try another What If question?");
+    
+    // Clear the input
+    setWhatIfText('');
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); // Prevent default new line behavior
+      handleSendResponse();
     }
   };
 
@@ -78,9 +98,26 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
         </div>
 
         <div className="what-if-encouragement">
-          <p className="text-lg text-[#9FE7F5] text-center leading-relaxed">
+          <p className="text-lg text-[#9FE7F5] text-center leading-relaxed mb-6">
             Imagine something wild, kind, or cool. Let's write it out!
           </p>
+        </div>
+
+        <div className="what-if-input-container">
+          <textarea
+            className="what-if-textarea"
+            value={whatIfText}
+            onChange={(e) => setWhatIfText(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Let your imagination run wild! Write your creative answer here..."
+          />
+          
+          <button 
+            className="settings-button settings-button-lg what-if-send-button"
+            onClick={handleSendResponse}
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>

@@ -433,6 +433,20 @@
   background: none !important;
 }
 
+.settings-button.reading-active {
+  @apply bg-[#9FE7F5] text-[#1c1a30];
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 20px rgba(159, 231, 245, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 30px rgba(159, 231, 245, 0.6);
+  }
+}
+
 .settings-button-lg {
   @apply w-full lg:w-auto;
   @apply lg:min-w-[400px];
@@ -473,20 +487,6 @@
 
 .settings-button:hover .button-icon {
   transform: scale(1.1) rotate(-5deg);
-}
-
-.settings-button.reading-active {
-  @apply bg-[#9FE7F5] text-[#1c1a30];
-  animation: pulse-glow 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 20px rgba(159, 231, 245, 0.3);
-  }
-  50% {
-    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 30px rgba(159, 231, 245, 0.6);
-  }
 }
 
 .toggle-switch {
@@ -935,12 +935,12 @@
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
   padding: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-size: clamp(1rem, 3vw, 1.25rem);
   
   @media (min-width: 1024px) {
     padding: 1.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     font-size: 1.5rem;
   }
 }
@@ -963,10 +963,10 @@
 
 .what-if-encouragement {
   @apply text-center;
-  margin-top: 1rem;
+  margin-bottom: 1.5rem;
   
   @media (min-width: 1024px) {
-    margin-top: 1.5rem;
+    margin-bottom: 2rem;
   }
 }
 
@@ -977,6 +977,58 @@
   
   @media (min-width: 1024px) {
     font-size: 1.25rem;
+  }
+}
+
+.what-if-input-container {
+  @apply flex flex-col h-full;
+  flex: 1;
+  min-height: 0;
+}
+
+.what-if-textarea {
+  @apply w-full bg-[#1c1a30] rounded-xl text-white resize-none;
+  @apply border-2 border-transparent focus:border-[#4B7BFF] focus:outline-none;
+  @apply transition-all duration-300;
+  font-family: "magistral", sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 1rem;
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+  flex: 1;
+  min-height: 8rem;
+  
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+    min-height: 10rem;
+  }
+  
+  @media (min-width: 1024px) {
+    min-height: 12rem;
+    font-size: 1.125rem;
+  }
+}
+
+.what-if-textarea::placeholder {
+  @apply text-gray-400;
+  font-style: italic;
+}
+
+.what-if-textarea:focus {
+  box-shadow: 0 0 0 4px rgba(75, 123, 255, 0.1);
+}
+
+.what-if-send-button {
+  @apply w-full max-w-md mx-auto;
+  margin-top: 1rem;
+  min-height: 50px;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  flex-shrink: 0;
+  
+  @media (min-width: 1024px) {
+    margin-top: 1.5rem;
+    min-height: 65px;
+    font-size: 1.5rem;
   }
 }
 
