@@ -1289,9 +1289,9 @@
 .drawing-preview-modal-content .grown-up-modal-header {
   @apply flex items-center gap-4 mb-6;
   @apply lg:mb-8;
-  /* Center the header content and move it to the right */
+  /* Center the title and move the entire header to the right */
   justify-content: center;
-  margin-left: 4rem;
+  margin-left: 6rem;
 }
 
 .drawing-preview-body {
