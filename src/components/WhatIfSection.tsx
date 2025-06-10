@@ -97,12 +97,6 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
           {whatIfPrompts[currentPromptIndex]}
         </div>
 
-        <div className="what-if-encouragement">
-          <p className="text-lg text-[#9FE7F5] text-center leading-relaxed mb-6">
-            Imagine something wild, kind, or cool. Let's write it out!
-          </p>
-        </div>
-
         <div className="what-if-input-container">
           <textarea
             className="what-if-textarea"
