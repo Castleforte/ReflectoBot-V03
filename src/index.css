@@ -1126,7 +1126,7 @@
 }
 
 .tool-button {
-  @apply w-18 h-18 bg-[#1c1a30] rounded-lg border-2 border-transparent;
+  @apply bg-[#1c1a30] rounded-lg border-2 border-transparent;
   @apply flex items-center justify-center cursor-pointer text-white;
   @apply transition-all duration-200 hover:bg-[#252847];
   width: 4.5rem;
