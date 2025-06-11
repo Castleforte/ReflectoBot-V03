@@ -1025,20 +1025,24 @@
 .draw-it-out-content {
   @apply w-full max-w-[890px] mx-auto;
   padding: clamp(5px, 2vw, 15px);
-  padding-top: 2rem;
+  /* Moved up 20px from previous 1rem */
+  padding-top: 0.25rem;
   
   @media (min-width: 1024px) {
-    padding-top: 4rem;
+    /* Moved up 20px from previous 4rem */
+    padding-top: 2.75rem;
   }
 }
 
 .draw-it-out-header {
   @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
   @apply gap-4 lg:gap-0;
-  margin-bottom: 1rem;
+  /* Moved up 20px from previous 1rem */
+  margin-bottom: 0.25rem;
   
   @media (min-width: 1024px) {
-    margin-bottom: 1.5rem;
+    /* Moved up 20px from previous 1.5rem */
+    margin-bottom: 1rem;
   }
 }
 
@@ -1088,8 +1092,10 @@
 }
 
 .drawing-canvas-container {
-  @apply bg-[#1c1a30] rounded-xl p-4 mb-3;
+  @apply bg-[#1c1a30] rounded-xl p-4;
   border: 2px solid #2a2d47;
+  /* Moved up 20px from previous mb-3 */
+  margin-bottom: 0.5rem;
 }
 
 .drawing-canvas {
@@ -1101,6 +1107,7 @@
 
 .drawing-controls {
   @apply flex flex-row flex-wrap justify-center items-center gap-4;
+  /* Moved up 20px - no margin change needed as it's already at the bottom */
 }
 
 .color-swatches {
@@ -1108,7 +1115,10 @@
 }
 
 .color-swatch {
-  @apply w-8 h-8 rounded-full border-2 border-transparent cursor-pointer;
+  /* Scaled up 8% from w-8 h-8 (32px) to approximately 34.5px */
+  width: 2.16rem;
+  height: 2.16rem;
+  @apply rounded-full border-2 border-transparent cursor-pointer;
   @apply transition-all duration-200 hover:scale-110;
 }
 
@@ -1129,8 +1139,9 @@
   @apply bg-[#1c1a30] rounded-lg border-2 border-transparent;
   @apply flex items-center justify-center cursor-pointer text-white;
   @apply transition-all duration-200 hover:bg-[#252847];
-  width: 3rem;
-  height: 3rem;
+  /* Scaled up 8% from 3rem (48px) to approximately 51.8px */
+  width: 3.24rem;
+  height: 3.24rem;
 }
 
 .tool-button.active {
