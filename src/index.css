@@ -1223,7 +1223,7 @@
   
   @media (max-width: 1023px) {
     background-size: 100% 100%;
-    margin-top: -12px;
+    margin-top: -20px;
     padding: 1rem;
     min-height: 500px;
   }
@@ -1233,20 +1233,20 @@
 .next-challenge-content {
   @apply w-full max-w-[890px] mx-auto;
   padding: clamp(5px, 2vw, 15px);
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   
   @media (min-width: 1024px) {
-    padding-top: 3.5rem;
+    padding-top: 2.5rem;
   }
 }
 
 .next-challenge-header {
   @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
   @apply gap-4 lg:gap-0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   
   @media (min-width: 1024px) {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -1256,15 +1256,15 @@
   text-align: center;
   @apply lg:text-left;
   white-space: nowrap;
-  font-size: clamp(1.75rem, 6vw, 2.25rem);
+  font-size: clamp(1.875rem, 6.5vw, 2.5rem);
   
   @media (min-width: 1024px) {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
   }
 }
 
 .my-badges-button {
-  @apply bg-[#9966ff] text-white px-4 py-2 rounded-lg;
+  @apply bg-[#4B7BFF] text-white px-4 py-2 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
   min-width: 108px;
   min-height: 48.6px;
@@ -1283,6 +1283,7 @@
   width: 1.5rem;
   height: 1.5rem;
   margin-right: 0.25rem;
+  filter: brightness(0) invert(1);
 }
 
 @media (min-width: 1024px) {
@@ -1297,6 +1298,13 @@
   @apply bg-[#1c1a30] rounded-xl p-6 mb-6;
   border: 2px solid #2a2d47;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.challenge-content {
+  flex: 1;
 }
 
 .challenge-card-header {
@@ -1304,16 +1312,24 @@
 }
 
 .challenge-card-title {
-  @apply text-2xl font-bold text-white text-center;
+  @apply text-2xl font-bold text-white;
   @apply lg:text-3xl;
   font-family: "magistral", sans-serif;
+  text-align: left;
 }
 
 .challenge-card-description {
-  @apply text-lg text-white text-center mb-6 leading-relaxed;
+  @apply text-lg text-white mb-6 leading-relaxed;
   @apply lg:text-xl;
   font-family: "magistral", sans-serif;
   font-weight: 400;
+  text-align: left;
+}
+
+.challenge-badge {
+  @apply w-24 h-24 object-contain flex-shrink-0;
+  @apply lg:w-32 lg:h-32;
+  filter: drop-shadow(0 0 8px rgba(75, 123, 255, 0.3));
 }
 
 .challenge-progress-indicator {
@@ -1327,13 +1343,15 @@
 }
 
 .start-challenge-button {
-  @apply w-full bg-[#4B7BFF] text-white py-4 rounded-lg;
+  @apply bg-[#4B7BFF] text-white py-4 rounded-lg;
   @apply text-xl font-bold transition-all duration-300;
   @apply lg:text-2xl;
   font-family: "magistral", sans-serif;
   min-height: 65px;
   border: 3px solid transparent;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  width: 100%;
 }
 
 .start-challenge-button:hover {
@@ -1349,8 +1367,7 @@
 
 /* Progress Management Section */
 .progress-management-section {
-  @apply bg-[#1c1a30] rounded-xl p-6 mt-6;
-  border: 2px solid #2a2d47;
+  @apply bg-transparent p-6 mt-6;
 }
 
 .progress-management-title {

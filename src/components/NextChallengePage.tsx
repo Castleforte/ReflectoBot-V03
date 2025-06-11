@@ -41,33 +41,41 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
           className="my-badges-button"
           onClick={onMyBadges}
         >
-          <img src="/Trophy-icon.png" alt="My Badges" className="button-icon" />
+          <img src="/badges/SuperStar.png" alt="My Badges" className="button-icon" />
           <div className="flex flex-col items-start">
-            <span className="text-2xl font-bold leading-none">My</span>
-            <span className="text-2xl font-bold leading-none">Badges</span>
+            <span className="text-sm font-bold leading-none">My</span>
+            <span className="text-sm font-bold leading-none">Badges</span>
           </div>
         </button>
       </div>
 
       <div className="challenge-card">
-        <div className="challenge-card-header">
-          <h2 className="challenge-card-title">{challenge.title}</h2>
+        <div className="challenge-content">
+          <div className="challenge-card-header">
+            <h2 className="challenge-card-title">{challenge.title}</h2>
+          </div>
+          
+          <p className="challenge-card-description">
+            {challenge.description}
+          </p>
+
+          <div className="challenge-progress-indicator">
+            <span className="challenge-progress-text">Just {remainingBadges} More To Go</span>
+          </div>
+
+          <button 
+            className="start-challenge-button"
+            onClick={onStartChallenge}
+          >
+            Start Challenge
+          </button>
         </div>
         
-        <p className="challenge-card-description">
-          {challenge.description}
-        </p>
-
-        <div className="challenge-progress-indicator">
-          <span className="challenge-progress-text">Just {remainingBadges} More To Go</span>
-        </div>
-
-        <button 
-          className="start-challenge-button"
-          onClick={onStartChallenge}
-        >
-          Start Challenge
-        </button>
+        <img 
+          src="/badges/MoodMapper.png" 
+          alt="Mood Mapper Badge"
+          className="challenge-badge"
+        />
       </div>
 
       <div className="progress-management-section">
