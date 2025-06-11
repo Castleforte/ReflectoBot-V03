@@ -51,35 +51,23 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
 
       <div className="challenge-card">
         <div className="challenge-content">
-          <div className="challenge-card-header">
-            <h2 className="challenge-card-title">{challenge.title}</h2>
-          </div>
+          <h2 className="challenge-card-title">{challenge.title}</h2>
           
           <p className="challenge-card-description">
             {challenge.description}
           </p>
 
-          <div className="challenge-actions">
-            <div className="challenge-progress-indicator">
-              <span className="challenge-progress-text">Just {remainingBadges} More To Go</span>
-            </div>
-
-            <button 
-              className="start-challenge-button"
-              onClick={onStartChallenge}
-            >
-              Start Challenge
-            </button>
+          <div className="challenge-progress-indicator">
+            <span className="challenge-progress-text">Just {remainingBadges} More To Go</span>
           </div>
-        </div>
-        
-        <img 
-          src="/badges/MoodMapper.png" 
-          alt="Mood Mapper Badge"
-          className="challenge-badge"
-        />
 
-        <div className="progress-management-section">
+          <button 
+            className="start-challenge-button"
+            onClick={onStartChallenge}
+          >
+            Start Challenge
+          </button>
+
           <div className="progress-management-buttons">
             <button 
               className="progress-button save-button"
@@ -97,7 +85,17 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
             </button>
           </div>
         </div>
+        
+        <img 
+          src="/badges/MoodMapper.png" 
+          alt="Mood Mapper Badge"
+          className="challenge-badge"
+        />
       </div>
+
+      <p className="challenge-helper-text">
+        Your badges save automatically. You can also save or load progress from the Settings page.
+      </p>
 
       <input
         ref={fileInputRef}
