@@ -1218,14 +1218,18 @@
   @apply p-6 lg:p-12;
   position: relative;
   background-size: contain;
-  margin-top: -70px; /* Moved up 20px from -50px */
+  margin-top: -50px;
   min-height: 700px;
   
   @media (max-width: 1023px) {
     background-size: 100% 100%;
-    margin-top: -40px; /* Moved up 20px from -20px */
+    margin-top: -40px;
     padding: 1rem;
     min-height: 500px;
+  }
+  
+  @media (min-width: 1024px) {
+    margin-top: -70px;
   }
 }
 
@@ -1233,29 +1237,30 @@
 .next-challenge-content {
   @apply w-full max-w-[890px] mx-auto;
   padding: clamp(5px, 2vw, 15px);
-  padding-top: 1.5rem; /* Adjusted for proper spacing */
+  padding-top: 3rem;
   
   @media (min-width: 1024px) {
-    padding-top: 3rem; /* Adjusted for proper spacing */
+    padding-top: 5rem;
   }
 }
 
 .next-challenge-header {
   @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
   @apply gap-4 lg:gap-0;
-  margin-bottom: 2rem; /* Increased spacing */
+  margin-bottom: 1rem;
   
   @media (min-width: 1024px) {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }
 }
 
 .next-challenge-title {
   @apply text-4xl font-bold bg-gradient-to-r from-[#E0F2F7] to-[#9FE7F5] text-transparent bg-clip-text;
   @apply lg:text-4xl;
-  text-align: left; /* Left-aligned as shown in reference */
+  text-align: center;
+  @apply lg:text-left;
   white-space: nowrap;
-  font-size: clamp(2rem, 7vw, 2.5rem);
+  font-size: clamp(1.875rem, 6.5vw, 2.5rem);
   
   @media (min-width: 1024px) {
     font-size: 2.5rem;
@@ -1265,75 +1270,126 @@
 .my-badges-button {
   @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
-  min-width: 160px; /* Larger button */
-  min-height: 60px; /* Larger button */
-  font-size: 1.125rem; /* Larger text */
+  min-width: 120px;
+  min-height: 54px;
+  position: relative;
+  overflow: hidden;
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
-  font-weight: bold;
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
 }
 
 .my-badges-button:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.my-badges-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.my-badges-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.my-badges-button:hover::before {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+}
+
 .my-badges-button .button-icon {
-  width: 2rem; /* Larger icon */
-  height: 2rem; /* Larger icon */
+  width: 2rem;
+  height: 2rem;
   margin-right: 0.5rem;
-  filter: none; /* Remove any filters to show original colors */
+  filter: brightness(0) invert(1);
+}
+
+@media (min-width: 1024px) {
+  .my-badges-button .button-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 0.75rem;
+  }
 }
 
 .challenge-card {
-  @apply bg-[#1c1a30] rounded-xl p-8; /* Increased padding */
+  @apply bg-[#1c1a30] rounded-xl;
   border: 2px solid #2a2d47;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
   display: flex;
-  flex-direction: row; /* Horizontal layout */
-  align-items: center; /* Center vertically */
-  gap: 2rem; /* Space between content and badge */
-  min-height: 320px; /* Taller card */
-  margin-bottom: 2rem; /* Space before Progress Management */
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  min-height: 280px;
+  padding: 1.5rem;
+  position: relative;
+  
+  @media (min-width: 1024px) {
+    min-height: 320px;
+    padding: 2rem;
+  }
 }
 
 .challenge-content {
-  flex: 1; /* Take up available space */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
+  align-items: center;
+  text-align: center;
+  width: 100%;
 }
 
 .challenge-card-header {
-  @apply mb-6; /* Increased spacing */
+  @apply mb-4;
 }
 
 .challenge-card-title {
-  @apply text-4xl font-bold text-white; /* Larger title */
-  @apply lg:text-5xl;
+  @apply text-2xl font-bold text-white;
+  @apply lg:text-3xl;
   font-family: "magistral", sans-serif;
-  text-align: left;
-  white-space: nowrap; /* Keep on one line */
+  text-align: center;
 }
 
 .challenge-card-description {
-  @apply text-xl text-white mb-8 leading-relaxed; /* Larger text */
-  @apply lg:text-2xl;
-  font-family: "Kallisto", sans-serif; /* Kallisto Medium font */
+  @apply text-lg text-white mb-6 leading-relaxed;
+  @apply lg:text-xl;
+  font-family: "Kallisto", sans-serif;
   font-weight: 500;
-  text-align: left;
-  white-space: pre-line; /* Allow line breaks from \n */
-}
-
-.challenge-actions {
-  @apply flex flex-col items-center gap-6; /* Center the buttons */
+  text-align: center;
+  margin-bottom: 1rem;
+  
+  @media (min-width: 1024px) {
+    margin-bottom: 1.5rem;
+  }
 }
 
 .challenge-badge {
-  @apply w-40 h-40 object-contain flex-shrink-0; /* Increased by 20% from previous size */
-  @apply lg:w-48 lg:h-48;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 115px;
+  height: 115px;
+  object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(75, 123, 255, 0.3));
+  
+  @media (min-width: 1024px) {
+    bottom: 2rem;
+    right: 2rem;
+    width: 154px;
+    height: 154px;
+  }
+}
+
+.challenge-actions {
+  @apply flex flex-col items-center gap-4;
+  margin-top: auto;
 }
 
 .challenge-progress-indicator {
@@ -1341,21 +1397,21 @@
 }
 
 .challenge-progress-text {
-  @apply inline-block bg-[#a4f61e] text-black px-6 py-3 rounded-full; /* Larger padding */
-  @apply text-xl font-bold; /* Larger text */
+  @apply inline-block bg-[#a4f61e] text-black px-4 py-2 rounded-full;
+  @apply text-lg font-bold;
   font-family: "magistral", sans-serif;
 }
 
 .start-challenge-button {
   @apply bg-[#4B7BFF] text-white py-4 rounded-lg;
-  @apply text-2xl font-bold transition-all duration-300; /* Larger text */
-  @apply lg:text-3xl;
+  @apply text-xl font-bold transition-all duration-300;
+  @apply lg:text-2xl;
   font-family: "magistral", sans-serif;
-  min-height: 75px; /* Larger button */
+  min-height: 65px;
   border: 3px solid transparent;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
   width: 100%;
-  max-width: 350px; /* Wider button */
 }
 
 .start-challenge-button:hover {
@@ -1371,30 +1427,20 @@
 
 /* Progress Management Section */
 .progress-management-section {
-  @apply bg-transparent p-6;
-  margin-top: 0; /* No extra margin, positioned right after challenge card */
-}
-
-.progress-management-title {
-  @apply text-2xl font-bold text-white text-center mb-6; /* Larger text */
-  @apply lg:text-3xl;
-  font-family: "magistral", sans-serif;
-  background: linear-gradient(135deg, #E0F2F7 0%, #9FE7F5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  @apply bg-transparent p-0;
+  margin-top: 1rem;
 }
 
 .progress-management-buttons {
-  @apply flex gap-6 justify-center flex-wrap; /* Increased gap */
+  @apply flex gap-4 justify-center flex-wrap;
 }
 
 .progress-button {
-  @apply text-white px-8 py-4 rounded-lg; /* Larger padding */
+  @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
-  min-width: 180px; /* Larger buttons */
-  min-height: 65px; /* Larger buttons */
-  font-size: 1.25rem; /* Larger text */
+  min-width: 160px;
+  min-height: 54px;
+  font-size: clamp(0.875rem, 2vw, 1.125rem);
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
   font-family: "magistral", sans-serif;
@@ -1412,16 +1458,12 @@
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
 }
 
-.progress-button.save-button {
-  @apply bg-[#4B7BFF]; /* Blue background */
-}
-
 .progress-button.load-button {
-  @apply bg-[#9966ff]; /* Purple background */
+  @apply bg-[#9966ff];
 }
 
 .progress-button .button-icon {
-  @apply w-8 h-8 mr-3; /* Larger icon */
+  @apply w-6 h-6 mr-2;
 }
 
 /* Challenge Complete Page Styles */
@@ -1611,25 +1653,52 @@
 .next-challenge-header-button {
   @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
-  min-width: 160px; /* Larger button */
-  min-height: 60px; /* Larger button */
-  font-size: 1.125rem; /* Larger text */
+  min-width: 120px;
+  min-height: 54px;
+  position: relative;
+  overflow: hidden;
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
-  font-weight: bold;
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
 }
 
 .next-challenge-header-button:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.next-challenge-header-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.next-challenge-header-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.next-challenge-header-button:hover::before {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+}
+
 .next-challenge-header-button .button-icon {
-  width: 2rem; /* Larger icon */
-  height: 2rem; /* Larger icon */
+  width: 2rem;
+  height: 2rem;
   margin-right: 0.5rem;
-  filter: none; /* Remove any filters to show original colors */
+  filter: brightness(0) invert(1);
+}
+
+@media (min-width: 1024px) {
+  .next-challenge-header-button .button-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 0.75rem;
+  }
 }
 
 .header-action-button {

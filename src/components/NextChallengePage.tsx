@@ -78,25 +78,24 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
           alt="Mood Mapper Badge"
           className="challenge-badge"
         />
-      </div>
 
-      <div className="progress-management-section">
-        <h3 className="progress-management-title">Progress Management</h3>
-        <div className="progress-management-buttons">
-          <button 
-            className="progress-button save-button"
-            onClick={handleSaveProgress}
-          >
-            <img src="/Save-icon.png" alt="Save Progress" className="button-icon" />
-            Save Progress
-          </button>
-          <button 
-            className="progress-button load-button"
-            onClick={handleLoadProgress}
-          >
-            <img src="/Load-icon.png" alt="Load Progress" className="button-icon" />
-            Load Progress
-          </button>
+        <div className="progress-management-section">
+          <div className="progress-management-buttons">
+            <button 
+              className="progress-button save-button"
+              onClick={handleSaveProgress}
+            >
+              <img src="/Save-icon.png" alt="Save Progress" className="button-icon" />
+              Save Progress
+            </button>
+            <button 
+              className="progress-button load-button"
+              onClick={handleLoadProgress}
+            >
+              <img src="/Load-icon.png" alt="Load Progress" className="button-icon" />
+              Load Progress
+            </button>
+          </div>
         </div>
       </div>
 
