@@ -1056,23 +1056,35 @@
 }
 
 .save-drawing-button {
-  @apply bg-[#4B7BFF] text-white px-4 py-2 rounded-lg;
+  @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
   min-width: 120px;
-  min-height: 48px;
-  font-size: clamp(0.875rem, 2vw, 1.125rem);
+  min-height: 54px;
+  position: relative;
+  overflow: hidden;
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
 }
 
 .save-drawing-button:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.save-drawing-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
 }
 
 .save-drawing-button .button-icon {
-  @apply w-6 h-6 mr-2;
+  @apply w-8 h-8 mr-2;
+  transition: all 0.3s ease-in-out;
+}
+
+.save-drawing-button:hover .button-icon {
+  transform: scale(1.1) rotate(-5deg);
 }
 
 .drawing-canvas-container {
@@ -1088,15 +1100,15 @@
 }
 
 .drawing-controls {
-  @apply flex flex-col gap-4;
+  @apply flex flex-row flex-wrap justify-center items-center gap-6;
 }
 
 .color-swatches {
-  @apply flex gap-2 justify-center flex-wrap;
+  @apply flex gap-3 justify-center flex-wrap;
 }
 
 .color-swatch {
-  @apply w-10 h-10 rounded-full border-2 border-transparent cursor-pointer;
+  @apply w-14 h-14 rounded-full border-2 border-transparent cursor-pointer;
   @apply transition-all duration-200 hover:scale-110;
 }
 
@@ -1114,9 +1126,11 @@
 }
 
 .tool-button {
-  @apply w-12 h-12 bg-[#1c1a30] rounded-lg border-2 border-transparent;
+  @apply w-18 h-18 bg-[#1c1a30] rounded-lg border-2 border-transparent;
   @apply flex items-center justify-center cursor-pointer text-white;
   @apply transition-all duration-200 hover:bg-[#252847];
+  width: 4.5rem;
+  height: 4.5rem;
 }
 
 .tool-button.active {
@@ -1128,16 +1142,20 @@
 }
 
 .brush-size-selector {
-  @apply absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2;
-  @apply bg-[#1c1a30] rounded-lg p-2 flex gap-2;
+  @apply absolute bottom-full left-1/2 transform -translate-x-1/2;
+  @apply bg-[#1c1a30] rounded-lg flex gap-2;
   @apply border border-[#2a2d47];
   z-index: 10;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
 }
 
 .brush-size-option {
-  @apply w-8 h-8 bg-transparent rounded border-2 border-transparent;
+  @apply w-10 h-10 bg-transparent rounded border-2 border-transparent;
   @apply flex items-center justify-center cursor-pointer;
   @apply transition-all duration-200 hover:border-[#4B7BFF];
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .brush-size-option.active {
