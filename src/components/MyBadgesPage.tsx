@@ -19,10 +19,7 @@ function MyBadgesPage({ progress, onNextChallenge }: MyBadgesPageProps) {
             onClick={onNextChallenge}
           >
             <img src="/My_Badges_Button_Icon.png" alt="Next Challenge" className="button-icon" />
-            <div className="flex flex-col items-start">
-              <span className="font-bold leading-none">Next</span>
-              <span className="font-bold leading-none">Challenge</span>
-            </div>
+            <span className="font-bold leading-none">Next Challenge</span>
           </button>
         </div>
       </div>
