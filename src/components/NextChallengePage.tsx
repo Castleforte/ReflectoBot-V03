@@ -42,10 +42,7 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
           onClick={onMyBadges}
         >
           <img src="/My_Badges_Button_Icon.png" alt="My Badges" className="button-icon" />
-          <div className="flex flex-col items-start">
-            <span className="font-bold leading-none">My</span>
-            <span className="font-bold leading-none">Badges</span>
-          </div>
+          <span className="font-bold leading-none">My Badges</span>
         </button>
       </div>
 
@@ -68,22 +65,9 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
             Start Challenge
           </button>
 
-          <div className="progress-management-buttons">
-            <button 
-              className="progress-button save-button"
-              onClick={handleSaveProgress}
-            >
-              <img src="/Save-icon.png" alt="Save Progress" className="button-icon" />
-              Save Progress
-            </button>
-            <button 
-              className="progress-button load-button"
-              onClick={handleLoadProgress}
-            >
-              <img src="/Load-icon.png" alt="Load Progress" className="button-icon" />
-              Load Progress
-            </button>
-          </div>
+          <p className="challenge-helper-text">
+            Your badges save automatically. You can also save or load progress from the Settings page.
+          </p>
         </div>
         
         <img 
@@ -92,10 +76,6 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
           className="challenge-badge"
         />
       </div>
-
-      <p className="challenge-helper-text">
-        Your badges save automatically. You can also save or load progress from the Settings page.
-      </p>
 
       <input
         ref={fileInputRef}
