@@ -1223,7 +1223,7 @@
   
   @media (max-width: 1023px) {
     background-size: 100% 100%;
-    margin-top: -20px;
+    margin-top: -50px;
     padding: 1rem;
     min-height: 500px;
   }
@@ -1256,42 +1256,57 @@
   text-align: center;
   @apply lg:text-left;
   white-space: nowrap;
-  font-size: clamp(1.875rem, 6.5vw, 2.5rem);
+  font-size: clamp(2.0rem, 7vw, 2.75rem);
   
   @media (min-width: 1024px) {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
   }
 }
 
 .my-badges-button {
-  @apply bg-[#4B7BFF] text-white px-4 py-2 rounded-lg;
+  @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
-  min-width: 108px;
-  min-height: 48.6px;
-  font-size: clamp(0.7875rem, 1.8vw, 1.125rem);
+  min-width: 120px;
+  min-height: 54px;
+  position: relative;
+  overflow: hidden;
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
 }
 
 .my-badges-button:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.my-badges-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.my-badges-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.my-badges-button:hover::before {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
 }
 
 .my-badges-button .button-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: 0.25rem;
+  @apply w-8 h-8 mr-2;
+  transition: all 0.3s ease-in-out;
   filter: brightness(0) invert(1);
 }
 
-@media (min-width: 1024px) {
-  .my-badges-button .button-icon {
-    width: 1.75rem;
-    height: 1.75rem;
-    margin-right: 0.5rem;
-  }
+.my-badges-button:hover .button-icon {
+  transform: scale(1.1) rotate(-5deg);
 }
 
 .challenge-card {
@@ -1299,12 +1314,23 @@
   border: 2px solid #2a2d47;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 1.5rem;
+  min-height: 300px;
+  
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+  }
 }
 
 .challenge-content {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .challenge-card-header {
@@ -1316,6 +1342,11 @@
   @apply lg:text-3xl;
   font-family: "magistral", sans-serif;
   text-align: left;
+  font-size: clamp(2.4rem, 7.2vw, 2.7rem);
+  
+  @media (min-width: 1024px) {
+    font-size: 3rem;
+  }
 }
 
 .challenge-card-description {
@@ -1324,16 +1355,31 @@
   font-family: "magistral", sans-serif;
   font-weight: 400;
   text-align: left;
+  white-space: pre-line;
 }
 
 .challenge-badge {
-  @apply w-24 h-24 object-contain flex-shrink-0;
-  @apply lg:w-32 lg:h-32;
+  @apply w-[134px] h-[134px] object-contain flex-shrink-0;
+  @apply lg:w-[168px] lg:h-[168px];
   filter: drop-shadow(0 0 8px rgba(75, 123, 255, 0.3));
+  align-self: end;
+  margin-top: 1rem;
+  
+  @media (min-width: 1024px) {
+    margin-top: 0;
+  }
+}
+
+.challenge-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: auto;
 }
 
 .challenge-progress-indicator {
-  @apply text-center mb-6;
+  @apply text-center;
 }
 
 .challenge-progress-text {
@@ -1367,7 +1413,8 @@
 
 /* Progress Management Section */
 .progress-management-section {
-  @apply bg-transparent p-6 mt-6;
+  @apply p-6;
+  margin-top: 20px;
 }
 
 .progress-management-title {
@@ -1600,40 +1647,49 @@
 }
 
 .next-challenge-header-button {
-  @apply bg-[#4B7BFF] text-white px-3 py-2 rounded-lg;
+  @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
-  min-width: 90px;
-  min-height: 40px;
-  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  min-width: 120px;
+  min-height: 54px;
+  position: relative;
+  overflow: hidden;
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
-  
-  @media (min-width: 1024px) {
-    min-width: 108px;
-    min-height: 48.6px;
-    padding: 0.45rem 1.35rem;
-    font-size: clamp(0.7875rem, 1.8vw, 1.125rem);
-  }
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
 }
 
 .next-challenge-header-button:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.next-challenge-header-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.next-challenge-header-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.next-challenge-header-button:hover::before {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
 }
 
 .next-challenge-header-button .button-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.25rem;
+  @apply w-8 h-8 mr-2;
+  transition: all 0.3s ease-in-out;
+  filter: brightness(0) invert(1);
 }
 
-@media (min-width: 1024px) {
-  .next-challenge-header-button .button-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 0.5rem;
-  }
+.next-challenge-header-button:hover .button-icon {
+  transform: scale(1.1) rotate(-5deg);
 }
 
 .header-action-button {

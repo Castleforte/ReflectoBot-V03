@@ -41,10 +41,10 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
           className="my-badges-button"
           onClick={onMyBadges}
         >
-          <img src="/badges/SuperStar.png" alt="My Badges" className="button-icon" />
+          <img src="/My_Badges_Button_Icon.png" alt="My Badges" className="button-icon" />
           <div className="flex flex-col items-start">
-            <span className="text-sm font-bold leading-none">My</span>
-            <span className="text-sm font-bold leading-none">Badges</span>
+            <span className="font-bold leading-none">My</span>
+            <span className="font-bold leading-none">Badges</span>
           </div>
         </button>
       </div>
@@ -59,16 +59,18 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
             {challenge.description}
           </p>
 
-          <div className="challenge-progress-indicator">
-            <span className="challenge-progress-text">Just {remainingBadges} More To Go</span>
-          </div>
+          <div className="challenge-actions">
+            <div className="challenge-progress-indicator">
+              <span className="challenge-progress-text">Just {remainingBadges} More To Go</span>
+            </div>
 
-          <button 
-            className="start-challenge-button"
-            onClick={onStartChallenge}
-          >
-            Start Challenge
-          </button>
+            <button 
+              className="start-challenge-button"
+              onClick={onStartChallenge}
+            >
+              Start Challenge
+            </button>
+          </div>
         </div>
         
         <img 
