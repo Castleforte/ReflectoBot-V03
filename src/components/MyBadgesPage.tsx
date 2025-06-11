@@ -12,16 +12,16 @@ function MyBadgesPage({ progress, onNextChallenge }: MyBadgesPageProps) {
     <div className="my-badges-content">
       <div className="my-badges-header">
         <h1 className="my-badges-title">My Badges</h1>
-        <div className="my-badges-header-buttons">
+        <div className="my-badges-header-right">
           <span className="badges-collected-indicator">{progress.badgeCount} of 18 Collected!</span>
           <button 
-            className="header-action-button"
+            className="next-challenge-header-button"
             onClick={onNextChallenge}
           >
             <img src="/Trophy-icon.png" alt="Next Challenge" className="button-icon" />
             <div className="flex flex-col items-start">
-              <span className="text-2xl font-bold leading-none">Next</span>
-              <span className="text-2xl font-bold leading-none">Challenge</span>
+              <span className="text-sm font-bold leading-none">Next</span>
+              <span className="text-sm font-bold leading-none">Challenge</span>
             </div>
           </button>
         </div>
