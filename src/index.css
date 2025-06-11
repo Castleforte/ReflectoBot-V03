@@ -1025,10 +1025,10 @@
 .draw-it-out-content {
   @apply w-full max-w-[890px] mx-auto;
   padding: clamp(5px, 2vw, 15px);
-  padding-top: 1rem;
+  padding-top: 2rem;
   
   @media (min-width: 1024px) {
-    padding-top: 3.5rem;
+    padding-top: 4rem;
   }
 }
 
@@ -1038,7 +1038,7 @@
   margin-bottom: 1rem;
   
   @media (min-width: 1024px) {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -1048,10 +1048,10 @@
   text-align: center;
   @apply lg:text-left;
   white-space: nowrap;
-  font-size: clamp(1.75rem, 6vw, 2.25rem);
+  font-size: clamp(1.5rem, 5vw, 2rem);
   
   @media (min-width: 1024px) {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
 }
 
@@ -1088,7 +1088,7 @@
 }
 
 .drawing-canvas-container {
-  @apply bg-[#1c1a30] rounded-xl p-4 mb-4;
+  @apply bg-[#1c1a30] rounded-xl p-4 mb-3;
   border: 2px solid #2a2d47;
 }
 
@@ -1096,19 +1096,19 @@
   @apply w-full h-auto bg-[#111122] rounded-lg cursor-crosshair;
   max-width: 100%;
   height: auto;
-  aspect-ratio: 7/4;
+  aspect-ratio: 7/3.5;
 }
 
 .drawing-controls {
-  @apply flex flex-row flex-wrap justify-center items-center gap-6;
+  @apply flex flex-row flex-wrap justify-center items-center gap-4;
 }
 
 .color-swatches {
-  @apply flex gap-3 justify-center flex-wrap;
+  @apply flex gap-2 justify-center flex-wrap;
 }
 
 .color-swatch {
-  @apply w-14 h-14 rounded-full border-2 border-transparent cursor-pointer;
+  @apply w-8 h-8 rounded-full border-2 border-transparent cursor-pointer;
   @apply transition-all duration-200 hover:scale-110;
 }
 
@@ -1118,7 +1118,7 @@
 }
 
 .tool-buttons {
-  @apply flex gap-4 justify-center items-center;
+  @apply flex gap-3 justify-center items-center;
 }
 
 .tool-button-container {
@@ -1129,8 +1129,8 @@
   @apply bg-[#1c1a30] rounded-lg border-2 border-transparent;
   @apply flex items-center justify-center cursor-pointer text-white;
   @apply transition-all duration-200 hover:bg-[#252847];
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 .tool-button.active {
@@ -1146,16 +1146,14 @@
   @apply bg-[#1c1a30] rounded-lg flex gap-2;
   @apply border border-[#2a2d47];
   z-index: 10;
-  margin-bottom: 1rem;
-  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
 }
 
 .brush-size-option {
-  @apply w-10 h-10 bg-transparent rounded border-2 border-transparent;
+  @apply w-8 h-8 bg-transparent rounded border-2 border-transparent;
   @apply flex items-center justify-center cursor-pointer;
   @apply transition-all duration-200 hover:border-[#4B7BFF];
-  width: 2.5rem;
-  height: 2.5rem;
 }
 
 .brush-size-option.active {
