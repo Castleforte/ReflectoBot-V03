@@ -5,13 +5,14 @@ import ChatSection from './components/ChatSection';
 import DailyCheckInSection from './components/DailyCheckInSection';
 import WhatIfSection from './components/WhatIfSection';
 import DrawItOutSection from './components/DrawItOutSection';
+import ChallengesSection from './components/ChallengesSection';
 import GrownUpAccessModal from './components/GrownUpAccessModal';
 import ChatHistoryModal from './components/ChatHistoryModal';
 import MoodHistoryModal from './components/MoodHistoryModal';
 import { ConversationTurn, MoodEntry } from './types';
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out'>('welcome');
+  const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges'>('welcome');
   const [showGrownUpModal, setShowGrownUpModal] = useState(false);
   const [showChatHistoryModal, setShowChatHistoryModal] = useState(false);
   const [showMoodHistoryModal, setShowMoodHistoryModal] = useState(false);
@@ -31,7 +32,7 @@ function App() {
     }
   };
 
-  const handleNavButtonClick = (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out') => {
+  const handleNavButtonClick = (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges') => {
     setCurrentScreen(screen);
     
     switch (screen) {
@@ -46,6 +47,9 @@ function App() {
         break;
       case 'draw-it-out':
         setRobotSpeech("Sometimes feelings are hard to explain with words—so let's draw them instead!");
+        break;
+      case 'challenges':
+        setRobotSpeech("Ready for a new challenge? Put on your thinking cap and give this one a try!");
         break;
       case 'settings':
         setRobotSpeech("Tuning things just the way you like them? Smart move! You can save your session, adjust sounds-or even start fresh. Your ReflectoBot, your rules!");
@@ -102,7 +106,10 @@ function App() {
                   <img src="/Palette-icon.png" alt="Draw It Out" className="nav-button-icon" />
                   <span className="nav-button-text max-lg:whitespace-normal max-lg:text-center">Draw It<br />Out</span>
                 </button>
-                <button className="nav-button" onClick={() => handleNavButtonClick('welcome')}>
+                <button 
+                  className={`nav-button ${currentScreen === 'challenges' ? 'nav-button-active' : ''}`}
+                  onClick={() => handleNavButtonClick('challenges')}
+                >
                   <img src="/Trophy-icon.png" alt="Challenges" className="nav-button-icon" />
                   <span className="nav-button-text">Challenges</span>
                 </button>
@@ -179,6 +186,11 @@ function App() {
           />
         ) : currentScreen === 'draw-it-out' ? (
           <DrawItOutSection 
+            onClose={() => setCurrentScreen('welcome')}
+            setRobotSpeech={setRobotSpeech}
+          />
+        ) : currentScreen === 'challenges' ? (
+          <ChallengesSection 
             onClose={() => setCurrentScreen('welcome')}
             setRobotSpeech={setRobotSpeech}
           />

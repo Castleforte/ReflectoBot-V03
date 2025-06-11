@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface MobileNavButtonsProps {
-  onNavButtonClick: (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out') => void;
-  currentScreen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out';
+  onNavButtonClick: (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges') => void;
+  currentScreen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges';
 }
 
 function MobileNavButtons({ onNavButtonClick, currentScreen }: MobileNavButtonsProps) {
@@ -37,7 +37,10 @@ function MobileNavButtons({ onNavButtonClick, currentScreen }: MobileNavButtonsP
           <img src="/Palette-icon.png" alt="Draw It Out" className="nav-button-icon" />
           <span className="nav-button-text max-lg:whitespace-normal max-lg:text-center">Draw It<br />Out</span>
         </button>
-        <button className="nav-button" onClick={() => onNavButtonClick('welcome')}>
+        <button 
+          className={`nav-button ${currentScreen === 'challenges' ? 'nav-button-active' : ''}`}
+          onClick={() => onNavButtonClick('challenges')}
+        >
           <img src="/Trophy-icon.png" alt="Challenges" className="nav-button-icon" />
           <span className="nav-button-text">Challenges</span>
         </button>
