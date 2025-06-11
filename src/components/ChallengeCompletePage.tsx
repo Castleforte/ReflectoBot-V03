@@ -1,7 +1,6 @@
 import React from 'react';
 import { allBadges } from '../badgeData';
 import { ReflectoBotProgress } from '../types';
-import { exportProgress } from '../utils/progressManager';
 
 interface ChallengeCompletePageProps {
   badgeId: string;
@@ -15,24 +14,10 @@ function ChallengeCompletePage({ badgeId, progress, onNextChallenge, onMyBadges 
   
   if (!badge) return null;
 
-  const handleSaveProgress = () => {
-    exportProgress();
-  };
-
   return (
     <div className="challenge-complete-content">
       <div className="challenge-complete-header">
         <h1 className="challenge-complete-title">Challenge Complete!</h1>
-        <button 
-          className="save-progress-button"
-          onClick={handleSaveProgress}
-        >
-          <img src="/Save-icon.png" alt="Save Progress" className="button-icon" />
-          <div className="flex flex-col items-start">
-            <span className="text-2xl font-bold leading-none">Save</span>
-            <span className="text-2xl font-bold leading-none">Progress</span>
-          </div>
-        </button>
       </div>
 
       <div className="congratulations-section">

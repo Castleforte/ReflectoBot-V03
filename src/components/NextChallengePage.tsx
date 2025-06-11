@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Challenge, ReflectoBotProgress } from '../types';
+import { exportProgress, importProgress } from '../utils/progressManager';
 
 interface NextChallengePageProps {
   challenge: Challenge;
@@ -9,7 +10,28 @@ interface NextChallengePageProps {
 }
 
 function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }: NextChallengePageProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const remainingBadges = 18 - progress.badgeCount;
+
+  const handleSaveProgress = () => {
+    exportProgress();
+  };
+
+  const handleLoadProgress = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      try {
+        await importProgress(file);
+      } catch (error) {
+        console.error('Error importing progress:', error);
+        alert('Error loading progress file. Please check the file and try again.');
+      }
+    }
+  };
 
   return (
     <div className="next-challenge-content">
@@ -47,6 +69,34 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
           Start Challenge
         </button>
       </div>
+
+      <div className="progress-management-section">
+        <h3 className="progress-management-title">Progress Management</h3>
+        <div className="progress-management-buttons">
+          <button 
+            className="progress-button save-button"
+            onClick={handleSaveProgress}
+          >
+            <img src="/Save-icon.png" alt="Save Progress" className="button-icon" />
+            Save Progress
+          </button>
+          <button 
+            className="progress-button load-button"
+            onClick={handleLoadProgress}
+          >
+            <img src="/Load-icon.png" alt="Load Progress" className="button-icon" />
+            Load Progress
+          </button>
+        </div>
+      </div>
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json"
+        onChange={handleFileChange}
+        style={{ display: 'none' }}
+      />
     </div>
   );
 }
