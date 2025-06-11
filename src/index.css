@@ -602,12 +602,16 @@
 }
 
 .chat-action-button .button-icon {
-  @apply w-6 h-6 mr-1;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.25rem;
 }
 
 @media (min-width: 1024px) {
   .chat-action-button .button-icon {
-    @apply w-7 h-7 mr-2;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 0.5rem;
   }
 }
 
@@ -1249,10 +1253,16 @@
 }
 
 .my-badges-button .button-icon {
-  @apply w-6 h-6 mr-1;
-  
-  @media (min-width: 1024px) {
-    @apply w-7 h-7 mr-2;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.25rem;
+}
+
+@media (min-width: 1024px) {
+  .my-badges-button .button-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 0.5rem;
   }
 }
 
@@ -1412,10 +1422,16 @@
 }
 
 .save-progress-button .button-icon {
-  @apply w-6 h-6 mr-1;
-  
-  @media (min-width: 1024px) {
-    @apply w-7 h-7 mr-2;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.25rem;
+}
+
+@media (min-width: 1024px) {
+  .save-progress-button .button-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 0.5rem;
   }
 }
 
@@ -1562,10 +1578,16 @@
 }
 
 .header-action-button .button-icon {
-  @apply w-5 h-5 mr-1;
-  
-  @media (min-width: 1024px) {
-    @apply w-6 h-6 mr-2;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.25rem;
+}
+
+@media (min-width: 1024px) {
+  .header-action-button .button-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
   }
 }
 
