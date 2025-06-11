@@ -1233,159 +1233,107 @@
 .next-challenge-content {
   @apply w-full max-w-[890px] mx-auto;
   padding: clamp(5px, 2vw, 15px);
-  padding-top: 2.5rem; /* Moved down to fit between rectangle edges */
+  padding-top: 1.5rem; /* Adjusted for proper spacing */
   
   @media (min-width: 1024px) {
-    padding-top: 4.5rem; /* Moved down to fit between rectangle edges */
+    padding-top: 3rem; /* Adjusted for proper spacing */
   }
 }
 
 .next-challenge-header {
   @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
   @apply gap-4 lg:gap-0;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem; /* Increased spacing */
   
   @media (min-width: 1024px) {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
   }
 }
 
 .next-challenge-title {
   @apply text-4xl font-bold bg-gradient-to-r from-[#E0F2F7] to-[#9FE7F5] text-transparent bg-clip-text;
   @apply lg:text-4xl;
-  text-align: center;
-  @apply lg:text-left;
+  text-align: left; /* Left-aligned as shown in reference */
   white-space: nowrap;
-  font-size: clamp(2.125rem, 7.5vw, 2.875rem); /* Increased by 8pts */
+  font-size: clamp(2rem, 7vw, 2.5rem);
   
   @media (min-width: 1024px) {
-    font-size: 2.875rem; /* Increased by 8pts */
+    font-size: 2.5rem;
   }
 }
 
 .my-badges-button {
   @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
-  min-width: 120px;
-  min-height: 54px;
-  position: relative;
-  overflow: hidden;
+  min-width: 160px; /* Larger button */
+  min-height: 60px; /* Larger button */
+  font-size: 1.125rem; /* Larger text */
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
-  font-size: clamp(0.875rem, 2vw, 1.25rem);
+  font-weight: bold;
 }
 
 .my-badges-button:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.my-badges-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
-}
-
-.my-badges-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
-  transition: all 0.3s ease-in-out;
-  pointer-events: none;
-}
-
-.my-badges-button:hover::before {
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
-}
-
 .my-badges-button .button-icon {
-  @apply w-8 h-8 mr-2;
-  transition: all 0.3s ease-in-out;
-  filter: brightness(0) invert(1); /* Make icon white/monochrome */
-}
-
-.my-badges-button:hover .button-icon {
-  transform: scale(1.1) rotate(-5deg);
+  width: 2rem; /* Larger icon */
+  height: 2rem; /* Larger icon */
+  margin-right: 0.5rem;
+  filter: none; /* Remove any filters to show original colors */
 }
 
 .challenge-card {
-  @apply bg-[#1c1a30] rounded-xl p-6 mb-4; /* Reduced margin-bottom */
+  @apply bg-[#1c1a30] rounded-xl p-8; /* Increased padding */
   border: 2px solid #2a2d47;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
   display: flex;
-  flex-direction: column;
-  min-height: 320px; /* Increased height */
-  
-  @media (min-width: 1024px) {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
+  flex-direction: row; /* Horizontal layout */
+  align-items: center; /* Center vertically */
+  gap: 2rem; /* Space between content and badge */
+  min-height: 320px; /* Taller card */
+  margin-bottom: 2rem; /* Space before Progress Management */
 }
 
 .challenge-content {
-  flex: 1;
+  flex: 1; /* Take up available space */
   display: flex;
   flex-direction: column;
-  text-align: center; /* Center all content */
-  
-  @media (min-width: 1024px) {
-    text-align: left; /* Left align on desktop */
-  }
+  justify-content: center; /* Center content vertically */
 }
 
 .challenge-card-header {
-  @apply mb-4;
+  @apply mb-6; /* Increased spacing */
 }
 
 .challenge-card-title {
-  @apply text-white font-bold;
+  @apply text-4xl font-bold text-white; /* Larger title */
+  @apply lg:text-5xl;
   font-family: "magistral", sans-serif;
-  text-align: center;
+  text-align: left;
   white-space: nowrap; /* Keep on one line */
-  font-size: clamp(2.4rem, 7.2vw, 2.7rem); /* 20% larger */
-  
-  @media (min-width: 1024px) {
-    font-size: 3.6rem; /* 20% larger than 3rem */
-    text-align: left;
-  }
 }
 
 .challenge-card-description {
-  @apply text-white mb-6 leading-relaxed;
-  font-family: "Kallisto", sans-serif; /* Changed to Kallisto Medium */
-  font-weight: 500; /* Medium weight */
-  text-align: center;
-  white-space: pre-line; /* Allow line breaks */
-  font-size: clamp(1.125rem, 3vw, 1.25rem);
-  
-  @media (min-width: 1024px) {
-    font-size: 1.25rem;
-    text-align: left;
-  }
+  @apply text-xl text-white mb-8 leading-relaxed; /* Larger text */
+  @apply lg:text-2xl;
+  font-family: "Kallisto", sans-serif; /* Kallisto Medium font */
+  font-weight: 500;
+  text-align: left;
+  white-space: pre-line; /* Allow line breaks from \n */
 }
 
 .challenge-actions {
-  @apply flex flex-col items-center gap-4 mt-auto; /* Push to bottom and center */
-  
-  @media (min-width: 1024px) {
-    align-items: flex-start; /* Left align on desktop */
-  }
+  @apply flex flex-col items-center gap-6; /* Center the buttons */
 }
 
 .challenge-badge {
-  @apply object-contain flex-shrink-0;
-  width: 161px; /* Increased by 20% from 134px */
-  height: 161px; /* Increased by 20% from 134px */
+  @apply w-40 h-40 object-contain flex-shrink-0; /* Increased by 20% from previous size */
+  @apply lg:w-48 lg:h-48;
   filter: drop-shadow(0 0 8px rgba(75, 123, 255, 0.3));
-  align-self: flex-end; /* Position at bottom-right */
-  margin-top: auto;
-  
-  @media (min-width: 1024px) {
-    width: 202px; /* Increased by 20% from 168px */
-    height: 202px; /* Increased by 20% from 168px */
-  }
 }
 
 .challenge-progress-indicator {
@@ -1393,21 +1341,21 @@
 }
 
 .challenge-progress-text {
-  @apply inline-block bg-[#a4f61e] text-black px-4 py-2 rounded-full;
-  @apply text-lg font-bold;
+  @apply inline-block bg-[#a4f61e] text-black px-6 py-3 rounded-full; /* Larger padding */
+  @apply text-xl font-bold; /* Larger text */
   font-family: "magistral", sans-serif;
 }
 
 .start-challenge-button {
   @apply bg-[#4B7BFF] text-white py-4 rounded-lg;
-  @apply text-xl font-bold transition-all duration-300;
-  @apply lg:text-2xl;
+  @apply text-2xl font-bold transition-all duration-300; /* Larger text */
+  @apply lg:text-3xl;
   font-family: "magistral", sans-serif;
-  min-height: 65px;
+  min-height: 75px; /* Larger button */
   border: 3px solid transparent;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
-  max-width: 250px; /* Shortened width */
   width: 100%;
+  max-width: 350px; /* Wider button */
 }
 
 .start-challenge-button:hover {
@@ -1423,12 +1371,13 @@
 
 /* Progress Management Section */
 .progress-management-section {
-  @apply p-6 mt-4; /* Reduced margin and moved inside rectangle */
+  @apply bg-transparent p-6;
+  margin-top: 0; /* No extra margin, positioned right after challenge card */
 }
 
 .progress-management-title {
-  @apply text-xl font-bold text-white text-center mb-4;
-  @apply lg:text-2xl;
+  @apply text-2xl font-bold text-white text-center mb-6; /* Larger text */
+  @apply lg:text-3xl;
   font-family: "magistral", sans-serif;
   background: linear-gradient(135deg, #E0F2F7 0%, #9FE7F5 100%);
   -webkit-background-clip: text;
@@ -1437,15 +1386,15 @@
 }
 
 .progress-management-buttons {
-  @apply flex gap-4 justify-center flex-wrap;
+  @apply flex gap-6 justify-center flex-wrap; /* Increased gap */
 }
 
 .progress-button {
-  @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg;
+  @apply text-white px-8 py-4 rounded-lg; /* Larger padding */
   @apply flex items-center justify-center transition-all duration-300;
-  min-width: 160px;
-  min-height: 54px;
-  font-size: clamp(0.875rem, 2vw, 1.125rem);
+  min-width: 180px; /* Larger buttons */
+  min-height: 65px; /* Larger buttons */
+  font-size: 1.25rem; /* Larger text */
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
   font-family: "magistral", sans-serif;
@@ -1463,12 +1412,16 @@
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
 }
 
+.progress-button.save-button {
+  @apply bg-[#4B7BFF]; /* Blue background */
+}
+
 .progress-button.load-button {
-  @apply bg-[#9966ff];
+  @apply bg-[#9966ff]; /* Purple background */
 }
 
 .progress-button .button-icon {
-  @apply w-6 h-6 mr-2;
+  @apply w-8 h-8 mr-3; /* Larger icon */
 }
 
 /* Challenge Complete Page Styles */
@@ -1658,47 +1611,25 @@
 .next-challenge-header-button {
   @apply bg-[#4B7BFF] text-white px-6 py-3 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
-  min-width: 120px;
-  min-height: 54px;
-  position: relative;
-  overflow: hidden;
+  min-width: 160px; /* Larger button */
+  min-height: 60px; /* Larger button */
+  font-size: 1.125rem; /* Larger text */
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
-  font-size: clamp(0.875rem, 2vw, 1.25rem);
+  font-weight: bold;
 }
 
 .next-challenge-header-button:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.next-challenge-header-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
-}
-
-.next-challenge-header-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
-  transition: all 0.3s ease-in-out;
-  pointer-events: none;
-}
-
-.next-challenge-header-button:hover::before {
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
-}
-
 .next-challenge-header-button .button-icon {
-  @apply w-8 h-8 mr-2;
-  transition: all 0.3s ease-in-out;
-  filter: brightness(0) invert(1); /* Make icon white/monochrome */
-}
-
-.next-challenge-header-button:hover .button-icon {
-  transform: scale(1.1) rotate(-5deg);
+  width: 2rem; /* Larger icon */
+  height: 2rem; /* Larger icon */
+  margin-right: 0.5rem;
+  filter: none; /* Remove any filters to show original colors */
 }
 
 .header-action-button {
