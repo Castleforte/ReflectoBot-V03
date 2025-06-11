@@ -1052,10 +1052,11 @@
   text-align: center;
   @apply lg:text-left;
   white-space: nowrap;
-  font-size: clamp(1.5rem, 5vw, 2rem);
+  /* Increased font size by 4pts (approximately 0.25rem) */
+  font-size: clamp(1.75rem, 5.5vw, 2.25rem);
   
   @media (min-width: 1024px) {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
 }
 
@@ -1069,6 +1070,9 @@
   border: 2px solid transparent;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
   font-size: clamp(0.875rem, 2vw, 1.25rem);
+  /* Added Magistral Extra Bold font weight */
+  font-family: "magistral", sans-serif;
+  font-weight: 900;
 }
 
 .save-drawing-button:hover {
@@ -1115,9 +1119,9 @@
 }
 
 .color-swatch {
-  /* Scaled up 8% from w-8 h-8 (32px) to approximately 34.5px */
-  width: 2.16rem;
-  height: 2.16rem;
+  /* Increased size by 10% from 2.16rem to approximately 2.38rem */
+  width: 2.38rem;
+  height: 2.38rem;
   @apply rounded-full border-2 border-transparent cursor-pointer;
   @apply transition-all duration-200 hover:scale-110;
 }
@@ -1218,12 +1222,12 @@
   @apply p-6 lg:p-12;
   position: relative;
   background-size: contain;
-  margin-top: -70px; /* Moved up 20px from -50px */
+  margin-top: -70px;
   min-height: 700px;
   
   @media (max-width: 1023px) {
     background-size: 100% 100%;
-    margin-top: -40px; /* Moved up 20px from -20px */
+    margin-top: -40px;
     padding: 1rem;
     min-height: 500px;
   }
@@ -1280,15 +1284,15 @@
 }
 
 .my-badges-button .button-icon {
-  width: 2rem; /* Increased from 1.5rem */
-  height: 2rem; /* Increased from 1.5rem */
+  width: 1.875rem;
+  height: 1.875rem;
   margin-right: 0.25rem;
 }
 
 @media (min-width: 1024px) {
   .my-badges-button .button-icon {
-    width: 2.25rem; /* Increased from 1.75rem */
-    height: 2.25rem; /* Increased from 1.75rem */
+    width: 2.1875rem;
+    height: 2.1875rem;
     margin-right: 0.5rem;
   }
 }
@@ -1297,78 +1301,87 @@
   @apply bg-[#1c1a30] rounded-xl p-6 mb-6;
   border: 2px solid #2a2d47;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
-  position: relative; /* Added for absolute positioning of badge */
-  max-width: 100%; /* Widened the inner rectangle */
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  position: relative;
+  min-height: 300px;
   width: 100%;
-  min-height: 300px; /* Made less tall */
+  padding-right: 8rem;
 }
 
 .challenge-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items */
-  text-align: center; /* Center text */
   gap: 1rem;
-  padding-right: 120px; /* Make room for badge */
 }
 
 .challenge-card-title {
   @apply text-2xl font-bold text-white;
   @apply lg:text-3xl;
   font-family: "magistral", sans-serif;
-  font-weight: 900; /* Extra bold */
-  font-size: 2rem; /* Slightly larger */
+  font-weight: 900;
+  text-align: left;
+  margin-bottom: 0.5rem;
 }
 
 .challenge-card-description {
   @apply text-lg text-white leading-relaxed;
   @apply lg:text-xl;
   font-family: "Kallisto", sans-serif;
-  font-weight: 500; /* Medium */
-  line-height: 1.5; /* Between 1.4-1.6 */
-  color: white;
+  font-weight: 500;
   text-align: center;
+  line-height: 1.5;
+  margin-bottom: 1rem;
 }
 
 .challenge-badge {
-  position: absolute; /* Absolute positioning within card */
-  bottom: 20px; /* Bottom-right corner */
-  right: 20px;
-  width: 6rem; /* Increased size by 25% from 4.8rem */
-  height: 6rem; /* Increased size by 25% from 4.8rem */
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 6rem;
+  height: 6rem;
   object-fit: contain;
-  filter: drop-shadow(0 0 12px rgba(75, 123, 255, 0.4)); /* Subtle glow */
   
   @media (min-width: 1024px) {
-    width: 8rem; /* Increased size by 25% from 6.4rem */
-    height: 8rem; /* Increased size by 25% from 6.4rem */
+    width: 8rem;
+    height: 8rem;
   }
+  
+  filter: drop-shadow(0 0 8px rgba(75, 123, 255, 0.3));
 }
 
 .challenge-progress-indicator {
-  @apply text-center;
+  @apply text-center mb-6;
 }
 
 .challenge-progress-text {
-  @apply inline-block rounded-full px-4 py-1;
-  @apply text-sm font-bold;
-  background-color: #BFFF00; /* Lime green background */
-  color: #000; /* Black text for contrast */
+  @apply inline-block text-black px-4 py-2 rounded-full;
+  @apply text-lg font-bold;
   font-family: "magistral", sans-serif;
-  /* Removed button-like styles - no hover or click effects */
+  background-color: #BFFF00;
+  color: #000000;
+  border: none;
+  cursor: default;
+}
+
+.challenge-progress-text:hover {
+  background-color: #BFFF00;
+  transform: none;
+  box-shadow: none;
 }
 
 .start-challenge-button {
-  @apply text-white py-4 rounded-lg;
+  @apply bg-[#558DFF] text-white py-4 rounded-lg;
   @apply text-xl font-bold transition-all duration-300;
   @apply lg:text-2xl;
-  background-color: #558DFF; /* Updated background color */
   font-family: "magistral", sans-serif;
   min-height: 65px;
   border: 3px solid transparent;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
-  width: 280px; /* Approximately 40% wider than default */
-  padding: 1rem 1.5rem; /* py-3 px-6 equivalent */
+  width: 280px;
+  margin: 0 auto;
 }
 
 .start-challenge-button:hover {
@@ -1420,11 +1433,9 @@
 
 .challenge-helper-text {
   @apply text-sm text-gray-400 text-center;
-  font-style: italic;
+  font-family: "magistral", sans-serif;
   margin-top: 1rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  font-style: italic;
 }
 
 /* Challenge Complete Page Styles */
@@ -1612,7 +1623,7 @@
 }
 
 .next-challenge-header-button {
-  @apply bg-[#4B7BFF] text-white px-3 py-2 rounded-lg;
+  @apply bg-[#558DFF] text-white px-3 py-2 rounded-lg;
   @apply flex items-center justify-center transition-all duration-300;
   min-width: 90px;
   min-height: 40px;
@@ -1635,15 +1646,15 @@
 }
 
 .next-challenge-header-button .button-icon {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5625rem;
+  height: 1.5625rem;
   margin-right: 0.25rem;
 }
 
 @media (min-width: 1024px) {
   .next-challenge-header-button .button-icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.875rem;
+    height: 1.875rem;
     margin-right: 0.5rem;
   }
 }
