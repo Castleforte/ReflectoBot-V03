@@ -5,144 +5,144 @@ export const allBadges: Badge[] = [
     id: 'calm_creator',
     name: 'Calm Creator',
     description: 'Save a drawing',
-    icon: '/badges/calm-creator-dimmed.png',
-    colorIcon: '/badges/calm-creator-color.png',
+    icon: '/badges/CalmCreator.png',
+    colorIcon: '/badges/CalmCreator.png',
     earned: false
   },
   {
     id: 'mood_mapper',
     name: 'Mood Mapper',
     description: 'Complete 3 mood check-ins',
-    icon: '/badges/mood-mapper-dimmed.png',
-    colorIcon: '/badges/mood-mapper-color.png',
+    icon: '/badges/MoodMapper.png',
+    colorIcon: '/badges/MoodMapper.png',
     earned: false
   },
   {
     id: 'bounce_back',
     name: 'Bounce Back',
     description: 'Use undo 3 times',
-    icon: '/badges/bounce-back-dimmed.png',
-    colorIcon: '/badges/bounce-back-color.png',
+    icon: '/badges/BounceBack.png',
+    colorIcon: '/badges/BounceBack.png',
     earned: false
   },
   {
     id: 'reflecto_rookie',
     name: 'Reflecto Rookie',
     description: 'Send first chat message',
-    icon: '/badges/reflecto-rookie-dimmed.png',
-    colorIcon: '/badges/reflecto-rookie-color.png',
+    icon: '/badges/ReflectoRookie.png',
+    colorIcon: '/badges/ReflectoRookie.png',
     earned: false
   },
   {
     id: 'persistence',
     name: 'Persistence',
     description: 'Return 3 separate days',
-    icon: '/badges/persistence-dimmed.png',
-    colorIcon: '/badges/persistence-color.png',
+    icon: '/badges/Persistence.png',
+    colorIcon: '/badges/Persistence.png',
     earned: false
   },
   {
     id: 'stay_positive',
     name: 'Stay Positive',
     description: 'Select a happy emoji',
-    icon: '/badges/stay-positive-dimmed.png',
-    colorIcon: '/badges/stay-positive-color.png',
+    icon: '/badges/StayPositive.png',
+    colorIcon: '/badges/StayPositive.png',
     earned: false
   },
   {
     id: 'great_job',
     name: 'Great Job',
     description: 'Export a mood or chat PDF',
-    icon: '/badges/great-job-dimmed.png',
-    colorIcon: '/badges/great-job-color.png',
+    icon: '/badges/GreatJob.png',
+    colorIcon: '/badges/GreatJob.png',
     earned: false
   },
   {
     id: 'brave_voice',
     name: 'Brave Voice',
     description: 'Share an emotion using "because"',
-    icon: '/badges/brave-voice-dimmed.png',
-    colorIcon: '/badges/brave-voice-color.png',
+    icon: '/badges/BraveVoice.png',
+    colorIcon: '/badges/BraveVoice.png',
     earned: false
   },
   {
     id: 'what_if_explorer',
     name: 'What If Explorer',
     description: 'View 3 What If prompts',
-    icon: '/badges/what-if-explorer-dimmed.png',
-    colorIcon: '/badges/what-if-explorer-color.png',
+    icon: '/badges/WhatIfExplorer.png',
+    colorIcon: '/badges/WhatIfExplorer.png',
     earned: false
   },
   {
     id: 'truth_spotter',
     name: 'Truth Spotter',
     description: 'Send message containing "I realized"',
-    icon: '/badges/truth-spotter-dimmed.png',
-    colorIcon: '/badges/truth-spotter-color.png',
+    icon: '/badges/TruthSpotter.png',
+    colorIcon: '/badges/TruthSpotter.png',
     earned: false
   },
   {
     id: 'kind_heart',
     name: 'Kind Heart',
     description: 'Choose a love emoji',
-    icon: '/badges/kind-heart-dimmed.png',
-    colorIcon: '/badges/kind-heart-color.png',
+    icon: '/badges/KindHeart.png',
+    colorIcon: '/badges/KindHeart.png',
     earned: false
   },
   {
     id: 'super_star',
     name: 'Super Star',
     description: 'Earn all 18 badges',
-    icon: '/badges/super-star-dimmed.png',
-    colorIcon: '/badges/super-star-color.png',
+    icon: '/badges/SuperStar.png',
+    colorIcon: '/badges/SuperStar.png',
     earned: false
   },
   {
     id: 'goal_getter',
     name: 'Goal Getter',
     description: 'Complete 5 total challenges',
-    icon: '/badges/goal-getter-dimmed.png',
-    colorIcon: '/badges/goal-getter-color.png',
+    icon: '/badges/GoalGetter.png',
+    colorIcon: '/badges/GoalGetter.png',
     earned: false
   },
   {
     id: 'good_listener',
     name: 'Good Listener',
     description: 'View chat or mood history 3 times',
-    icon: '/badges/good-listener-dimmed.png',
-    colorIcon: '/badges/good-listener-color.png',
+    icon: '/badges/GoodListener.png',
+    colorIcon: '/badges/GoodListener.png',
     earned: false
   },
   {
     id: 'creative_spark',
     name: 'Creative Spark',
     description: 'Use 5+ colors in one drawing',
-    icon: '/badges/creative-spark-dimmed.png',
-    colorIcon: '/badges/creative-spark-color.png',
+    icon: '/badges/CreativeSpark.png',
+    colorIcon: '/badges/CreativeSpark.png',
     earned: false
   },
   {
     id: 'deep_thinker',
     name: 'Deep Thinker',
     description: 'Send chat message with 15+ words',
-    icon: '/badges/deep-thinker-dimmed.png',
-    colorIcon: '/badges/deep-thinker-color.png',
+    icon: '/badges/DeepThinker.png',
+    colorIcon: '/badges/DeepThinker.png',
     earned: false
   },
   {
     id: 'boost_buddy',
     name: 'Boost Buddy',
     description: 'Use "Read it to me" button',
-    icon: '/badges/boost-buddy-dimmed.png',
-    colorIcon: '/badges/boost-buddy-color.png',
+    icon: '/badges/BoostBuddy.png',
+    colorIcon: '/badges/BoostBuddy.png',
     earned: false
   },
   {
     id: 'focus_finder',
     name: 'Focus Finder',
     description: 'Complete a challenge without switching sections',
-    icon: '/badges/focus-finder-dimmed.png',
-    colorIcon: '/badges/focus-finder-color.png',
+    icon: '/badges/FocusFinder.png',
+    colorIcon: '/badges/FocusFinder.png',
     earned: false
   }
 ];
