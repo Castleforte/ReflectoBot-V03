@@ -15,6 +15,7 @@ import { loadProgress, trackDailyVisit, updateProgress, checkAndUpdateBadges } f
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges' | 'challenge-complete'>('welcome');
+  const [challengesSubScreen, setChallengesSubScreen] = useState<'next-challenge' | 'my-badges'>('next-challenge');
   const [showGrownUpModal, setShowGrownUpModal] = useState(false);
   const [showChatHistoryModal, setShowChatHistoryModal] = useState(false);
   const [showMoodHistoryModal, setShowMoodHistoryModal] = useState(false);
@@ -196,6 +197,11 @@ function App() {
     
     setCurrentScreen(screen);
     
+    // Reset challenges sub-screen to next-challenge when navigating via sidebar
+    if (screen === 'challenges') {
+      setChallengesSubScreen('next-challenge');
+    }
+    
     // Reset Focus Finder tracking for new screen
     setFocusFinderMeaningfulActions(0);
     setFocusFinderStartTime(Date.now());
@@ -228,12 +234,14 @@ function App() {
 
   const handleNextChallengeFromApp = () => {
     setCurrentScreen('challenges');
+    setChallengesSubScreen('next-challenge');
     setNewlyEarnedBadge(null);
     setRobotSpeech("Ready for a new challenge? Put on your thinking cap and give this one a try!");
   };
 
   const handleMyBadgesFromApp = () => {
     setCurrentScreen('challenges');
+    setChallengesSubScreen('my-badges');
     setNewlyEarnedBadge(null);
     // Navigate to My Badges page within challenges section
     setRobotSpeech(`Wow! You've already earned ${progress.badgeCount} badges! Just ${18 - progress.badgeCount} more to unlock the full set. Keep going!`);
@@ -406,6 +414,7 @@ function App() {
           <ChallengesSection 
             onClose={() => handleSectionClose('challenges')}
             setRobotSpeech={setRobotSpeech}
+            initialSubScreen={challengesSubScreen}
           />
         ) : currentScreen === 'challenge-complete' && newlyEarnedBadge ? (
           <ChallengeCompletePage
