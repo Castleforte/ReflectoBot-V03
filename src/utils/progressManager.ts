@@ -32,9 +32,15 @@ export const loadProgress = (): ReflectoBotProgress => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      // Ensure all required fields exist
+      // Ensure all required fields exist with backward compatibility
       const initial = getInitialProgress();
-      return { ...initial, ...parsed };
+      return { 
+        ...initial, 
+        ...parsed,
+        // Ensure new fields are properly initialized
+        challengeActive: parsed.challengeActive ?? false,
+        currentChallengeIndex: parsed.currentChallengeIndex ?? 0
+      };
     }
   } catch (error) {
     console.error('Error loading progress:', error);
@@ -57,77 +63,107 @@ export const updateProgress = (updates: Partial<ReflectoBotProgress>): ReflectoB
   return updated;
 };
 
-// Check if a specific badge should be awarded based on progress
-export const checkBadgeCondition = (badgeId: string, progress: ReflectoBotProgress): boolean => {
-  switch (badgeId) {
-    case 'calm_creator':
-      return progress.drawingsSaved >= 1;
-    case 'mood_mapper':
-      return progress.moodCheckInCount >= 3;
-    case 'bounce_back':
-      return progress.undoCount >= 3;
-    case 'reflecto_rookie':
-      return progress.chatMessageCount >= 1;
-    case 'resilient':
-      return progress.returnDays.length >= 3;
-    case 'stay_positive':
-      return progress.badges.stay_positive;
-    case 'great_job':
-      return progress.pdfExportCount >= 1;
-    case 'brave_voice':
-      return progress.badges.brave_voice;
-    case 'what_if_explorer':
-      return progress.whatIfPromptViews >= 3;
-    case 'truth_spotter':
-      return progress.badges.truth_spotter;
-    case 'kind_heart':
-      return progress.badges.kind_heart;
-    case 'super_star':
-      return progress.badgeCount >= 17;
-    case 'goal_getter':
-      return progress.challengesCompleted >= 5;
-    case 'good_listener':
-      return progress.historyViews >= 3;
-    case 'creative_spark':
-      return progress.colorsUsedInDrawing >= 5;
-    case 'deep_thinker':
-      return progress.badges.deep_thinker;
-    case 'boost_buddy':
-      return progress.readItToMeUsed >= 1;
-    case 'focus_finder':
-      return progress.focusedChallengeCompleted;
-    default:
-      return false;
+// New badge checking system with gatekeeping rules
+export const checkAndUpdateBadges = (triggeredBadgeId: string, progress: ReflectoBotProgress): string | null => {
+  // Only award badges if challenge is active
+  if (!progress.challengeActive) {
+    return null;
   }
-};
 
-export const checkAndUpdateBadges = (progress: ReflectoBotProgress): { progress: ReflectoBotProgress; newBadges: string[] } => {
-  const newBadges: string[] = [];
-  const updatedBadges = { ...progress.badges };
-  let updatedProgress = { ...progress };
-
-  // Check all badges for completion
-  allBadges.forEach(badge => {
-    if (!updatedBadges[badge.id] && checkBadgeCondition(badge.id, progress)) {
-      updatedBadges[badge.id] = true;
-      newBadges.push(badge.id);
-    }
-  });
-
-  // Update badge count
-  const badgeCount = Object.keys(updatedBadges).filter(id => updatedBadges[id]).length;
-
-  const finalProgress = {
-    ...updatedProgress,
-    badges: updatedBadges,
-    badgeCount,
-    earnedBadges: Object.keys(updatedBadges).filter(id => updatedBadges[id])
-  };
-
-  saveProgress(finalProgress);
-  updateBadgeCounterDisplay(badgeCount);
+  // Get the expected badge based on current challenge index
+  const expectedBadgeId = badgeQueue[progress.currentChallengeIndex];
   
-  return { progress: finalProgress, newBadges };
+  // Only award if the triggered badge matches the expected badge
+  if (triggeredBadgeId !== expectedBadgeId) {
+    return null;
+  }
+
+  // Check if badge condition is met
+  let conditionMet = false;
+  
+  switch (triggeredBadgeId) {
+    case 'calm_creator':
+      conditionMet = progress.drawingsSaved >= 1;
+      break;
+    case 'mood_mapper':
+      conditionMet = progress.moodCheckInCount >= 3;
+      break;
+    case 'bounce_back':
+      conditionMet = progress.undoCount >= 3;
+      break;
+    case 'reflecto_rookie':
+      conditionMet = progress.chatMessageCount >= 1;
+      break;
+    case 'focus_finder':
+      conditionMet = progress.focusedChallengeCompleted;
+      break;
+    case 'stay_positive':
+      conditionMet = progress.badges.stay_positive;
+      break;
+    case 'great_job':
+      conditionMet = progress.pdfExportCount >= 1;
+      break;
+    case 'brave_voice':
+      conditionMet = progress.badges.brave_voice;
+      break;
+    case 'what_if_explorer':
+      conditionMet = progress.whatIfPromptViews >= 3;
+      break;
+    case 'truth_spotter':
+      conditionMet = progress.badges.truth_spotter;
+      break;
+    case 'kind_heart':
+      conditionMet = progress.badges.kind_heart;
+      break;
+    case 'super_star':
+      conditionMet = progress.badgeCount >= 17;
+      break;
+    case 'goal_getter':
+      conditionMet = progress.challengesCompleted >= 5;
+      break;
+    case 'good_listener':
+      conditionMet = progress.historyViews >= 3;
+      break;
+    case 'creative_spark':
+      conditionMet = progress.colorsUsedInDrawing >= 5;
+      break;
+    case 'deep_thinker':
+      conditionMet = progress.badges.deep_thinker;
+      break;
+    case 'boost_buddy':
+      conditionMet = progress.readItToMeUsed >= 1;
+      break;
+    case 'resilient':
+      conditionMet = progress.returnDays.length >= 3;
+      break;
+    default:
+      return null;
+  }
+
+  // If condition is met and badge not already earned
+  if (conditionMet && !progress.badges[triggeredBadgeId]) {
+    // Award the badge
+    const updatedBadges = { ...progress.badges, [triggeredBadgeId]: true };
+    const newBadgeCount = progress.badgeCount + 1;
+    
+    // Update progress with new badge and deactivate challenge
+    const updatedProgress = {
+      ...progress,
+      badges: updatedBadges,
+      badgeCount: newBadgeCount,
+      earnedBadges: [...progress.earnedBadges, triggeredBadgeId],
+      challengeActive: false, // Deactivate challenge after awarding badge
+      currentChallengeIndex: Math.min(progress.currentChallengeIndex + 1, badgeQueue.length - 1),
+      challengesCompleted: progress.challengesCompleted + 1
+    };
+
+    saveProgress(updatedProgress);
+    updateBadgeCounterDisplay(newBadgeCount);
+    
+    return triggeredBadgeId;
+  }
+
+  return null;
 };
 
 export const updateBadgeCounterDisplay = (badgeCount?: number): void => {

@@ -258,78 +258,24 @@ export const challengeDetails: Challenge[] = [
   }
 ];
 
-// Badge queue with conditions for awarding
+// Badge queue in the specified fixed order
 export const badgeQueue = [
-  { 
-    key: "calm_creator", 
-    condition: (progress: ReflectoBotProgress) => progress.drawingsSaved >= 1 
-  },
-  { 
-    key: "mood_mapper", 
-    condition: (progress: ReflectoBotProgress) => progress.moodCheckInCount >= 3 
-  },
-  { 
-    key: "bounce_back", 
-    condition: (progress: ReflectoBotProgress) => progress.undoCount >= 3 
-  },
-  { 
-    key: "reflecto_rookie", 
-    condition: (progress: ReflectoBotProgress) => progress.chatMessageCount >= 1 
-  },
-  { 
-    key: "stay_positive", 
-    condition: (progress: ReflectoBotProgress) => progress.badges.stay_positive 
-  },
-  { 
-    key: "great_job", 
-    condition: (progress: ReflectoBotProgress) => progress.pdfExportCount >= 1 
-  },
-  { 
-    key: "brave_voice", 
-    condition: (progress: ReflectoBotProgress) => progress.badges.brave_voice 
-  },
-  { 
-    key: "what_if_explorer", 
-    condition: (progress: ReflectoBotProgress) => progress.whatIfPromptViews >= 3 
-  },
-  { 
-    key: "truth_spotter", 
-    condition: (progress: ReflectoBotProgress) => progress.badges.truth_spotter 
-  },
-  { 
-    key: "kind_heart", 
-    condition: (progress: ReflectoBotProgress) => progress.badges.kind_heart 
-  },
-  { 
-    key: "goal_getter", 
-    condition: (progress: ReflectoBotProgress) => progress.challengesCompleted >= 5 
-  },
-  { 
-    key: "good_listener", 
-    condition: (progress: ReflectoBotProgress) => progress.historyViews >= 3 
-  },
-  { 
-    key: "creative_spark", 
-    condition: (progress: ReflectoBotProgress) => progress.colorsUsedInDrawing >= 5 
-  },
-  { 
-    key: "deep_thinker", 
-    condition: (progress: ReflectoBotProgress) => progress.badges.deep_thinker 
-  },
-  { 
-    key: "boost_buddy", 
-    condition: (progress: ReflectoBotProgress) => progress.readItToMeUsed >= 1 
-  },
-  { 
-    key: "focus_finder", 
-    condition: (progress: ReflectoBotProgress) => progress.focusedChallengeCompleted 
-  },
-  { 
-    key: "resilient", 
-    condition: (progress: ReflectoBotProgress) => progress.returnDays.length >= 3 
-  },
-  { 
-    key: "super_star", 
-    condition: (progress: ReflectoBotProgress) => progress.badgeCount >= 17 
-  }
+  'calm_creator',
+  'mood_mapper',
+  'bounce_back',
+  'reflecto_rookie',
+  'focus_finder',
+  'stay_positive',
+  'great_job',
+  'brave_voice',
+  'what_if_explorer',
+  'truth_spotter',
+  'kind_heart',
+  'super_star',
+  'goal_getter',
+  'good_listener',
+  'creative_spark',
+  'deep_thinker',
+  'boost_buddy',
+  'resilient'
 ];

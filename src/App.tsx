@@ -11,7 +11,7 @@ import GrownUpAccessModal from './components/GrownUpAccessModal';
 import ChatHistoryModal from './components/ChatHistoryModal';
 import MoodHistoryModal from './components/MoodHistoryModal';
 import { ConversationTurn, MoodEntry, ReflectoBotProgress } from './types';
-import { loadProgress, trackDailyVisit } from './utils/progressManager';
+import { loadProgress, trackDailyVisit, updateProgress, checkAndUpdateBadges } from './utils/progressManager';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges' | 'challenge-complete'>('welcome');
@@ -32,7 +32,73 @@ function App() {
     setProgress(updatedProgress);
   }, []);
 
-  // Removed handleBadgeEarned function - no longer needed
+  const handleBadgeEarned = (badgeId: string) => {
+    const currentProgress = loadProgress();
+    
+    // Update progress based on the badge type
+    let updatedProgress = { ...currentProgress };
+    
+    switch (badgeId) {
+      case 'calm_creator':
+        updatedProgress.drawingsSaved = Math.max(updatedProgress.drawingsSaved, 1);
+        break;
+      case 'mood_mapper':
+        updatedProgress.moodCheckInCount = Math.max(updatedProgress.moodCheckInCount, 3);
+        break;
+      case 'bounce_back':
+        updatedProgress.undoCount = Math.max(updatedProgress.undoCount, 3);
+        break;
+      case 'reflecto_rookie':
+        updatedProgress.chatMessageCount = Math.max(updatedProgress.chatMessageCount, 1);
+        break;
+      case 'stay_positive':
+        updatedProgress.badges.stay_positive = true;
+        break;
+      case 'great_job':
+        updatedProgress.pdfExportCount = Math.max(updatedProgress.pdfExportCount, 1);
+        break;
+      case 'brave_voice':
+        updatedProgress.badges.brave_voice = true;
+        break;
+      case 'what_if_explorer':
+        updatedProgress.whatIfPromptViews = Math.max(updatedProgress.whatIfPromptViews, 3);
+        break;
+      case 'truth_spotter':
+        updatedProgress.badges.truth_spotter = true;
+        break;
+      case 'kind_heart':
+        updatedProgress.badges.kind_heart = true;
+        break;
+      case 'good_listener':
+        updatedProgress.historyViews = Math.max(updatedProgress.historyViews, 3);
+        break;
+      case 'creative_spark':
+        updatedProgress.colorsUsedInDrawing = Math.max(updatedProgress.colorsUsedInDrawing, 5);
+        break;
+      case 'deep_thinker':
+        updatedProgress.badges.deep_thinker = true;
+        break;
+      case 'boost_buddy':
+        updatedProgress.readItToMeUsed = Math.max(updatedProgress.readItToMeUsed, 1);
+        break;
+      case 'focus_finder':
+        updatedProgress.focusedChallengeCompleted = true;
+        break;
+    }
+
+    // Save the updated progress
+    updateProgress(updatedProgress);
+    
+    // Check if badge should be awarded
+    const awardedBadgeId = checkAndUpdateBadges(badgeId, updatedProgress);
+    
+    if (awardedBadgeId) {
+      setNewlyEarnedBadge(awardedBadgeId);
+      setCurrentScreen('challenge-complete');
+      setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
+      setProgress(loadProgress()); // Refresh progress state
+    }
+  };
 
   const handleLogoClick = () => {
     if (currentScreen === 'settings') {
@@ -194,6 +260,7 @@ function App() {
             setChatMessages={setChatMessages}
             onShowChatHistory={() => setShowChatHistoryModal(true)}
             setRobotSpeech={setRobotSpeech}
+            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'daily-checkin' ? (
           <DailyCheckInSection 
@@ -202,16 +269,19 @@ function App() {
             moodHistory={moodHistory}
             setMoodHistory={setMoodHistory}
             onShowMoodHistory={() => setShowMoodHistoryModal(true)}
+            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'what-if' ? (
           <WhatIfSection 
             onClose={() => setCurrentScreen('welcome')}
             setRobotSpeech={setRobotSpeech}
+            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'draw-it-out' ? (
           <DrawItOutSection 
             onClose={() => setCurrentScreen('welcome')}
             setRobotSpeech={setRobotSpeech}
+            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'challenges' ? (
           <ChallengesSection 
@@ -287,6 +357,7 @@ function App() {
       {showGrownUpModal && (
         <GrownUpAccessModal 
           onClose={() => setShowGrownUpModal(false)} 
+          onBadgeEarned={handleBadgeEarned}
         />
       )}
 
@@ -295,6 +366,7 @@ function App() {
         <ChatHistoryModal 
           onClose={() => setShowChatHistoryModal(false)} 
           chatHistory={chatMessages}
+          onBadgeEarned={handleBadgeEarned}
         />
       )}
 
@@ -303,6 +375,7 @@ function App() {
         <MoodHistoryModal 
           onClose={() => setShowMoodHistoryModal(false)} 
           moodHistory={moodHistory}
+          onBadgeEarned={handleBadgeEarned}
         />
       )}
     </div>

@@ -4,6 +4,7 @@ import DrawingPreviewModal from './DrawingPreviewModal';
 interface DrawItOutSectionProps {
   onClose: () => void;
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
 interface Point {
@@ -30,7 +31,7 @@ const colors = [
 
 const brushSizes = [2, 4, 8]; // Small, Medium, Large
 
-function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
+function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutSectionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentColor, setCurrentColor] = useState('#ff3333');
@@ -185,7 +186,8 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
     setStrokes(previousState);
     redrawCanvas(previousState);
 
-    // Removed badge tracking logic
+    // Track undo for bounce_back badge
+    onBadgeEarned('bounce_back');
   };
 
   const handleRedo = () => {
@@ -224,7 +226,16 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
     setShowDrawingPreview(false);
     setRobotSpeech("Perfect! Your drawing has been saved to your device. You're such a talented artist!");
 
-    // Removed badge tracking logic
+    // Track drawing save for calm_creator badge
+    onBadgeEarned('calm_creator');
+    
+    // Track colors used for creative_spark badge
+    if (usedColors.size >= 5) {
+      onBadgeEarned('creative_spark');
+    }
+
+    // Reset used colors for next drawing
+    setUsedColors(new Set());
   };
 
   const handleColorChange = (color: string) => {
@@ -429,4 +440,4 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
   );
 }
 
-export default DrawItOutSection
+export default DrawItOutSection;

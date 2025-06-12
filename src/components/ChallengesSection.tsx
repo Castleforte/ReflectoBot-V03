@@ -20,20 +20,24 @@ function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) 
 
   // Get the current challenge based on progress
   const getCurrentChallenge = () => {
-    // Find the first badge that hasn't been earned yet
-    for (let i = 0; i < badgeQueue.length; i++) {
-      const badgeKey = badgeQueue[i].key;
-      if (!progress.badges[badgeKey]) {
-        return challengeDetails.find(challenge => challenge.badgeId === badgeKey);
-      }
-    }
-    return null; // All challenges completed
+    // Get the badge ID from the queue based on current index
+    const currentBadgeId = badgeQueue[progress.currentChallengeIndex];
+    if (!currentBadgeId) return null; // All challenges completed
+    
+    // Find the challenge details for this badge
+    return challengeDetails.find(challenge => challenge.badgeId === currentBadgeId);
   };
 
   const currentChallenge = getCurrentChallenge();
 
   const handleStartChallenge = () => {
     if (!currentChallenge) return;
+    
+    // Activate the challenge
+    const updatedProgress = updateProgress({
+      challengeActive: true
+    });
+    setProgress(updatedProgress);
     
     // Update robot speech based on challenge
     switch (currentChallenge.badgeId) {

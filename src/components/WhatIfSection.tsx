@@ -4,9 +4,10 @@ import { whatIfPrompts } from '../whatIfPrompts';
 interface WhatIfSectionProps {
   onClose: () => void;
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
+function WhatIfSection({ onClose, setRobotSpeech, onBadgeEarned }: WhatIfSectionProps) {
   const [currentPromptIndex, setCurrentPromptIndex] = useState<number>(0);
   const [isRefreshDisabled, setIsRefreshDisabled] = useState<boolean>(false);
   const [isReading, setIsReading] = useState<boolean>(false);
@@ -26,7 +27,8 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
       setIsRefreshDisabled(false);
     }, 2000);
 
-    // Removed badge tracking logic
+    // Track badge progress for viewing What If prompts
+    onBadgeEarned('what_if_explorer');
   };
 
   const handleReadItToMe = () => {
@@ -44,7 +46,8 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
       // Update robot speech to acknowledge the action
       setRobotSpeech("Listen up! I'm reading your What If prompt out loud. Let your imagination run wild!");
 
-      // Removed badge tracking logic
+      // Track badge progress for using Read It to Me
+      onBadgeEarned('boost_buddy');
     }
   };
 
@@ -122,4 +125,4 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
   );
 }
 
-export default WhatIfSection
+export default WhatIfSection;

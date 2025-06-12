@@ -3,11 +3,13 @@ import { X } from 'lucide-react';
 
 interface GrownUpAccessModalProps {
   onClose: () => void;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function GrownUpAccessModal({ onClose }: GrownUpAccessModalProps) {
+function GrownUpAccessModal({ onClose, onBadgeEarned }: GrownUpAccessModalProps) {
   const handleDownloadSessionSummary = () => {
-    // Removed badge tracking logic
+    // Track PDF export
+    onBadgeEarned('great_job');
     
     // TODO: Implement actual session summary download
     console.log('Download session summary clicked');
@@ -82,4 +84,4 @@ function GrownUpAccessModal({ onClose }: GrownUpAccessModalProps) {
   );
 }
 
-export default GrownUpAccessModal
+export default GrownUpAccessModal;

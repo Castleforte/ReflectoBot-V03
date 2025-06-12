@@ -8,9 +8,10 @@ interface ChatSectionProps {
   setChatMessages: React.Dispatch<React.SetStateAction<ConversationTurn[]>>;
   onShowChatHistory: () => void;
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory, setRobotSpeech }: ChatSectionProps) {
+function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory, setRobotSpeech, onBadgeEarned }: ChatSectionProps) {
   const [currentPromptIndex, setCurrentPromptIndex] = useState<number>(0);
   const [chatInputText, setChatInputText] = useState<string>('');
   const [isRefreshDisabled, setIsRefreshDisabled] = useState<boolean>(false);
@@ -96,7 +97,21 @@ function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory
     // Clear input
     setChatInputText('');
 
-    // Removed badge tracking logic
+    // Track badge progress
+    onBadgeEarned('reflecto_rookie'); // First message badge
+    
+    // Check for specific badge conditions
+    if (trimmedMessage.split(/\s+/).length >= 15) {
+      onBadgeEarned('deep_thinker'); // 15+ words badge
+    }
+    
+    if (trimmedMessage.toLowerCase().includes('because')) {
+      onBadgeEarned('brave_voice'); // Contains "because" badge
+    }
+    
+    if (trimmedMessage.toLowerCase().includes('i realized')) {
+      onBadgeEarned('truth_spotter'); // Contains "I realized" badge
+    }
     
     // TODO: Replace this logic with actual GPT API call in the future
   };
@@ -160,4 +175,4 @@ function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory
   );
 }
 
-export default ChatSection
+export default ChatSection;

@@ -8,9 +8,10 @@ interface DailyCheckInSectionProps {
   moodHistory: MoodEntry[];
   setMoodHistory: React.Dispatch<React.SetStateAction<MoodEntry[]>>;
   onShowMoodHistory: () => void;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function DailyCheckInSection({ onClose, setRobotSpeech, moodHistory, setMoodHistory, onShowMoodHistory }: DailyCheckInSectionProps) {
+function DailyCheckInSection({ onClose, setRobotSpeech, moodHistory, setMoodHistory, onShowMoodHistory, onBadgeEarned }: DailyCheckInSectionProps) {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [hoveredMood, setHoveredMood] = useState<string | null>(null);
   const [checkInText, setCheckInText] = useState<string>('');
@@ -72,7 +73,17 @@ function DailyCheckInSection({ onClose, setRobotSpeech, moodHistory, setMoodHist
       // Add the new entry to mood history
       setMoodHistory(prevHistory => [...prevHistory, newEntry]);
 
-      // Removed badge tracking logic
+      // Track badge progress
+      onBadgeEarned('mood_mapper'); // Mood check-in count badge
+      
+      // Check for specific mood badges
+      if (selectedMood === 'happy') {
+        onBadgeEarned('stay_positive'); // Happy emoji badge
+      }
+      
+      if (selectedMood === 'love') {
+        onBadgeEarned('kind_heart'); // Love emoji badge
+      }
       
       // Reset form
       setSelectedMood(null);
@@ -160,4 +171,4 @@ function DailyCheckInSection({ onClose, setRobotSpeech, moodHistory, setMoodHist
   );
 }
 
-export default DailyCheckInSection
+export default DailyCheckInSection;

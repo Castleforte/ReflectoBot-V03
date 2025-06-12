@@ -6,19 +6,24 @@ import { ConversationTurn } from '../types';
 interface ChatHistoryModalProps {
   onClose: () => void;
   chatHistory: ConversationTurn[];
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function ChatHistoryModal({ onClose, chatHistory }: ChatHistoryModalProps) {
+function ChatHistoryModal({ onClose, chatHistory, onBadgeEarned }: ChatHistoryModalProps) {
   const pdfContentRef = useRef<HTMLDivElement>(null);
 
-  // Removed badge tracking logic
+  // Track history view when modal opens
+  useEffect(() => {
+    onBadgeEarned('good_listener');
+  }, [onBadgeEarned]);
 
   const handleDownloadHistory = async () => {
     if (pdfContentRef.current) {
       try {
         await generatePdf(pdfContentRef.current, 'reflectobot-chat-history.pdf');
         
-        // Removed badge tracking logic
+        // Track PDF export
+        onBadgeEarned('great_job');
       } catch (error) {
         console.error('Error generating PDF:', error);
       }
@@ -137,4 +142,4 @@ function ChatHistoryModal({ onClose, chatHistory }: ChatHistoryModalProps) {
   );
 }
 
-export default ChatHistoryModal
+export default ChatHistoryModal;

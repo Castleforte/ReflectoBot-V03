@@ -7,19 +7,24 @@ import { MoodEntry } from '../types';
 interface MoodHistoryModalProps {
   onClose: () => void;
   moodHistory: MoodEntry[];
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function MoodHistoryModal({ onClose, moodHistory }: MoodHistoryModalProps) {
+function MoodHistoryModal({ onClose, moodHistory, onBadgeEarned }: MoodHistoryModalProps) {
   const pdfContentRef = useRef<HTMLDivElement>(null);
 
-  // Removed badge tracking logic
+  // Track history view when modal opens
+  useEffect(() => {
+    onBadgeEarned('good_listener');
+  }, [onBadgeEarned]);
 
   const handleDownloadHistory = async () => {
     if (pdfContentRef.current) {
       try {
         await generatePdf(pdfContentRef.current, 'reflectobot-mood-history.pdf');
         
-        // Removed badge tracking logic
+        // Track PDF export
+        onBadgeEarned('great_job');
       } catch (error) {
         console.error('Error generating PDF:', error);
       }
@@ -135,4 +140,4 @@ function MoodHistoryModal({ onClose, moodHistory }: MoodHistoryModalProps) {
   );
 }
 
-export default MoodHistoryModal
+export default MoodHistoryModal;
