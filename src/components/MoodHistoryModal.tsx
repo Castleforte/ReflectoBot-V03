@@ -23,8 +23,11 @@ function MoodHistoryModal({ onClose, moodHistory, onBadgeEarned }: MoodHistoryMo
       try {
         await generatePdf(pdfContentRef.current, 'reflectobot-mood-history.pdf');
         
-        // Track PDF export
+        // Track PDF export for great_job badge
         onBadgeEarned('great_job');
+        
+        // Track mood history download for mood_mapper badge
+        onBadgeEarned('mood_mapper');
       } catch (error) {
         console.error('Error generating PDF:', error);
       }

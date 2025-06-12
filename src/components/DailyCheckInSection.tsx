@@ -73,9 +73,6 @@ function DailyCheckInSection({ onClose, setRobotSpeech, moodHistory, setMoodHist
       // Add the new entry to mood history
       setMoodHistory(prevHistory => [...prevHistory, newEntry]);
 
-      // Track badge progress
-      onBadgeEarned('mood_mapper'); // Mood check-in count badge
-      
       // Check for specific mood badges
       if (selectedMood === 'happy') {
         onBadgeEarned('stay_positive'); // Happy emoji badge

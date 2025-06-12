@@ -47,6 +47,7 @@ function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutS
   const [savedDrawingDataUrl, setSavedDrawingDataUrl] = useState('');
   const [selectorTimeout, setSelectorTimeout] = useState<NodeJS.Timeout | null>(null);
   const [usedColors, setUsedColors] = useState<Set<string>>(new Set());
+  const [hasUsedUndoThisSession, setHasUsedUndoThisSession] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -186,8 +187,8 @@ function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutS
     setStrokes(previousState);
     redrawCanvas(previousState);
 
-    // Track undo for bounce_back badge
-    onBadgeEarned('bounce_back');
+    // Track that undo was used this session
+    setHasUsedUndoThisSession(true);
   };
 
   const handleRedo = () => {
@@ -232,6 +233,12 @@ function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutS
     // Track colors used for creative_spark badge
     if (usedColors.size >= 5) {
       onBadgeEarned('creative_spark');
+    }
+
+    // Track bounce_back badge if undo was used this session
+    if (hasUsedUndoThisSession) {
+      onBadgeEarned('bounce_back');
+      setHasUsedUndoThisSession(false); // Reset for next drawing session
     }
 
     // Reset used colors for next drawing
