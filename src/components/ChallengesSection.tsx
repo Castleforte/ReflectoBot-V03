@@ -9,14 +9,20 @@ import { ReflectoBotProgress } from '../types';
 interface ChallengesSectionProps {
   onClose: () => void;
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
+  initialSubScreen?: 'next-challenge' | 'my-badges';
 }
 
 type ChallengeScreen = 'next-challenge' | 'challenge-complete' | 'my-badges';
 
-function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) {
-  const [currentScreen, setCurrentScreen] = useState<ChallengeScreen>('next-challenge');
+function ChallengesSection({ onClose, setRobotSpeech, initialSubScreen = 'next-challenge' }: ChallengesSectionProps) {
+  const [currentScreen, setCurrentScreen] = useState<ChallengeScreen>(initialSubScreen);
   const [progress, setProgress] = useState<ReflectoBotProgress>(loadProgress());
   const [newlyEarnedBadge, setNewlyEarnedBadge] = useState<string | null>(null);
+
+  // Listen for changes in initialSubScreen prop and update internal state
+  useEffect(() => {
+    setCurrentScreen(initialSubScreen);
+  }, [initialSubScreen]);
 
   // Get the current challenge based on progress
   const getCurrentChallenge = () => {
