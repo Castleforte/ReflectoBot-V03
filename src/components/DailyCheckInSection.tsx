@@ -159,3 +159,5 @@ function DailyCheckInSection({ onClose, setRobotSpeech, moodHistory, setMoodHist
     </div>
   );
 }
+
+export default DailyCheckInSection

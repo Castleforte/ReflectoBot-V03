@@ -134,3 +134,5 @@ function MoodHistoryModal({ onClose, moodHistory }: MoodHistoryModalProps) {
     </div>
   );
 }
+
+export default MoodHistoryModal

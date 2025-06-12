@@ -121,3 +121,5 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
     </div>
   );
 }
+
+export default WhatIfSection

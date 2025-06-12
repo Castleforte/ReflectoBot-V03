@@ -428,3 +428,5 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
     </div>
   );
 }
+
+export default DrawItOutSection

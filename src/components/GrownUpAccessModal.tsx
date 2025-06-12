@@ -81,3 +81,5 @@ function GrownUpAccessModal({ onClose }: GrownUpAccessModalProps) {
     </div>
   );
 }
+
+export default GrownUpAccessModal

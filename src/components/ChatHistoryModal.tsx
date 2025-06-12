@@ -136,3 +136,5 @@ function ChatHistoryModal({ onClose, chatHistory }: ChatHistoryModalProps) {
     </div>
   );
 }
+
+export default ChatHistoryModal

@@ -159,3 +159,5 @@ function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory
     </div>
   );
 }
+
+export default ChatSection
