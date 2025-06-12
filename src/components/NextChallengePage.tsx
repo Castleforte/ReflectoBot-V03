@@ -58,28 +58,30 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
             <span className="challenge-progress-text">Just {remainingBadges} More To Go</span>
           </div>
 
-          <button 
-            className="start-challenge-button"
-            onClick={onStartChallenge}
-          >
-            Start Challenge
-          </button>
+          <div className="challenge-buttons-container">
+            <button 
+              className="start-challenge-button"
+              onClick={onStartChallenge}
+            >
+              Start Challenge
+            </button>
 
-          <div className="progress-management-buttons">
-            <button 
-              className="progress-button save-button"
-              onClick={handleSaveProgress}
-            >
-              <img src="/Save-icon.png" alt="Save Progress" className="button-icon" />
-              Save Progress
-            </button>
-            <button 
-              className="progress-button load-button"
-              onClick={handleLoadProgress}
-            >
-              <img src="/Load-icon.png" alt="Load Progress" className="button-icon" />
-              Load Progress
-            </button>
+            <div className="progress-management-buttons">
+              <button 
+                className="progress-button save-button"
+                onClick={handleSaveProgress}
+              >
+                <img src="/Save-icon.png" alt="Save Progress" className="button-icon" />
+                Save Progress
+              </button>
+              <button 
+                className="progress-button load-button"
+                onClick={handleLoadProgress}
+              >
+                <img src="/Load-icon.png" alt="Load Progress" className="button-icon" />
+                Load Progress
+              </button>
+            </div>
           </div>
         </div>
         
