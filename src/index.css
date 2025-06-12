@@ -1243,10 +1243,11 @@
 .next-challenge-header {
   @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
   @apply gap-4 lg:gap-0;
-  margin-bottom: 1rem;
+  /* Moved down 10px */
+  margin-bottom: 1.625rem;
   
   @media (min-width: 1024px) {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.125rem;
   }
 }
 
@@ -1283,7 +1284,6 @@
   width: 1.5rem;
   height: 1.5rem;
   margin-right: 0.25rem;
-  filter: brightness(0) invert(1);
 }
 
 @media (min-width: 1024px) {
@@ -1305,55 +1305,64 @@
 
 .challenge-content {
   flex: 1;
-}
-
-.challenge-card-header {
-  @apply mb-4;
+  /* Move content 60px to the left */
+  margin-right: 3.75rem;
 }
 
 .challenge-card-title {
-  @apply text-2xl font-bold text-white;
-  @apply lg:text-3xl;
+  @apply text-white mb-4;
+  @apply lg:mb-6;
   font-family: "magistral", sans-serif;
-  text-align: left;
-  /* Reduced by 12% from previous size */
-  font-size: clamp(1.54rem, 5.28vw, 2.64rem);
+  font-weight: 900; /* Extra Bold */
+  text-align: center;
+  white-space: nowrap;
+  /* Reduced by 12% from 60pt (3.75rem) to approximately 52.8pt (3.3rem) */
+  font-size: clamp(2.2rem, 7vw, 3.3rem);
   
   @media (min-width: 1024px) {
-    font-size: 2.64rem;
+    font-size: 3.3rem;
   }
 }
 
 .challenge-card-description {
-  @apply text-lg text-white mb-6 leading-relaxed;
+  @apply text-lg text-white mb-6 leading-relaxed text-center;
   @apply lg:text-xl;
   font-family: "magistral", sans-serif;
   font-weight: 400;
-  text-align: left;
 }
 
 .challenge-badge {
-  @apply w-24 h-24 object-contain flex-shrink-0;
-  @apply lg:w-32 lg:h-32;
+  @apply object-contain flex-shrink-0;
+  /* Increased by 60% from w-24 h-24 (96px) to approximately 154px */
+  width: 9.625rem;
+  height: 9.625rem;
+  
+  @media (min-width: 1024px) {
+    /* Increased by 60% from w-32 h-32 (128px) to approximately 205px */
+    width: 12.8125rem;
+    height: 12.8125rem;
+  }
+  
   filter: drop-shadow(0 0 8px rgba(75, 123, 255, 0.3));
 }
 
 .challenge-progress-indicator {
-  @apply text-left mb-6;
-  /* Move 40px to the left */
-  margin-left: -40px;
+  @apply text-center mb-6;
 }
 
 .challenge-progress-text {
-  @apply inline-block bg-[#a4f61e] text-black px-4 py-2 rounded-full;
+  @apply inline-block text-black px-4 py-2;
   @apply text-lg font-bold;
   font-family: "magistral", sans-serif;
+  /* Lime green outlined rectangle */
+  background: transparent;
+  border: 2px solid #BFFF00;
+  color: #BFFF00;
+  border-radius: 0.5rem; /* More rectangular than oval */
 }
 
 .challenge-buttons-container {
-  @apply flex justify-start;
-  /* Move 40px to the left */
-  margin-left: -40px;
+  @apply flex flex-col items-center gap-4;
 }
 
 .start-challenge-button {
@@ -1364,8 +1373,9 @@
   min-height: 65px;
   border: 3px solid transparent;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
-  max-width: 300px;
-  width: 100%;
+  /* Make 40% wider */
+  width: 280px;
+  max-width: 100%;
 }
 
 .start-challenge-button:hover {
@@ -1379,29 +1389,7 @@
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
 }
 
-.challenge-helper-text {
-  @apply text-center text-white text-sm opacity-70;
-  @apply lg:text-base;
-  font-family: "magistral", sans-serif;
-  font-style: italic;
-  margin-top: 1rem;
-}
-
-/* Progress Management Section */
-.progress-management-section {
-  @apply bg-transparent p-6 mt-6;
-}
-
-.progress-management-title {
-  @apply text-xl font-bold text-white text-center mb-4;
-  @apply lg:text-2xl;
-  font-family: "magistral", sans-serif;
-  background: linear-gradient(135deg, #E0F2F7 0%, #9FE7F5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
+/* Progress Management Buttons */
 .progress-management-buttons {
   @apply flex gap-4 justify-center flex-wrap;
 }
@@ -1435,6 +1423,15 @@
 
 .progress-button .button-icon {
   @apply w-6 h-6 mr-2;
+}
+
+/* Helper text */
+.challenge-helper-text {
+  @apply text-sm text-gray-400 text-center italic mt-4;
+  font-family: "magistral", sans-serif;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Challenge Complete Page Styles */
