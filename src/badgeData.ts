@@ -151,7 +151,7 @@ export const challengeDetails: Challenge[] = [
   {
     id: 'mood_mapper_challenge',
     title: 'Mood Mapper Challenge',
-    description: 'Track your emotions today with emojis. How many different<br />ones did you feel? What made them change?',
+    description: 'Track your emotions today with emojis. How many different\nones did you feel? What made them change?',
     badgeId: 'mood_mapper'
   },
   {

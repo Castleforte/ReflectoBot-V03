@@ -1319,12 +1319,13 @@
   font-family: "magistral", sans-serif;
   font-weight: 400;
   text-align: left;
+  white-space: pre-wrap;
 }
 
 .challenge-badge {
   position: absolute;
   bottom: 1rem;
-  right: calc(1rem - 30px);
+  right: calc(1rem + 30px);
   width: 7.5rem;
   height: 7.5rem;
   object-fit: contain;
