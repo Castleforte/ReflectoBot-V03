@@ -35,8 +35,8 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
   };
 
   // Get current challenge info for dev display
-  const currentChallenge = badgeQueue[progress.currentChallengeIndex];
-  const currentBadgeEarned = currentChallenge ? progress.badges[currentChallenge.key] : false;
+  const currentBadgeKey = challenge.badgeId;
+  const currentBadgeEarned = progress.badges[currentBadgeKey];
 
   return (
     <div className="next-challenge-content">
@@ -99,7 +99,7 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
           🔧 DEV TOOLS - Challenge Status
         </div>
         <div style={{ marginBottom: '0.25rem' }}>
-          <strong>Current Challenge:</strong> {currentChallenge ? currentChallenge.key : 'No more challenges'}
+          <strong>Current Challenge:</strong> {currentBadgeKey}
         </div>
         <div style={{ marginBottom: '0.25rem' }}>
           <strong>Challenge Active:</strong> {progress.challengeActive ? 'true' : 'false'}

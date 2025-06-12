@@ -188,17 +188,18 @@ function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutS
     redrawCanvas(previousState);
 
     // Track badge progress for undo
-    const progress = loadProgress();
-    const updatedProgress = {
-      ...progress,
-      undoCount: progress.undoCount + 1
-    };
+    setTimeout(() => {
+      const progress = loadProgress();
+      const updatedProgress = updateProgress({
+        undoCount: progress.undoCount + 1
+      });
 
-    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
-    
-    if (newBadges.length > 0) {
-      onBadgeEarned(newBadges[0]);
-    }
+      const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+      
+      if (newBadges.length > 0) {
+        onBadgeEarned(newBadges[0]);
+      }
+    }, 100);
   };
 
   const handleRedo = () => {
@@ -220,23 +221,6 @@ function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutS
     setSavedDrawingDataUrl(dataUrl);
     setShowDrawingPreview(true);
 
-    // Track badge progress for saving drawing
-    const progress = loadProgress();
-    const updatedProgress = {
-      ...progress,
-      drawingsSaved: progress.drawingsSaved + 1,
-      colorsUsedInDrawing: Math.max(progress.colorsUsedInDrawing, usedColors.size)
-    };
-
-    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
-    
-    if (newBadges.length > 0) {
-      onBadgeEarned(newBadges[0]);
-    }
-
-    // Reset used colors for next drawing
-    setUsedColors(new Set());
-
     // Update robot speech
     setRobotSpeech("Amazing artwork! I love seeing your creativity come to life. Your drawing is ready to save!");
   };
@@ -253,6 +237,24 @@ function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutS
     // Close modal and update robot speech
     setShowDrawingPreview(false);
     setRobotSpeech("Perfect! Your drawing has been saved to your device. You're such a talented artist!");
+
+    // Track badge progress for saving drawing (after download completes)
+    setTimeout(() => {
+      const progress = loadProgress();
+      const updatedProgress = updateProgress({
+        drawingsSaved: progress.drawingsSaved + 1,
+        colorsUsedInDrawing: Math.max(progress.colorsUsedInDrawing, usedColors.size)
+      });
+
+      const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+      
+      if (newBadges.length > 0) {
+        onBadgeEarned(newBadges[0]);
+      }
+
+      // Reset used colors for next drawing
+      setUsedColors(new Set());
+    }, 500);
   };
 
   const handleColorChange = (color: string) => {

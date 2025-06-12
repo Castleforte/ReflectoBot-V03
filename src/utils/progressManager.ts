@@ -57,40 +57,64 @@ export const updateProgress = (updates: Partial<ReflectoBotProgress>): ReflectoB
   return updated;
 };
 
+// Check if a specific badge should be awarded based on progress
+export const checkBadgeCondition = (badgeId: string, progress: ReflectoBotProgress): boolean => {
+  switch (badgeId) {
+    case 'calm_creator':
+      return progress.drawingsSaved >= 1;
+    case 'mood_mapper':
+      return progress.moodCheckInCount >= 3;
+    case 'bounce_back':
+      return progress.undoCount >= 3;
+    case 'reflecto_rookie':
+      return progress.chatMessageCount >= 1;
+    case 'persistence':
+      return progress.returnDays.length >= 3;
+    case 'stay_positive':
+      return progress.badges.stay_positive;
+    case 'great_job':
+      return progress.pdfExportCount >= 1;
+    case 'brave_voice':
+      return progress.badges.brave_voice;
+    case 'what_if_explorer':
+      return progress.whatIfPromptViews >= 3;
+    case 'truth_spotter':
+      return progress.badges.truth_spotter;
+    case 'kind_heart':
+      return progress.badges.kind_heart;
+    case 'super_star':
+      return progress.badgeCount >= 17;
+    case 'goal_getter':
+      return progress.challengesCompleted >= 5;
+    case 'good_listener':
+      return progress.historyViews >= 3;
+    case 'creative_spark':
+      return progress.colorsUsedInDrawing >= 5;
+    case 'deep_thinker':
+      return progress.badges.deep_thinker;
+    case 'boost_buddy':
+      return progress.readItToMeUsed >= 1;
+    case 'focus_finder':
+      return progress.focusedChallengeCompleted;
+    default:
+      return false;
+  }
+};
+
 export const checkAndUpdateBadges = (progress: ReflectoBotProgress): { progress: ReflectoBotProgress; newBadges: string[] } => {
   const newBadges: string[] = [];
   const updatedBadges = { ...progress.badges };
   let updatedProgress = { ...progress };
 
-  // Only check for badge if challenge is active
-  if (progress.challengeActive && progress.currentChallengeIndex < badgeQueue.length) {
-    const currentChallenge = badgeQueue[progress.currentChallengeIndex];
-    
-    // Check if the current challenge condition is met and badge not already earned
-    if (!updatedBadges[currentChallenge.key] && currentChallenge.condition(progress)) {
-      // Award the badge
-      updatedBadges[currentChallenge.key] = true;
-      newBadges.push(currentChallenge.key);
-      
-      // Update challenge state
-      updatedProgress = {
-        ...updatedProgress,
-        challengeActive: false,
-        currentChallengeIndex: progress.currentChallengeIndex + 1,
-        challengesCompleted: progress.challengesCompleted + 1
-      };
+  // Check all badges for completion
+  allBadges.forEach(badge => {
+    if (!updatedBadges[badge.id] && checkBadgeCondition(badge.id, progress)) {
+      updatedBadges[badge.id] = true;
+      newBadges.push(badge.id);
     }
-  }
+  });
 
-  // Check for super_star badge (all other badges earned)
-  const earnedBadges = Object.keys(updatedBadges).filter(id => updatedBadges[id] && id !== 'super_star');
-  if (earnedBadges.length >= 17 && !updatedBadges.super_star) {
-    updatedBadges.super_star = true;
-    if (!newBadges.includes('super_star')) {
-      newBadges.push('super_star');
-    }
-  }
-
+  // Update badge count
   const badgeCount = Object.keys(updatedBadges).filter(id => updatedBadges[id]).length;
 
   const finalProgress = {
