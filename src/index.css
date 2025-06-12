@@ -1435,10 +1435,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #a4f61e 0%, #8bc34a 100%);
-  color: #1a1a1a;
-  border: 3px solid #a4f61e;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  border: 3px solid #9ca3af;
+  color: #e5e7eb;
 }
 
 .challenge-helper-text {
@@ -1474,7 +1473,6 @@
   @apply text-4xl font-bold bg-gradient-to-r from-[#E0F2F7] to-[#9FE7F5] text-transparent bg-clip-text;
   @apply lg:text-4xl;
   text-align: center;
-  @apply lg:text-center;
   white-space: nowrap;
   font-size: clamp(1.75rem, 6vw, 2.25rem);
   
