@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Challenge, ReflectoBotProgress } from '../types';
 import { exportProgress, importProgress } from '../utils/progressManager';
-import { badgeQueue } from '../badgeData';
 
 interface NextChallengePageProps {
   challenge: Challenge;
@@ -33,10 +32,6 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
       }
     }
   };
-
-  // Get current challenge info for dev display
-  const currentBadgeKey = challenge.badgeId;
-  const currentBadgeEarned = progress.badges[currentBadgeKey];
 
   return (
     <div className="next-challenge-content">
@@ -83,37 +78,6 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
       <p className="challenge-helper-text">
         Your badges save automatically. You can also save or load progress from the Settings page.
       </p>
-
-      {/* Developer Tools Display */}
-      <div style={{
-        backgroundColor: '#1c1a30',
-        border: '2px solid #ff6b35',
-        borderRadius: '8px',
-        padding: '1rem',
-        marginTop: '1rem',
-        fontFamily: 'monospace',
-        fontSize: '0.875rem',
-        color: '#fff'
-      }}>
-        <div style={{ color: '#ff6b35', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-          🔧 DEV TOOLS - Challenge Status
-        </div>
-        <div style={{ marginBottom: '0.25rem' }}>
-          <strong>Current Challenge:</strong> {currentBadgeKey}
-        </div>
-        <div style={{ marginBottom: '0.25rem' }}>
-          <strong>Challenge Active:</strong> {progress.challengeActive ? 'true' : 'false'}
-        </div>
-        <div style={{ marginBottom: '0.25rem' }}>
-          <strong>Badge Earned:</strong> {currentBadgeEarned ? 'true' : 'false'}
-        </div>
-        <div style={{ marginBottom: '0.25rem' }}>
-          <strong>Challenge Index:</strong> {progress.currentChallengeIndex} / {badgeQueue.length}
-        </div>
-        <div style={{ fontSize: '0.75rem', color: '#9FE7F5', marginTop: '0.5rem' }}>
-          Use "Reset Badge Progress" in Settings to test from the beginning
-        </div>
-      </div>
 
       <input
         ref={fileInputRef}
