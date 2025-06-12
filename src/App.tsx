@@ -412,6 +412,7 @@ function App() {
           />
         ) : currentScreen === 'challenges' ? (
           <ChallengesSection 
+            key={challengesSubScreen}
             onClose={() => handleSectionClose('challenges')}
             setRobotSpeech={setRobotSpeech}
             initialSubScreen={challengesSubScreen}
