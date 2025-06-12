@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NextChallengePage from './NextChallengePage';
 import ChallengeCompletePage from './ChallengeCompletePage';
 import MyBadgesPage from './MyBadgesPage';
-import { loadProgress, updateProgress } from './utils/progressManager';
+import { loadProgress, updateProgress } from '../utils/progressManager';
 import { challengeDetails } from '../badgeData';
 import { ReflectoBotProgress } from '../types';
 
