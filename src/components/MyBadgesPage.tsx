@@ -13,7 +13,7 @@ function MyBadgesPage({ progress, onNextChallenge }: MyBadgesPageProps) {
       <div className="my-badges-header">
         <h1 className="my-badges-title">My Badges</h1>
         <div className="my-badges-header-right">
-          <span className="badges-collected-indicator">{progress.badgeCount} of 18 Collected!</span>
+          <span id="badge-counter" className="badges-collected-indicator">{progress.badgeCount} of 18 Collected!</span>
           <button 
             className="next-challenge-header-button"
             onClick={onNextChallenge}
