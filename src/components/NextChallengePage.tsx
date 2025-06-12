@@ -38,7 +38,7 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
       <div className="next-challenge-header">
         <h1 className="next-challenge-title">Next Challenge</h1>
         <button 
-          className="my-badges-button-large"
+          className="my-badges-button"
           onClick={onMyBadges}
         >
           <img src="/My_Badges_Button_Icon.png" alt="My Badges" className="button-icon" />
@@ -47,31 +47,54 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
       </div>
 
       <div className="challenge-card">
-        <div className="challenge-content-left">
+        <div className="challenge-content">
           <h2 className="challenge-card-title">{challenge.title}</h2>
           
           <p className="challenge-card-description">
             {challenge.description}
           </p>
 
-          <div className="challenge-progress-indicator-left">
+          <div className="challenge-progress-indicator">
             <span className="challenge-progress-text">Just {remainingBadges} More To Go</span>
           </div>
 
-          <button 
-            className="start-challenge-button-left"
-            onClick={onStartChallenge}
-          >
-            Start Challenge
-          </button>
+          <div className="challenge-buttons-container">
+            <button 
+              className="start-challenge-button"
+              onClick={onStartChallenge}
+            >
+              Start Challenge
+            </button>
+
+            <div className="progress-management-buttons">
+              <button 
+                className="progress-button save-button"
+                onClick={handleSaveProgress}
+              >
+                <img src="/Save-icon.png" alt="Save Progress" className="button-icon" />
+                Save Progress
+              </button>
+              <button 
+                className="progress-button load-button"
+                onClick={handleLoadProgress}
+              >
+                <img src="/Load-icon.png" alt="Load Progress" className="button-icon" />
+                Load Progress
+              </button>
+            </div>
+          </div>
         </div>
         
         <img 
           src="/badges/MoodMapper.png" 
           alt="Mood Mapper Badge"
-          className="challenge-badge-bottom-right"
+          className="challenge-badge"
         />
       </div>
+
+      <p className="challenge-helper-text">
+        Your badges save automatically. You can also save or load progress from the Settings page.
+      </p>
 
       <input
         ref={fileInputRef}
