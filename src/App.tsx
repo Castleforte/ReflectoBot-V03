@@ -31,6 +31,13 @@ function App() {
   const [focusFinderStartTime, setFocusFinderStartTime] = useState<number | null>(null);
   const [focusFinderPage, setFocusFinderPage] = useState<string | null>(null);
 
+  // Reflecto Rookie tracking state
+  const [reflectoRookieMessageCount, setReflectoRookieMessageCount] = useState(0);
+  const [reflectoRookieHasLongMessage, setReflectoRookieHasLongMessage] = useState(false);
+
+  // Stay Positive tracking state
+  const [stayPositiveMessageCount, setStayPositiveMessageCount] = useState(0);
+
   // Track daily visit on component mount
   useEffect(() => {
     const updatedProgress = trackDailyVisit();
@@ -54,10 +61,18 @@ function App() {
         updatedProgress.undoCount = Math.max(updatedProgress.undoCount, 3);
         break;
       case 'reflecto_rookie':
-        updatedProgress.chatMessageCount = updatedProgress.chatMessageCount + 1;
+        // Track message count for Reflecto Rookie
+        if (currentProgress.challengeActive && currentProgress.currentChallengeIndex === 3) { // reflecto_rookie is at index 3
+          setReflectoRookieMessageCount(prev => prev + 1);
+          updatedProgress.chatMessageCount = updatedProgress.chatMessageCount + 1;
+        }
         break;
       case 'stay_positive':
-        updatedProgress.badges.stay_positive = true;
+        // Track positive messages for Stay Positive badge
+        if (currentProgress.challengeActive && currentProgress.currentChallengeIndex === 5) { // stay_positive is at index 5
+          setStayPositiveMessageCount(prev => prev + 1);
+          updatedProgress.badges.stay_positive = true;
+        }
         break;
       case 'great_job':
         updatedProgress.pdfExportCount = Math.max(updatedProgress.pdfExportCount, 1);
@@ -81,6 +96,10 @@ function App() {
         updatedProgress.colorsUsedInDrawing = Math.max(updatedProgress.colorsUsedInDrawing, 5);
         break;
       case 'deep_thinker':
+        // Track long messages for Reflecto Rookie
+        if (currentProgress.challengeActive && currentProgress.currentChallengeIndex === 3) { // reflecto_rookie is at index 3
+          setReflectoRookieHasLongMessage(true);
+        }
         updatedProgress.badges.deep_thinker = true;
         break;
       case 'boost_buddy':
@@ -102,6 +121,11 @@ function App() {
       setCurrentScreen('challenge-complete');
       setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
       setProgress(loadProgress()); // Refresh progress state
+      
+      // Reset tracking states
+      setReflectoRookieMessageCount(0);
+      setReflectoRookieHasLongMessage(false);
+      setStayPositiveMessageCount(0);
     }
   };
 
@@ -115,6 +139,7 @@ function App() {
   const checkFocusFinderConditions = () => {
     const currentProgress = loadProgress();
     if (currentProgress.challengeActive && 
+        currentProgress.currentChallengeIndex === 4 && // focus_finder is at index 4
         focusFinderStartTime && 
         focusFinderPage === currentScreen &&
         focusFinderMeaningfulActions >= 3) {
@@ -126,8 +151,29 @@ function App() {
     }
   };
 
+  const checkReflectoRookieConditions = () => {
+    const currentProgress = loadProgress();
+    if (currentProgress.challengeActive && 
+        currentProgress.currentChallengeIndex === 3 && // reflecto_rookie is at index 3
+        reflectoRookieMessageCount >= 2 && 
+        reflectoRookieHasLongMessage) {
+      handleBadgeEarned('reflecto_rookie');
+    }
+  };
+
+  const checkStayPositiveConditions = () => {
+    const currentProgress = loadProgress();
+    if (currentProgress.challengeActive && 
+        currentProgress.currentChallengeIndex === 5 && // stay_positive is at index 5
+        stayPositiveMessageCount >= 3) {
+      handleBadgeEarned('stay_positive');
+    }
+  };
+
   const handleLogoClick = () => {
     checkFocusFinderConditions(); // Check before navigation
+    checkReflectoRookieConditions(); // Check before navigation
+    checkStayPositiveConditions(); // Check before navigation
     
     if (currentScreen === 'settings') {
       setCurrentScreen('welcome');
@@ -145,6 +191,8 @@ function App() {
 
   const handleNavButtonClick = (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges') => {
     checkFocusFinderConditions(); // Check before navigation
+    checkReflectoRookieConditions(); // Check before navigation
+    checkStayPositiveConditions(); // Check before navigation
     
     setCurrentScreen(screen);
     
@@ -187,11 +235,15 @@ function App() {
   const handleMyBadgesFromApp = () => {
     setCurrentScreen('challenges');
     setNewlyEarnedBadge(null);
+    // Navigate to My Badges page within challenges section
     setRobotSpeech(`Wow! You've already earned ${progress.badgeCount} badges! Just ${18 - progress.badgeCount} more to unlock the full set. Keep going!`);
   };
 
   const handleSectionClose = (sectionName: string) => {
     checkFocusFinderConditions(); // Check before closing
+    checkReflectoRookieConditions(); // Check before closing
+    checkStayPositiveConditions(); // Check before closing
+    
     setCurrentScreen('welcome');
     setRobotSpeech("Hey friend! I'm Reflekto, your AI buddy. Let's explore your thoughts together — and if you want to tweak anything, just tap my logo!");
     
@@ -313,6 +365,18 @@ function App() {
             setRobotSpeech={setRobotSpeech}
             onBadgeEarned={handleBadgeEarned}
             onMeaningfulAction={handleMeaningfulAction}
+            onReflectoRookieProgress={() => {
+              // Check Reflecto Rookie conditions after each message
+              setTimeout(() => {
+                checkReflectoRookieConditions();
+              }, 100);
+            }}
+            onStayPositiveProgress={() => {
+              // Check Stay Positive conditions after each message
+              setTimeout(() => {
+                checkStayPositiveConditions();
+              }, 100);
+            }}
           />
         ) : currentScreen === 'daily-checkin' ? (
           <DailyCheckInSection 

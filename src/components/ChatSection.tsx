@@ -10,9 +10,21 @@ interface ChatSectionProps {
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
   onBadgeEarned: (badgeId: string) => void;
   onMeaningfulAction: () => void;
+  onReflectoRookieProgress?: () => void;
+  onStayPositiveProgress?: () => void;
 }
 
-function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory, setRobotSpeech, onBadgeEarned, onMeaningfulAction }: ChatSectionProps) {
+function ChatSection({ 
+  onClose, 
+  chatMessages, 
+  setChatMessages, 
+  onShowChatHistory, 
+  setRobotSpeech, 
+  onBadgeEarned, 
+  onMeaningfulAction,
+  onReflectoRookieProgress,
+  onStayPositiveProgress
+}: ChatSectionProps) {
   const [currentPromptIndex, setCurrentPromptIndex] = useState<number>(0);
   const [chatInputText, setChatInputText] = useState<string>('');
   const [isRefreshDisabled, setIsRefreshDisabled] = useState<boolean>(false);
@@ -69,6 +81,18 @@ function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory
     onShowChatHistory();
   };
 
+  const isPositiveMessage = (message: string): boolean => {
+    const positiveWords = [
+      'happy', 'good', 'great', 'awesome', 'amazing', 'wonderful', 'fantastic', 
+      'love', 'excited', 'grateful', 'thankful', 'blessed', 'proud', 'confident',
+      'hopeful', 'optimistic', 'positive', 'cheerful', 'joyful', 'peaceful',
+      'calm', 'relaxed', 'content', 'satisfied', 'accomplished', 'successful'
+    ];
+    
+    const lowerMessage = message.toLowerCase();
+    return positiveWords.some(word => lowerMessage.includes(word));
+  };
+
   const handleSendMessage = () => {
     const trimmedMessage = chatInputText.trim();
     if (!trimmedMessage) return;
@@ -105,11 +129,11 @@ function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory
     onMeaningfulAction();
 
     // Track badge progress
-    onBadgeEarned('reflecto_rookie'); // First message badge
+    onBadgeEarned('reflecto_rookie'); // Track message for Reflecto Rookie
     
     // Check for specific badge conditions
-    if (trimmedMessage.split(/\s+/).length >= 15) {
-      onBadgeEarned('deep_thinker'); // 15+ words badge
+    if (trimmedMessage.split(/\s+/).length >= 10) {
+      onBadgeEarned('deep_thinker'); // 10+ words badge for Reflecto Rookie
     }
     
     if (trimmedMessage.toLowerCase().includes('because')) {
@@ -118,6 +142,19 @@ function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory
     
     if (trimmedMessage.toLowerCase().includes('i realized')) {
       onBadgeEarned('truth_spotter'); // Contains "I realized" badge
+    }
+
+    // Check for positive messages for Stay Positive badge
+    if (isPositiveMessage(trimmedMessage)) {
+      onBadgeEarned('stay_positive');
+    }
+
+    // Trigger progress checks
+    if (onReflectoRookieProgress) {
+      onReflectoRookieProgress();
+    }
+    if (onStayPositiveProgress) {
+      onStayPositiveProgress();
     }
     
     // TODO: Replace this logic with actual GPT API call in the future

@@ -92,12 +92,14 @@ export const checkAndUpdateBadges = (triggeredBadgeId: string, progress: Reflect
       conditionMet = progress.undoCount >= 3;
       break;
     case 'reflecto_rookie':
-      conditionMet = progress.chatMessageCount >= 1;
+      // Special handling for Reflecto Rookie - checked in App.tsx
+      conditionMet = progress.chatMessageCount >= 2;
       break;
     case 'focus_finder':
       conditionMet = progress.focusedChallengeCompleted;
       break;
     case 'stay_positive':
+      // Special handling for Stay Positive - checked in App.tsx
       conditionMet = progress.badges.stay_positive;
       break;
     case 'great_job':

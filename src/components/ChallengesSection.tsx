@@ -33,7 +33,7 @@ function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) 
   const handleStartChallenge = () => {
     if (!currentChallenge) return;
     
-    // Activate the challenge
+    // Activate the challenge - stay on the same page
     const updatedProgress = updateProgress({
       challengeActive: true
     });
@@ -62,12 +62,18 @@ function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) 
       case 'boost_buddy':
         setRobotSpeech("Let's try something fun! Go to What If and use the 'Read It to Me' button to hear a prompt out loud.");
         break;
+      case 'reflecto_rookie':
+        setRobotSpeech("Ready to start chatting? Go to Chat and share your thoughts with me. Remember, I need at least 2 messages from you!");
+        break;
+      case 'focus_finder':
+        setRobotSpeech("Time to focus! Pick any section and stay there for at least 90 seconds while being active. No switching allowed!");
+        break;
+      case 'stay_positive':
+        setRobotSpeech("Let's spread some positivity! Go to Chat and share some encouraging thoughts with me.");
+        break;
       default:
         setRobotSpeech("Great choice! Go explore and complete your challenge. I believe in you!");
     }
-    
-    // Close challenges section to let user complete the challenge
-    onClose();
   };
 
   const handleNextChallenge = () => {

@@ -12,6 +12,7 @@ interface NextChallengePageProps {
 function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }: NextChallengePageProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const remainingBadges = 18 - progress.badgeCount;
+  const isActive = progress.challengeActive;
 
   const handleSaveProgress = () => {
     exportProgress();
@@ -36,7 +37,9 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
   return (
     <div className="next-challenge-content">
       <div className="next-challenge-header">
-        <h1 className="next-challenge-title">Next Challenge</h1>
+        <h1 className="next-challenge-title">
+          {isActive ? 'Current Challenge' : 'Next Challenge'}
+        </h1>
         <button 
           className="my-badges-button"
           onClick={onMyBadges}
@@ -59,12 +62,18 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
           </div>
 
           <div className="challenge-buttons-container">
-            <button 
-              className="start-challenge-button"
-              onClick={onStartChallenge}
-            >
-              Start Challenge
-            </button>
+            {isActive ? (
+              <div className="challenge-started-indicator">
+                Challenge Started — Good Luck!
+              </div>
+            ) : (
+              <button 
+                className="start-challenge-button"
+                onClick={onStartChallenge}
+              >
+                Start Challenge
+              </button>
+            )}
           </div>
         </div>
         
