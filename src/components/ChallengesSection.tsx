@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NextChallengePage from './NextChallengePage';
 import ChallengeCompletePage from './ChallengeCompletePage';
 import MyBadgesPage from './MyBadgesPage';
-import { loadProgress, checkAndUpdateBadges, updateProgress } from '../utils/progressManager';
+import { loadProgress, updateProgress } from './utils/progressManager';
 import { challengeDetails } from '../badgeData';
 import { ReflectoBotProgress } from '../types';
 
@@ -19,22 +19,15 @@ function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) 
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
   const [newlyEarnedBadge, setNewlyEarnedBadge] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Check for newly earned badges when component mounts
-    const { progress: updatedProgress, newBadges } = checkAndUpdateBadges(progress);
-    setProgress(updatedProgress);
-    
-    if (newBadges.length > 0) {
-      setNewlyEarnedBadge(newBadges[0]); // Show first new badge
-      setCurrentScreen('challenge-complete');
-    }
-  }, []);
-
   const handleStartChallenge = () => {
     const currentChallenge = challengeDetails[currentChallengeIndex];
     
-    // Mark that user started a focused challenge
-    updateProgress({ focusedChallengeCompleted: false });
+    // Activate the challenge
+    const updatedProgress = updateProgress({ 
+      challengeActive: true,
+      focusedChallengeCompleted: false 
+    });
+    setProgress(updatedProgress);
     
     // Update robot speech based on challenge
     switch (currentChallenge.badgeId) {

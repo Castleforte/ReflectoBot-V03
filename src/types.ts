@@ -51,6 +51,8 @@ export interface ReflectoBotProgress {
   readItToMeUsed: number;
   focusedChallengeCompleted: boolean;
   lastVisitDate: string;
+  challengeActive: boolean;
+  currentChallengeIndex: number;
 }
 
 export interface DrawingEntry {

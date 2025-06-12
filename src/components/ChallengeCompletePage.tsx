@@ -38,7 +38,7 @@ function ChallengeCompletePage({ badgeId, progress, onNextChallenge, onMyBadges 
         </p>
 
         <div className="badge-progress-display">
-          <span className="badge-progress-text">{progress.badgeCount} of 18 Collected!</span>
+          <span id="badge-counter" className="badge-progress-text">{progress.badgeCount} of 18 Collected!</span>
         </div>
 
         <div className="challenge-complete-buttons">
