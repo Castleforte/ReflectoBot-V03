@@ -9,6 +9,17 @@ function SettingsSection({ onClose, onShowGrownUpModal }: SettingsSectionProps) 
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [showResetModal, setShowResetModal] = useState<boolean>(false);
 
+  const handleEraseProgress = () => {
+    // Clear all ReflectoBot progress data
+    localStorage.removeItem('reflectobot_progress');
+    localStorage.removeItem('reflectobot-chat-messages');
+    localStorage.removeItem('reflectobot-mood-history');
+    
+    // Show confirmation and reload
+    alert('All progress has been erased! The app will now reload to reset everything.');
+    window.location.reload();
+  };
+
   return (
     <div className="settings-section">
       <div className="settings-content">
@@ -111,7 +122,7 @@ function SettingsSection({ onClose, onShowGrownUpModal }: SettingsSectionProps) 
               <button
                 className="modal-button danger"
                 onClick={() => {
-                  // Handle reset logic here
+                  handleEraseProgress();
                   setShowResetModal(false);
                 }}
               >
