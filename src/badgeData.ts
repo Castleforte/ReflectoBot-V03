@@ -1,5 +1,3 @@
-import { Badge, Challenge, ReflectoBotProgress } from './types';
-
 export const allBadges: Badge[] = [
   {
     id: 'calm_creator',
@@ -34,11 +32,11 @@ export const allBadges: Badge[] = [
     earned: false
   },
   {
-    id: 'persistence',
-    name: 'Persistence',
-    description: 'Return 3 separate days',
-    icon: '/badges/Persistence.png',
-    colorIcon: '/badges/Persistence.png',
+    id: 'focus_finder',
+    name: 'Focus Finder',
+    description: 'Complete a challenge without switching sections',
+    icon: '/badges/FocusFinder.png',
+    colorIcon: '/badges/FocusFinder.png',
     earned: false
   },
   {
@@ -138,11 +136,11 @@ export const allBadges: Badge[] = [
     earned: false
   },
   {
-    id: 'focus_finder',
-    name: 'Focus Finder',
-    description: 'Complete a challenge without switching sections',
-    icon: '/badges/FocusFinder.png',
-    colorIcon: '/badges/FocusFinder.png',
+    id: 'persistence',
+    name: 'Persistence',
+    description: 'Return 3 separate days',
+    icon: '/badges/Persistence.png',
+    colorIcon: '/badges/Persistence.png',
     earned: false
   }
 ];
@@ -173,10 +171,10 @@ export const challengeDetails: Challenge[] = [
     badgeId: 'reflecto_rookie'
   },
   {
-    id: 'persistence_challenge',
-    title: 'Persistence Challenge',
-    description: 'Show your commitment by returning to ReflectoBot on different days.\nConsistency is the key to growth!',
-    badgeId: 'persistence'
+    id: 'focus_finder_challenge',
+    title: 'Focus Finder Challenge',
+    description: 'Complete a challenge without switching to other sections.\nFocus is your secret weapon for success!',
+    badgeId: 'focus_finder'
   },
   {
     id: 'stay_positive_challenge',
@@ -245,10 +243,10 @@ export const challengeDetails: Challenge[] = [
     badgeId: 'boost_buddy'
   },
   {
-    id: 'focus_finder_challenge',
-    title: 'Focus Finder Challenge',
-    description: 'Complete a challenge without switching to other sections.\nFocus is your secret weapon for success!',
-    badgeId: 'focus_finder'
+    id: 'persistence_challenge',
+    title: 'Persistence Challenge',
+    description: 'Show your commitment by returning to ReflectoBot on different days.\nConsistency is the key to growth!',
+    badgeId: 'persistence'
   },
   {
     id: 'super_star_challenge',
