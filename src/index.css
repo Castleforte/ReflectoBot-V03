@@ -1579,11 +1579,20 @@
 }
 
 .badges-collected-indicator {
-  @apply bg-[#a4f61e] text-black px-3 py-1 rounded-full;
-  @apply text-sm font-bold;
-  @apply lg:text-base;
+  @apply text-lg font-bold;
   font-family: "magistral", sans-serif;
+  color: #BFFF00;
+  border: 2px solid #BFFF00;
+  background: transparent;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
   white-space: nowrap;
+  
+  @media (min-width: 1024px) {
+    font-size: 1.125rem;
+  }
 }
 
 .next-challenge-header-button {
