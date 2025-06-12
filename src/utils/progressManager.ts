@@ -68,7 +68,7 @@ export const checkBadgeCondition = (badgeId: string, progress: ReflectoBotProgre
       return progress.undoCount >= 3;
     case 'reflecto_rookie':
       return progress.chatMessageCount >= 1;
-    case 'persistence':
+    case 'resilient':
       return progress.returnDays.length >= 3;
     case 'stay_positive':
       return progress.badges.stay_positive;

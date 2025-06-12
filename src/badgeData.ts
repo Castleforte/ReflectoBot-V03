@@ -1,3 +1,5 @@
+import { Badge, Challenge, ReflectoBotProgress } from './types';
+
 export const allBadges: Badge[] = [
   {
     id: 'calm_creator',
@@ -136,11 +138,11 @@ export const allBadges: Badge[] = [
     earned: false
   },
   {
-    id: 'persistence',
-    name: 'Persistence',
+    id: 'resilient',
+    name: 'Resilient',
     description: 'Return 3 separate days',
-    icon: '/badges/Persistence.png',
-    colorIcon: '/badges/Persistence.png',
+    icon: '/badges/Resilient.png',
+    colorIcon: '/badges/Resilient.png',
     earned: false
   }
 ];
@@ -243,16 +245,16 @@ export const challengeDetails: Challenge[] = [
     badgeId: 'boost_buddy'
   },
   {
-    id: 'persistence_challenge',
-    title: 'Persistence Challenge',
-    description: 'Show your commitment by returning to ReflectoBot on different days.\nConsistency is the key to growth!',
-    badgeId: 'persistence'
-  },
-  {
     id: 'super_star_challenge',
     title: 'Super Star Challenge',
     description: 'Achieve greatness by earning all other badges.\nYou\'re truly a ReflectoBot superstar!',
     badgeId: 'super_star'
+  },
+  {
+    id: 'resilient_challenge',
+    title: 'Resilient Challenge',
+    description: 'Show your commitment by returning to ReflectoBot on different days.\nConsistency is the key to growth!',
+    badgeId: 'resilient'
   }
 ];
 
@@ -323,7 +325,7 @@ export const badgeQueue = [
     condition: (progress: ReflectoBotProgress) => progress.focusedChallengeCompleted 
   },
   { 
-    key: "persistence", 
+    key: "resilient", 
     condition: (progress: ReflectoBotProgress) => progress.returnDays.length >= 3 
   },
   { 
