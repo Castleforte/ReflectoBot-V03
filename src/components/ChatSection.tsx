@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { chatPrompts, promptStarters } from '../prompts';
 import { ConversationTurn } from '../types';
+import { loadProgress } from '../utils/progressManager';
 
 interface ChatSectionProps {
   onClose: () => void;
@@ -132,8 +133,8 @@ function ChatSection({
     onBadgeEarned('reflecto_rookie'); // Track message for Reflecto Rookie
     
     // Check for specific badge conditions
-    if (trimmedMessage.split(/\s+/).length >= 10) {
-      onBadgeEarned('deep_thinker'); // 10+ words badge for Reflecto Rookie
+    if (trimmedMessage.split(/\s+/).length >= 15) {
+      onBadgeEarned('deep_thinker'); // 15+ words badge
     }
     
     if (trimmedMessage.toLowerCase().includes('because')) {
@@ -146,7 +147,11 @@ function ChatSection({
 
     // Check for positive messages for Stay Positive badge
     if (isPositiveMessage(trimmedMessage)) {
-      onBadgeEarned('stay_positive');
+      // Get current progress to check if Stay Positive challenge is active
+      const currentProgress = loadProgress();
+      if (currentProgress.challengeActive && currentProgress.currentChallengeIndex === 5) {
+        onBadgeEarned('stay_positive');
+      }
     }
 
     // Trigger progress checks

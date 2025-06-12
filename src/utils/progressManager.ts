@@ -242,3 +242,53 @@ export const importProgress = (file: File): Promise<void> => {
     reader.readAsText(file);
   });
 };
+
+// New function to reset a specific badge for debugging
+export const resetSpecificBadge = (badgeId: string): boolean => {
+  // Check if the badge ID exists in allBadges
+  const badgeExists = allBadges.some(badge => badge.id === badgeId);
+  if (!badgeExists) {
+    console.error(`Badge ID "${badgeId}" does not exist.`);
+    return false;
+  }
+
+  const progress = loadProgress();
+  
+  // Check if the badge is currently earned
+  if (!progress.badges[badgeId]) {
+    console.log(`Badge "${badgeId}" is not currently earned.`);
+    return false;
+  }
+
+  // Reset the badge
+  const updatedBadges = { ...progress.badges, [badgeId]: false };
+  const newBadgeCount = Math.max(0, progress.badgeCount - 1);
+  const updatedEarnedBadges = progress.earnedBadges.filter(id => id !== badgeId);
+
+  // Find the badge index in the queue to potentially reset challenge progress
+  const badgeIndex = badgeQueue.indexOf(badgeId);
+  let updatedChallengeIndex = progress.currentChallengeIndex;
+  let updatedChallengeActive = progress.challengeActive;
+
+  // If resetting a badge that's before or at the current challenge index, adjust accordingly
+  if (badgeIndex !== -1 && badgeIndex <= progress.currentChallengeIndex) {
+    updatedChallengeIndex = badgeIndex;
+    updatedChallengeActive = false; // Deactivate any active challenge
+  }
+
+  const updatedProgress = {
+    ...progress,
+    badges: updatedBadges,
+    badgeCount: newBadgeCount,
+    earnedBadges: updatedEarnedBadges,
+    currentChallengeIndex: updatedChallengeIndex,
+    challengeActive: updatedChallengeActive,
+    challengesCompleted: Math.max(0, progress.challengesCompleted - 1)
+  };
+
+  saveProgress(updatedProgress);
+  updateBadgeCounterDisplay(newBadgeCount);
+  
+  console.log(`Badge "${badgeId}" has been reset successfully.`);
+  return true;
+};

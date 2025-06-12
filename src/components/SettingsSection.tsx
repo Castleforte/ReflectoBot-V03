@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { resetSpecificBadge } from '../utils/progressManager';
 
 interface SettingsSectionProps {
   onClose: () => void;
@@ -18,6 +19,30 @@ function SettingsSection({ onClose, onShowGrownUpModal }: SettingsSectionProps) 
     // Show confirmation and reload
     alert('All progress has been erased! The app will now reload to reset everything.');
     window.location.reload();
+  };
+
+  const handleResetSpecificBadge = () => {
+    const badgeId = prompt(
+      'Enter the badge ID to reset (e.g., "brave_voice", "deep_thinker", "stay_positive"):\n\n' +
+      'Common badge IDs:\n' +
+      '• brave_voice\n' +
+      '• deep_thinker\n' +
+      '• stay_positive\n' +
+      '• focus_finder\n' +
+      '• calm_creator\n' +
+      '• mood_mapper\n' +
+      '• reflecto_rookie'
+    );
+
+    if (badgeId) {
+      const success = resetSpecificBadge(badgeId.trim());
+      if (success) {
+        alert(`Badge "${badgeId}" has been reset successfully! The page will reload to reflect changes.`);
+        window.location.reload();
+      } else {
+        alert(`Failed to reset badge "${badgeId}". Please check the badge ID and try again.`);
+      }
+    }
   };
 
   return (
@@ -81,6 +106,13 @@ function SettingsSection({ onClose, onShowGrownUpModal }: SettingsSectionProps) 
                 onClick={() => setShowResetModal(true)}
               >
                 Erase My Progress
+              </button>
+              <button
+                className="settings-button settings-button-lg"
+                onClick={handleResetSpecificBadge}
+                style={{ marginLeft: '10px' }}
+              >
+                Reset Specific Badge
               </button>
             </div>
           </div>
