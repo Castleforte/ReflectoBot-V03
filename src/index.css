@@ -763,24 +763,48 @@
 }
 
 .emoji-grid {
-  @apply flex flex-nowrap gap-4 mb-4 justify-center overflow-x-auto;
-  @apply lg:gap-6 lg:mb-6;
+  @apply flex flex-wrap justify-center gap-2 mb-4 max-w-full mx-auto;
+  @apply sm:gap-3 lg:gap-4 lg:mb-6;
   padding: 0.5rem 0;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
-.emoji-grid::-webkit-scrollbar {
-  display: none;
+/* Allow wrapping on very small screens */
+@media (max-width: 640px) {
+  .emoji-grid {
+    @apply flex-wrap;
+  }
+}
+
+/* Keep single row on larger screens */
+@media (min-width: 641px) {
+  .emoji-grid {
+    @apply flex-nowrap;
+  }
 }
 
 .emoji-button {
-  @apply w-16 h-16 rounded-full bg-[#1c1a30] border-2 border-transparent;
+  @apply rounded-full bg-[#1c1a30] border-2 border-transparent;
   @apply flex items-center justify-center cursor-pointer flex-shrink-0;
   @apply transition-all duration-300 hover:bg-[#252847] hover:transform hover:scale-110;
-  @apply lg:w-20 lg:h-20;
+  /* Responsive sizing - smaller on mobile, larger on desktop */
+  width: 48px;
+  height: 48px;
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .emoji-button {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .emoji-button {
+    width: 64px;
+    height: 64px;
+  }
 }
 
 .emoji-button::before {
