@@ -277,10 +277,6 @@ export const badgeQueue = [
     condition: (progress: ReflectoBotProgress) => progress.chatMessageCount >= 1 
   },
   { 
-    key: "persistence", 
-    condition: (progress: ReflectoBotProgress) => progress.returnDays.length >= 3 
-  },
-  { 
     key: "stay_positive", 
     condition: (progress: ReflectoBotProgress) => progress.badges.stay_positive 
   },
@@ -327,6 +323,10 @@ export const badgeQueue = [
   { 
     key: "focus_finder", 
     condition: (progress: ReflectoBotProgress) => progress.focusedChallengeCompleted 
+  },
+  { 
+    key: "persistence", 
+    condition: (progress: ReflectoBotProgress) => progress.returnDays.length >= 3 
   },
   { 
     key: "super_star", 
