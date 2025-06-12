@@ -1425,20 +1425,24 @@
 }
 
 .challenge-started-indicator {
-  @apply text-white py-4 rounded-lg;
+  @apply text-white py-4 rounded-lg text-center;
   @apply text-xl font-bold;
   @apply lg:text-2xl;
   font-family: "magistral", sans-serif;
   min-height: 65px;
   max-width: 300px;
   width: 100%;
+  color: #BFFF00;
+  border: 2px solid #BFFF00;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #a4f61e 0%, #8bc34a 100%);
-  color: #1a1a1a;
-  border: 3px solid #a4f61e;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  
+  @media (min-width: 1024px) {
+    font-size: 1.5rem;
+  }
 }
 
 .challenge-helper-text {
@@ -1474,7 +1478,6 @@
   @apply text-4xl font-bold bg-gradient-to-r from-[#E0F2F7] to-[#9FE7F5] text-transparent bg-clip-text;
   @apply lg:text-4xl;
   text-align: center;
-  @apply lg:text-center;
   white-space: nowrap;
   font-size: clamp(1.75rem, 6vw, 2.25rem);
   
