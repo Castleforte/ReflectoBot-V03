@@ -120,11 +120,12 @@ function App() {
     const awardedBadgeId = checkAndUpdateBadges(badgeId, updatedProgress);
     
     if (awardedBadgeId) {
+      // Only Focus Finder and Stay Positive should be pending badges
       if (awardedBadgeId === 'focus_finder' || awardedBadgeId === 'stay_positive') {
         setPendingAwardedBadge(awardedBadgeId);
         // Do NOT change screen or robot speech here. The display will be delayed.
       } else {
-        // For all other badges, immediately show the complete page
+        // For all other badges (including Brave Voice), immediately show the complete page
         setNewlyEarnedBadge(awardedBadgeId);
         setCurrentScreen('challenge-complete');
         setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
