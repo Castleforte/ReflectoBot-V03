@@ -107,16 +107,19 @@ export const checkAndUpdateBadges = (triggeredBadgeId: string, progress: Reflect
       conditionMet = progress.pdfExportCount >= 1;
       break;
     case 'brave_voice':
-      conditionMet = progress.badges.brave_voice;
+      // Condition already verified by calling component
+      conditionMet = true;
       break;
     case 'what_if_explorer':
       conditionMet = progress.whatIfPromptViews >= 3;
       break;
     case 'truth_spotter':
-      conditionMet = progress.badges.truth_spotter;
+      // Condition already verified by calling component
+      conditionMet = true;
       break;
     case 'kind_heart':
-      conditionMet = progress.badges.kind_heart;
+      // Condition already verified by calling component
+      conditionMet = true;
       break;
     case 'super_star':
       conditionMet = progress.badgeCount >= 17;
@@ -131,10 +134,12 @@ export const checkAndUpdateBadges = (triggeredBadgeId: string, progress: Reflect
       conditionMet = progress.colorsUsedInDrawing >= 5;
       break;
     case 'deep_thinker':
-      conditionMet = progress.badges.deep_thinker;
+      // Condition already verified by calling component
+      conditionMet = true;
       break;
     case 'boost_buddy':
-      conditionMet = progress.readItToMeUsed >= 1;
+      // Condition already verified by calling component
+      conditionMet = true;
       break;
     case 'resilient':
       conditionMet = progress.returnDays.length >= 3;
