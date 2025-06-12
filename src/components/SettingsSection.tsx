@@ -9,6 +9,12 @@ function SettingsSection({ onClose, onShowGrownUpModal }: SettingsSectionProps) 
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [showResetModal, setShowResetModal] = useState<boolean>(false);
 
+  const handleResetBadgeProgress = () => {
+    localStorage.removeItem('reflectobot_progress');
+    alert('Badge progress has been reset! Please reload the page to see changes.');
+    window.location.reload();
+  };
+
   return (
     <div className="settings-section">
       <div className="settings-content">
@@ -70,6 +76,23 @@ function SettingsSection({ onClose, onShowGrownUpModal }: SettingsSectionProps) 
                 onClick={() => setShowResetModal(true)}
               >
                 Erase My Progress
+              </button>
+            </div>
+          </div>
+
+          {/* Developer Tools Section */}
+          <div className="settings-row">
+            <div className="settings-label">
+              <img src="/Gear.png" alt="Developer tools icon" className="settings-icon" />
+              <span>Developer Tools</span>
+            </div>
+            <div className="settings-controls justify-center lg:justify-end">
+              <button
+                className="settings-button settings-button-lg"
+                onClick={handleResetBadgeProgress}
+                style={{ backgroundColor: '#ff6b35' }}
+              >
+                Reset Badge Progress
               </button>
             </div>
           </div>
