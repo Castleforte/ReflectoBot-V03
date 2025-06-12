@@ -1324,7 +1324,7 @@
 .challenge-badge {
   position: absolute;
   bottom: 1rem;
-  right: calc(1rem - 30px);
+  right: 1rem;
   width: 7.5rem;
   height: 7.5rem;
   object-fit: contain;
