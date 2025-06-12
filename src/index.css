@@ -763,14 +763,20 @@
 }
 
 .emoji-grid {
-  @apply grid grid-cols-4 gap-3 mb-6;
-  @apply lg:grid-cols-8 lg:gap-4 lg:mb-8;
-  justify-items: center;
+  @apply flex flex-nowrap gap-4 mb-4 justify-center overflow-x-auto;
+  @apply lg:gap-6 lg:mb-6;
+  padding: 0.5rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.emoji-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .emoji-button {
   @apply w-16 h-16 rounded-full bg-[#1c1a30] border-2 border-transparent;
-  @apply flex items-center justify-center cursor-pointer;
+  @apply flex items-center justify-center cursor-pointer flex-shrink-0;
   @apply transition-all duration-300 hover:bg-[#252847] hover:transform hover:scale-110;
   @apply lg:w-20 lg:h-20;
   position: relative;
@@ -845,13 +851,13 @@
 
 .daily-checkin-send-button {
   @apply w-full max-w-md mx-auto;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   min-height: 50px;
   font-size: clamp(1rem, 3vw, 1.25rem);
   flex-shrink: 0;
   
   @media (min-width: 1024px) {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     min-height: 65px;
     font-size: 1.5rem;
   }
