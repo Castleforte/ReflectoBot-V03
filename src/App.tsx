@@ -12,6 +12,7 @@ import ChatHistoryModal from './components/ChatHistoryModal';
 import MoodHistoryModal from './components/MoodHistoryModal';
 import { ConversationTurn, MoodEntry, ReflectoBotProgress } from './types';
 import { loadProgress, trackDailyVisit, updateProgress, checkAndUpdateBadges } from './utils/progressManager';
+import { badgeQueue } from './badgeData';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges' | 'challenge-complete'>('welcome');
@@ -23,6 +24,7 @@ function App() {
   const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
   const [progress, setProgress] = useState<ReflectoBotProgress>(loadProgress());
   const [newlyEarnedBadge, setNewlyEarnedBadge] = useState<string | null>(null);
+  const [pendingAwardedBadge, setPendingAwardedBadge] = useState<string | null>(null);
   const [robotSpeech, setRobotSpeech] = useState<string>(
     "Hey friend! I'm Reflekto, your AI buddy. Let's explore your thoughts together — and if you want to tweak anything, just tap my logo!"
   );
@@ -72,7 +74,7 @@ function App() {
         // Track positive messages for Stay Positive badge
         if (currentProgress.challengeActive && currentProgress.currentChallengeIndex === 5) { // stay_positive is at index 5
           setStayPositiveMessageCount(prev => prev + 1);
-          updatedProgress.badges.stay_positive = true;
+          updatedProgress.stayPositiveMessageCount = updatedProgress.stayPositiveMessageCount + 1;
         }
         break;
       case 'great_job':
@@ -118,15 +120,21 @@ function App() {
     const awardedBadgeId = checkAndUpdateBadges(badgeId, updatedProgress);
     
     if (awardedBadgeId) {
-      setNewlyEarnedBadge(awardedBadgeId);
-      setCurrentScreen('challenge-complete');
-      setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
-      setProgress(loadProgress()); // Refresh progress state
-      
-      // Reset tracking states
-      setReflectoRookieMessageCount(0);
-      setReflectoRookieHasLongMessage(false);
-      setStayPositiveMessageCount(0);
+      if (awardedBadgeId === 'focus_finder' || awardedBadgeId === 'stay_positive') {
+        setPendingAwardedBadge(awardedBadgeId);
+        // Do NOT change screen or robot speech here. The display will be delayed.
+      } else {
+        // For all other badges, immediately show the complete page
+        setNewlyEarnedBadge(awardedBadgeId);
+        setCurrentScreen('challenge-complete');
+        setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
+        setProgress(loadProgress()); // Refresh progress state
+        
+        // Reset tracking states for immediately awarded badges
+        setReflectoRookieMessageCount(0);
+        setReflectoRookieHasLongMessage(false);
+        setStayPositiveMessageCount(0);
+      }
     }
   };
 
@@ -172,6 +180,32 @@ function App() {
   };
 
   const handleLogoClick = () => {
+    // Check for pending badge awards first
+    if (pendingAwardedBadge) {
+      setNewlyEarnedBadge(pendingAwardedBadge);
+      setCurrentScreen('challenge-complete');
+      setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
+      
+      // Update persistent progress for the pending badge (deactivate challenge, increment index)
+      const currentProgress = loadProgress();
+      const updatedProgress = {
+        ...currentProgress,
+        challengeActive: false,
+        currentChallengeIndex: Math.min(currentProgress.currentChallengeIndex + 1, badgeQueue.length - 1),
+        challengesCompleted: currentProgress.challengesCompleted + 1
+      };
+      updateProgress(updatedProgress);
+      setProgress(updatedProgress); // Update local state
+      
+      // Reset pending badge and tracking states
+      setPendingAwardedBadge(null);
+      setReflectoRookieMessageCount(0);
+      setReflectoRookieHasLongMessage(false);
+      setStayPositiveMessageCount(0);
+      
+      return; // Stop further navigation in this handler to show the completion page
+    }
+
     checkFocusFinderConditions(); // Check before navigation
     checkReflectoRookieConditions(); // Check before navigation
     checkStayPositiveConditions(); // Check before navigation
@@ -191,6 +225,32 @@ function App() {
   };
 
   const handleNavButtonClick = (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges') => {
+    // Check for pending badge awards first
+    if (pendingAwardedBadge) {
+      setNewlyEarnedBadge(pendingAwardedBadge);
+      setCurrentScreen('challenge-complete');
+      setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
+      
+      // Update persistent progress for the pending badge (deactivate challenge, increment index)
+      const currentProgress = loadProgress();
+      const updatedProgress = {
+        ...currentProgress,
+        challengeActive: false,
+        currentChallengeIndex: Math.min(currentProgress.currentChallengeIndex + 1, badgeQueue.length - 1),
+        challengesCompleted: currentProgress.challengesCompleted + 1
+      };
+      updateProgress(updatedProgress);
+      setProgress(updatedProgress); // Update local state
+      
+      // Reset pending badge and tracking states
+      setPendingAwardedBadge(null);
+      setReflectoRookieMessageCount(0);
+      setReflectoRookieHasLongMessage(false);
+      setStayPositiveMessageCount(0);
+      
+      return; // Stop further navigation in this handler to show the completion page
+    }
+
     checkFocusFinderConditions(); // Check before navigation
     checkReflectoRookieConditions(); // Check before navigation
     checkStayPositiveConditions(); // Check before navigation
@@ -248,6 +308,32 @@ function App() {
   };
 
   const handleSectionClose = (sectionName: string) => {
+    // Check for pending badge awards first
+    if (pendingAwardedBadge) {
+      setNewlyEarnedBadge(pendingAwardedBadge);
+      setCurrentScreen('challenge-complete');
+      setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
+      
+      // Update persistent progress for the pending badge (deactivate challenge, increment index)
+      const currentProgress = loadProgress();
+      const updatedProgress = {
+        ...currentProgress,
+        challengeActive: false,
+        currentChallengeIndex: Math.min(currentProgress.currentChallengeIndex + 1, badgeQueue.length - 1),
+        challengesCompleted: currentProgress.challengesCompleted + 1
+      };
+      updateProgress(updatedProgress);
+      setProgress(updatedProgress); // Update local state
+      
+      // Reset pending badge and tracking states
+      setPendingAwardedBadge(null);
+      setReflectoRookieMessageCount(0);
+      setReflectoRookieHasLongMessage(false);
+      setStayPositiveMessageCount(0);
+      
+      return; // Stop further navigation in this handler to show the completion page
+    }
+
     checkFocusFinderConditions(); // Check before closing
     checkReflectoRookieConditions(); // Check before closing
     checkStayPositiveConditions(); // Check before closing

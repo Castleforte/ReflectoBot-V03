@@ -23,7 +23,8 @@ export const getInitialProgress = (): ReflectoBotProgress => {
     focusedChallengeCompleted: false,
     lastVisitDate: today,
     challengeActive: false,
-    currentChallengeIndex: 0
+    currentChallengeIndex: 0,
+    stayPositiveMessageCount: 0
   };
 };
 
@@ -39,7 +40,8 @@ export const loadProgress = (): ReflectoBotProgress => {
         ...parsed,
         // Ensure new fields are properly initialized
         challengeActive: parsed.challengeActive ?? false,
-        currentChallengeIndex: parsed.currentChallengeIndex ?? 0
+        currentChallengeIndex: parsed.currentChallengeIndex ?? 0,
+        stayPositiveMessageCount: parsed.stayPositiveMessageCount ?? 0
       };
     }
   } catch (error) {
@@ -99,8 +101,7 @@ export const checkAndUpdateBadges = (triggeredBadgeId: string, progress: Reflect
       conditionMet = progress.focusedChallengeCompleted;
       break;
     case 'stay_positive':
-      // Special handling for Stay Positive - checked in App.tsx
-      conditionMet = progress.badges.stay_positive;
+      conditionMet = progress.stayPositiveMessageCount >= 3;
       break;
     case 'great_job':
       conditionMet = progress.pdfExportCount >= 1;
@@ -148,21 +149,33 @@ export const checkAndUpdateBadges = (triggeredBadgeId: string, progress: Reflect
     const updatedBadges = { ...progress.badges, [triggeredBadgeId]: true };
     const newBadgeCount = progress.badgeCount + 1;
     
-    // Update progress with new badge and deactivate challenge
-    const updatedProgress = {
-      ...progress,
-      badges: updatedBadges,
-      badgeCount: newBadgeCount,
-      earnedBadges: [...progress.earnedBadges, triggeredBadgeId],
-      challengeActive: false, // Deactivate challenge after awarding badge
-      currentChallengeIndex: Math.min(progress.currentChallengeIndex + 1, badgeQueue.length - 1),
-      challengesCompleted: progress.challengesCompleted + 1
-    };
-
-    saveProgress(updatedProgress);
-    updateBadgeCounterDisplay(newBadgeCount);
-    
-    return triggeredBadgeId;
+    // For focus_finder and stay_positive badges, don't update challenge state here
+    // This will be handled in App.tsx when the completion screen is displayed
+    if (triggeredBadgeId === 'focus_finder' || triggeredBadgeId === 'stay_positive') {
+      const updatedProgress = {
+        ...progress,
+        badges: updatedBadges,
+        badgeCount: newBadgeCount,
+        earnedBadges: [...progress.earnedBadges, triggeredBadgeId]
+      };
+      saveProgress(updatedProgress);
+      updateBadgeCounterDisplay(newBadgeCount);
+      return triggeredBadgeId;
+    } else {
+      // For all other badges, update challenge state immediately
+      const updatedProgress = {
+        ...progress,
+        badges: updatedBadges,
+        badgeCount: newBadgeCount,
+        earnedBadges: [...progress.earnedBadges, triggeredBadgeId],
+        challengeActive: false,
+        currentChallengeIndex: Math.min(progress.currentChallengeIndex + 1, badgeQueue.length - 1),
+        challengesCompleted: progress.challengesCompleted + 1
+      };
+      saveProgress(updatedProgress);
+      updateBadgeCounterDisplay(newBadgeCount);
+      return triggeredBadgeId;
+    }
   }
 
   return null;

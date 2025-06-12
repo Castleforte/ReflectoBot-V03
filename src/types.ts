@@ -56,6 +56,7 @@ export interface ReflectoBotProgress {
   lastVisitDate: string;
   challengeActive: boolean;
   currentChallengeIndex: number;
+  stayPositiveMessageCount: number;
 }
 
 export interface DrawingEntry {
