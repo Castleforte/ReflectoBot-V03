@@ -1,11 +1,31 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import { loadProgress, updateProgress, checkAndUpdateBadges } from '../utils/progressManager';
 
 interface GrownUpAccessModalProps {
   onClose: () => void;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function GrownUpAccessModal({ onClose }: GrownUpAccessModalProps) {
+function GrownUpAccessModal({ onClose, onBadgeEarned }: GrownUpAccessModalProps) {
+  const handleDownloadSessionSummary = () => {
+    // Track PDF export
+    const progress = loadProgress();
+    const updatedProgress = {
+      ...progress,
+      pdfExportCount: progress.pdfExportCount + 1
+    };
+
+    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+    
+    if (newBadges.length > 0) {
+      onBadgeEarned(newBadges[0]);
+    }
+
+    // TODO: Implement actual session summary download
+    console.log('Download session summary clicked');
+  };
+
   return (
     <div className="grown-up-modal-overlay" onClick={onClose}>
       <div className="grown-up-modal-container">
@@ -62,7 +82,10 @@ function GrownUpAccessModal({ onClose }: GrownUpAccessModalProps) {
               </ul>
             </div>
 
-            <button className="grown-up-modal-download-button">
+            <button 
+              className="grown-up-modal-download-button"
+              onClick={handleDownloadSessionSummary}
+            >
               Download Session Summary
             </button>
           </div>

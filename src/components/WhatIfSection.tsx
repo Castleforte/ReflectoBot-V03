@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { whatIfPrompts } from '../whatIfPrompts';
+import { loadProgress, updateProgress, checkAndUpdateBadges } from '../utils/progressManager';
 
 interface WhatIfSectionProps {
   onClose: () => void;
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
+function WhatIfSection({ onClose, setRobotSpeech, onBadgeEarned }: WhatIfSectionProps) {
   const [currentPromptIndex, setCurrentPromptIndex] = useState<number>(0);
   const [isRefreshDisabled, setIsRefreshDisabled] = useState<boolean>(false);
   const [isReading, setIsReading] = useState<boolean>(false);
@@ -25,6 +27,19 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
     setTimeout(() => {
       setIsRefreshDisabled(false);
     }, 2000);
+
+    // Track badge progress for viewing What If prompts
+    const progress = loadProgress();
+    const updatedProgress = {
+      ...progress,
+      whatIfPromptViews: progress.whatIfPromptViews + 1
+    };
+
+    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+    
+    if (newBadges.length > 0) {
+      onBadgeEarned(newBadges[0]);
+    }
   };
 
   const handleReadItToMe = () => {
@@ -41,6 +56,19 @@ function WhatIfSection({ onClose, setRobotSpeech }: WhatIfSectionProps) {
       
       // Update robot speech to acknowledge the action
       setRobotSpeech("Listen up! I'm reading your What If prompt out loud. Let your imagination run wild!");
+
+      // Track badge progress for using Read It to Me
+      const progress = loadProgress();
+      const updatedProgress = {
+        ...progress,
+        readItToMeUsed: progress.readItToMeUsed + 1
+      };
+
+      const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+      
+      if (newBadges.length > 0) {
+        onBadgeEarned(newBadges[0]);
+      }
     }
   };
 

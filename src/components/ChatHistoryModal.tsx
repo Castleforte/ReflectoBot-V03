@@ -1,20 +1,50 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { generatePdf } from '../utils/pdfGenerator';
 import { ConversationTurn } from '../types';
+import { loadProgress, updateProgress, checkAndUpdateBadges } from '../utils/progressManager';
 
 interface ChatHistoryModalProps {
   onClose: () => void;
   chatHistory: ConversationTurn[];
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function ChatHistoryModal({ onClose, chatHistory }: ChatHistoryModalProps) {
+function ChatHistoryModal({ onClose, chatHistory, onBadgeEarned }: ChatHistoryModalProps) {
   const pdfContentRef = useRef<HTMLDivElement>(null);
+
+  // Track history view when modal opens
+  useEffect(() => {
+    const progress = loadProgress();
+    const updatedProgress = {
+      ...progress,
+      historyViews: progress.historyViews + 1
+    };
+
+    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+    
+    if (newBadges.length > 0) {
+      onBadgeEarned(newBadges[0]);
+    }
+  }, [onBadgeEarned]);
 
   const handleDownloadHistory = async () => {
     if (pdfContentRef.current) {
       try {
         await generatePdf(pdfContentRef.current, 'reflectobot-chat-history.pdf');
+        
+        // Track PDF export
+        const progress = loadProgress();
+        const updatedProgress = {
+          ...progress,
+          pdfExportCount: progress.pdfExportCount + 1
+        };
+
+        const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+        
+        if (newBadges.length > 0) {
+          onBadgeEarned(newBadges[0]);
+        }
       } catch (error) {
         console.error('Error generating PDF:', error);
       }

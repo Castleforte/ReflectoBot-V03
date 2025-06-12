@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { moodData, moodResponses, sentenceStarters } from '../moodData';
 import { MoodEntry } from '../types';
+import { loadProgress, updateProgress, checkAndUpdateBadges } from '../utils/progressManager';
 
 interface DailyCheckInSectionProps {
   onClose: () => void;
@@ -8,9 +9,10 @@ interface DailyCheckInSectionProps {
   moodHistory: MoodEntry[];
   setMoodHistory: React.Dispatch<React.SetStateAction<MoodEntry[]>>;
   onShowMoodHistory: () => void;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function DailyCheckInSection({ onClose, setRobotSpeech, moodHistory, setMoodHistory, onShowMoodHistory }: DailyCheckInSectionProps) {
+function DailyCheckInSection({ onClose, setRobotSpeech, moodHistory, setMoodHistory, onShowMoodHistory, onBadgeEarned }: DailyCheckInSectionProps) {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [hoveredMood, setHoveredMood] = useState<string | null>(null);
   const [checkInText, setCheckInText] = useState<string>('');
@@ -71,6 +73,26 @@ function DailyCheckInSection({ onClose, setRobotSpeech, moodHistory, setMoodHist
 
       // Add the new entry to mood history
       setMoodHistory(prevHistory => [...prevHistory, newEntry]);
+
+      // Track badge progress
+      const progress = loadProgress();
+      const updatedProgress = {
+        ...progress,
+        moodCheckInCount: progress.moodCheckInCount + 1,
+        badges: {
+          ...progress.badges,
+          // Check for stay_positive badge (happy emoji)
+          stay_positive: progress.badges.stay_positive || selectedMood === 'happy',
+          // Check for kind_heart badge (love emoji)
+          kind_heart: progress.badges.kind_heart || selectedMood === 'love'
+        }
+      };
+
+      const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+      
+      if (newBadges.length > 0) {
+        onBadgeEarned(newBadges[0]);
+      }
       
       // Reset form
       setSelectedMood(null);

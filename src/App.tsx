@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MobileNavButtons from './components/MobileNavButtons';
 import SettingsSection from './components/SettingsSection';
 import ChatSection from './components/ChatSection';
@@ -6,21 +6,37 @@ import DailyCheckInSection from './components/DailyCheckInSection';
 import WhatIfSection from './components/WhatIfSection';
 import DrawItOutSection from './components/DrawItOutSection';
 import ChallengesSection from './components/ChallengesSection';
+import ChallengeCompletePage from './components/ChallengeCompletePage';
 import GrownUpAccessModal from './components/GrownUpAccessModal';
 import ChatHistoryModal from './components/ChatHistoryModal';
 import MoodHistoryModal from './components/MoodHistoryModal';
-import { ConversationTurn, MoodEntry } from './types';
+import { ConversationTurn, MoodEntry, ReflectoBotProgress } from './types';
+import { loadProgress, trackDailyVisit } from './utils/progressManager';
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges'>('welcome');
+  const [currentScreen, setCurrentScreen] = useState<'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges' | 'challenge-complete'>('welcome');
   const [showGrownUpModal, setShowGrownUpModal] = useState(false);
   const [showChatHistoryModal, setShowChatHistoryModal] = useState(false);
   const [showMoodHistoryModal, setShowMoodHistoryModal] = useState(false);
   const [chatMessages, setChatMessages] = useState<ConversationTurn[]>([]);
   const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
+  const [progress, setProgress] = useState<ReflectoBotProgress>(loadProgress());
+  const [newlyEarnedBadge, setNewlyEarnedBadge] = useState<string | null>(null);
   const [robotSpeech, setRobotSpeech] = useState<string>(
     "Hey friend! I'm Reflekto, your AI buddy. Let's explore your thoughts together — and if you want to tweak anything, just tap my logo!"
   );
+
+  // Track daily visit on component mount
+  useEffect(() => {
+    const updatedProgress = trackDailyVisit();
+    setProgress(updatedProgress);
+  }, []);
+
+  const handleBadgeEarned = (badgeId: string) => {
+    setNewlyEarnedBadge(badgeId);
+    setCurrentScreen('challenge-complete');
+    setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
+  };
 
   const handleLogoClick = () => {
     if (currentScreen === 'settings') {
@@ -58,6 +74,18 @@ function App() {
         setRobotSpeech("Hey friend! I'm Reflekto, your AI buddy. Let's explore your thoughts together — and if you want to tweak anything, just tap my logo!");
         break;
     }
+  };
+
+  const handleNextChallengeFromApp = () => {
+    setCurrentScreen('challenges');
+    setNewlyEarnedBadge(null);
+    setRobotSpeech("Ready for a new challenge? Put on your thinking cap and give this one a try!");
+  };
+
+  const handleMyBadgesFromApp = () => {
+    setCurrentScreen('challenges');
+    setNewlyEarnedBadge(null);
+    setRobotSpeech(`Wow! You've already earned ${progress.badgeCount} badges! Just ${18 - progress.badgeCount} more to unlock the full set. Keep going!`);
   };
 
   return (
@@ -170,6 +198,7 @@ function App() {
             setChatMessages={setChatMessages}
             onShowChatHistory={() => setShowChatHistoryModal(true)}
             setRobotSpeech={setRobotSpeech}
+            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'daily-checkin' ? (
           <DailyCheckInSection 
@@ -178,21 +207,31 @@ function App() {
             moodHistory={moodHistory}
             setMoodHistory={setMoodHistory}
             onShowMoodHistory={() => setShowMoodHistoryModal(true)}
+            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'what-if' ? (
           <WhatIfSection 
             onClose={() => setCurrentScreen('welcome')}
             setRobotSpeech={setRobotSpeech}
+            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'draw-it-out' ? (
           <DrawItOutSection 
             onClose={() => setCurrentScreen('welcome')}
             setRobotSpeech={setRobotSpeech}
+            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'challenges' ? (
           <ChallengesSection 
             onClose={() => setCurrentScreen('welcome')}
             setRobotSpeech={setRobotSpeech}
+          />
+        ) : currentScreen === 'challenge-complete' && newlyEarnedBadge ? (
+          <ChallengeCompletePage
+            badgeId={newlyEarnedBadge}
+            progress={progress}
+            onNextChallenge={handleNextChallengeFromApp}
+            onMyBadges={handleMyBadgesFromApp}
           />
         ) : (
           <div className="info-section">
@@ -254,7 +293,10 @@ function App() {
 
       {/* Grown-Up Access Modal */}
       {showGrownUpModal && (
-        <GrownUpAccessModal onClose={() => setShowGrownUpModal(false)} />
+        <GrownUpAccessModal 
+          onClose={() => setShowGrownUpModal(false)} 
+          onBadgeEarned={handleBadgeEarned}
+        />
       )}
 
       {/* Chat History Modal */}
@@ -262,6 +304,7 @@ function App() {
         <ChatHistoryModal 
           onClose={() => setShowChatHistoryModal(false)} 
           chatHistory={chatMessages}
+          onBadgeEarned={handleBadgeEarned}
         />
       )}
 
@@ -270,6 +313,7 @@ function App() {
         <MoodHistoryModal 
           onClose={() => setShowMoodHistoryModal(false)} 
           moodHistory={moodHistory}
+          onBadgeEarned={handleBadgeEarned}
         />
       )}
     </div>

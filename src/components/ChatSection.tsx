@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { chatPrompts, promptStarters } from '../prompts';
 import { ConversationTurn } from '../types';
+import { loadProgress, updateProgress, checkAndUpdateBadges } from '../utils/progressManager';
 
 interface ChatSectionProps {
   onClose: () => void;
@@ -8,9 +9,10 @@ interface ChatSectionProps {
   setChatMessages: React.Dispatch<React.SetStateAction<ConversationTurn[]>>;
   onShowChatHistory: () => void;
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
-function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory, setRobotSpeech }: ChatSectionProps) {
+function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory, setRobotSpeech, onBadgeEarned }: ChatSectionProps) {
   const [currentPromptIndex, setCurrentPromptIndex] = useState<number>(0);
   const [chatInputText, setChatInputText] = useState<string>('');
   const [isRefreshDisabled, setIsRefreshDisabled] = useState<boolean>(false);
@@ -95,6 +97,28 @@ function ChatSection({ onClose, chatMessages, setChatMessages, onShowChatHistory
     
     // Clear input
     setChatInputText('');
+
+    // Track badge progress
+    const progress = loadProgress();
+    const updatedProgress = {
+      ...progress,
+      chatMessageCount: progress.chatMessageCount + 1,
+      badges: {
+        ...progress.badges,
+        // Check for deep_thinker badge (15+ words)
+        deep_thinker: progress.badges.deep_thinker || trimmedMessage.split(/\s+/).length >= 15,
+        // Check for brave_voice badge (contains "because")
+        brave_voice: progress.badges.brave_voice || trimmedMessage.toLowerCase().includes('because'),
+        // Check for truth_spotter badge (contains "I realized")
+        truth_spotter: progress.badges.truth_spotter || trimmedMessage.toLowerCase().includes('i realized')
+      }
+    };
+
+    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+    
+    if (newBadges.length > 0) {
+      onBadgeEarned(newBadges[0]);
+    }
     
     // TODO: Replace this logic with actual GPT API call in the future
   };

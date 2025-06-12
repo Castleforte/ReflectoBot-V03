@@ -46,6 +46,12 @@ export const moodData = [
     emoji: '😴',
     blueImage: '/Mood-Emojis_0000s_0000_worried-blue.png',
     colorImage: '/Mood-Emojis_0001s_0000_worried-color.png'
+  },
+  { 
+    name: 'love', 
+    emoji: '😍',
+    blueImage: '/Mood-Emojis_0000s_0007_happy-blue.png',
+    colorImage: '/Mood-Emojis_0001s_0007_happy-color.png'
   }
 ];
 
@@ -57,7 +63,8 @@ export const moodResponses: Record<string, string> = {
   angry: "Sounds like something upset you. Want to let it out?",
   overwhelmed: "If you're feeling swirly inside, I'm all ears.",
   blank: "Not sure how you feel? That's okay too. Let's figure it out together.",
-  drained: "It's been a lot today, huh? You can tell me anything."
+  drained: "It's been a lot today, huh? You can tell me anything.",
+  love: "Aww, feeling the love today! That's so wonderful to see!"
 };
 
 export const sentenceStarters: Record<string, string> = {
@@ -68,5 +75,6 @@ export const sentenceStarters: Record<string, string> = {
   angry: "I'm feeling angry today because...",
   overwhelmed: "I feel overwhelmed because...",
   blank: "I'm not sure how to describe how I feel but...",
-  drained: "I feel really drained today because..."
+  drained: "I feel really drained today because...",
+  love: "I'm feeling so much love today because..."
 };

@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import DrawingPreviewModal from './DrawingPreviewModal';
+import { loadProgress, updateProgress, checkAndUpdateBadges } from '../utils/progressManager';
 
 interface DrawItOutSectionProps {
   onClose: () => void;
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
+  onBadgeEarned: (badgeId: string) => void;
 }
 
 interface Point {
@@ -30,7 +32,7 @@ const colors = [
 
 const brushSizes = [2, 4, 8]; // Small, Medium, Large
 
-function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
+function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutSectionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentColor, setCurrentColor] = useState('#ff3333');
@@ -45,6 +47,7 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
   const [showDrawingPreview, setShowDrawingPreview] = useState(false);
   const [savedDrawingDataUrl, setSavedDrawingDataUrl] = useState('');
   const [selectorTimeout, setSelectorTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [usedColors, setUsedColors] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -183,6 +186,19 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
     setUndoStack(prev => prev.slice(0, -1));
     setStrokes(previousState);
     redrawCanvas(previousState);
+
+    // Track badge progress for undo
+    const progress = loadProgress();
+    const updatedProgress = {
+      ...progress,
+      undoCount: progress.undoCount + 1
+    };
+
+    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+    
+    if (newBadges.length > 0) {
+      onBadgeEarned(newBadges[0]);
+    }
   };
 
   const handleRedo = () => {
@@ -203,6 +219,23 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
     const dataUrl = canvas.toDataURL('image/png');
     setSavedDrawingDataUrl(dataUrl);
     setShowDrawingPreview(true);
+
+    // Track badge progress for saving drawing
+    const progress = loadProgress();
+    const updatedProgress = {
+      ...progress,
+      drawingsSaved: progress.drawingsSaved + 1,
+      colorsUsedInDrawing: Math.max(progress.colorsUsedInDrawing, usedColors.size)
+    };
+
+    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+    
+    if (newBadges.length > 0) {
+      onBadgeEarned(newBadges[0]);
+    }
+
+    // Reset used colors for next drawing
+    setUsedColors(new Set());
 
     // Update robot speech
     setRobotSpeech("Amazing artwork! I love seeing your creativity come to life. Your drawing is ready to save!");
@@ -225,6 +258,8 @@ function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
   const handleColorChange = (color: string) => {
     setCurrentColor(color);
     setCurrentTool('brush');
+    // Track colors used in current drawing
+    setUsedColors(prev => new Set([...prev, color]));
   };
 
   const handleBrushTool = () => {

@@ -71,7 +71,7 @@ function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) 
 
   const handleMyBadges = () => {
     setCurrentScreen('my-badges');
-    setRobotSpeech(`Wow! You've already earned ${progress.badgeCount} badges! Just ${18 - progress.badgeCount} more to unlock the full set. Keep going—`);
+    setRobotSpeech(`Wow! You've already earned ${progress.badgeCount} badges! Just ${18 - progress.badgeCount} more to unlock the full set. Keep going!`);
   };
 
   const handleBackToNextChallenge = () => {
