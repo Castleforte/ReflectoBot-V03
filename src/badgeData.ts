@@ -149,34 +149,112 @@ export const allBadges: Badge[] = [
 
 export const challengeDetails: Challenge[] = [
   {
+    id: 'calm_creator_challenge',
+    title: 'Calm Creator Challenge',
+    description: 'Create and save a drawing that expresses how you\'re feeling.\nLet your creativity flow and capture your emotions on canvas!',
+    badgeId: 'calm_creator'
+  },
+  {
     id: 'mood_mapper_challenge',
     title: 'Mood Mapper Challenge',
     description: 'Track your emotions today with emojis. How many different\nones did you feel? What made them change?',
     badgeId: 'mood_mapper'
   },
   {
+    id: 'bounce_back_challenge',
+    title: 'Bounce Back Challenge',
+    description: 'Practice resilience by using the undo button while drawing.\nMistakes are just stepping stones to something better!',
+    badgeId: 'bounce_back'
+  },
+  {
+    id: 'reflecto_rookie_challenge',
+    title: 'Reflecto Rookie Challenge',
+    description: 'Start your journey by sending your first message to ReflectoBot.\nShare what\'s on your mind - I\'m here to listen!',
+    badgeId: 'reflecto_rookie'
+  },
+  {
+    id: 'persistence_challenge',
+    title: 'Persistence Challenge',
+    description: 'Show your commitment by returning to ReflectoBot on different days.\nConsistency is the key to growth!',
+    badgeId: 'persistence'
+  },
+  {
+    id: 'stay_positive_challenge',
+    title: 'Stay Positive Challenge',
+    description: 'Find something that makes you happy today and select the happy emoji.\nPositivity is a superpower!',
+    badgeId: 'stay_positive'
+  },
+  {
+    id: 'great_job_challenge',
+    title: 'Great Job Challenge',
+    description: 'Save your progress by downloading your chat or mood history.\nYour journey deserves to be remembered!',
+    badgeId: 'great_job'
+  },
+  {
+    id: 'brave_voice_challenge',
+    title: 'Brave Voice Challenge',
+    description: 'Share how you\'re feeling and explain why using the word "because".\nYour voice matters!',
+    badgeId: 'brave_voice'
+  },
+  {
+    id: 'what_if_explorer_challenge',
+    title: 'What If Explorer Challenge',
+    description: 'Explore your imagination by viewing 3 different What If prompts.\nLet your creativity run wild!',
+    badgeId: 'what_if_explorer'
+  },
+  {
+    id: 'truth_spotter_challenge',
+    title: 'Truth Spotter Challenge',
+    description: 'Share a moment of insight by using "I realized" in a message.\nSelf-discovery is a beautiful thing!',
+    badgeId: 'truth_spotter'
+  },
+  {
+    id: 'kind_heart_challenge',
+    title: 'Kind Heart Challenge',
+    description: 'Express love and kindness by selecting a love emoji.\nSpread the love wherever you go!',
+    badgeId: 'kind_heart'
+  },
+  {
+    id: 'goal_getter_challenge',
+    title: 'Goal Getter Challenge',
+    description: 'Show your determination by completing 5 total challenges.\nYou\'re unstoppable when you set your mind to it!',
+    badgeId: 'goal_getter'
+  },
+  {
+    id: 'good_listener_challenge',
+    title: 'Good Listener Challenge',
+    description: 'Reflect on your journey by viewing your chat or mood history 3 times.\nLooking back helps you move forward!',
+    badgeId: 'good_listener'
+  },
+  {
     id: 'creative_spark_challenge',
     title: 'Creative Spark Challenge',
-    description: 'Create a colorful drawing using at least 5 different colors. Let your creativity shine!',
+    description: 'Create a colorful drawing using at least 5 different colors.\nLet your creativity shine!',
     badgeId: 'creative_spark'
   },
   {
     id: 'deep_thinker_challenge',
     title: 'Deep Thinker Challenge',
-    description: 'Share a thoughtful message with ReflectoBot using at least 15 words. What\'s really on your mind?',
+    description: 'Share a thoughtful message with ReflectoBot using at least 15 words.\nWhat\'s really on your mind?',
     badgeId: 'deep_thinker'
   },
   {
-    id: 'what_if_explorer_challenge',
-    title: 'What If Explorer Challenge',
-    description: 'Explore your imagination by viewing 3 different What If prompts. Let your creativity run wild!',
-    badgeId: 'what_if_explorer'
+    id: 'boost_buddy_challenge',
+    title: 'Boost Buddy Challenge',
+    description: 'Use the "Read it to me" feature in the What If section.\nSometimes hearing things out loud helps us think differently!',
+    badgeId: 'boost_buddy'
   },
   {
-    id: 'brave_voice_challenge',
-    title: 'Brave Voice Challenge',
-    description: 'Share how you\'re feeling and explain why using the word "because". Your voice matters!',
-    badgeId: 'brave_voice'
+    id: 'focus_finder_challenge',
+    title: 'Focus Finder Challenge',
+    description: 'Complete a challenge without switching to other sections.\nFocus is your secret weapon for success!',
+    badgeId: 'focus_finder'
+  },
+  {
+    id: 'super_star_challenge',
+    title: 'Super Star Challenge',
+    description: 'Achieve greatness by earning all other badges.\nYou\'re truly a ReflectoBot superstar!',
+    badgeId: 'super_star'
   }
 ];
 

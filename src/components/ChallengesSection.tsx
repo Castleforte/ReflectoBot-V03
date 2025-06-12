@@ -3,7 +3,7 @@ import NextChallengePage from './NextChallengePage';
 import ChallengeCompletePage from './ChallengeCompletePage';
 import MyBadgesPage from './MyBadgesPage';
 import { loadProgress, updateProgress } from '../utils/progressManager';
-import { challengeDetails } from '../badgeData';
+import { challengeDetails, badgeQueue } from '../badgeData';
 import { ReflectoBotProgress } from '../types';
 
 interface ChallengesSectionProps {
@@ -16,11 +16,23 @@ type ChallengeScreen = 'next-challenge' | 'challenge-complete' | 'my-badges';
 function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) {
   const [currentScreen, setCurrentScreen] = useState<ChallengeScreen>('next-challenge');
   const [progress, setProgress] = useState<ReflectoBotProgress>(loadProgress());
-  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
   const [newlyEarnedBadge, setNewlyEarnedBadge] = useState<string | null>(null);
 
+  // Get the current challenge based on progress
+  const getCurrentChallenge = () => {
+    if (progress.currentChallengeIndex >= badgeQueue.length) {
+      // All challenges completed
+      return null;
+    }
+    
+    const currentBadgeKey = badgeQueue[progress.currentChallengeIndex].key;
+    return challengeDetails.find(challenge => challenge.badgeId === currentBadgeKey);
+  };
+
+  const currentChallenge = getCurrentChallenge();
+
   const handleStartChallenge = () => {
-    const currentChallenge = challengeDetails[currentChallengeIndex];
+    if (!currentChallenge) return;
     
     // Activate the challenge
     const updatedProgress = updateProgress({ 
@@ -31,6 +43,9 @@ function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) 
     
     // Update robot speech based on challenge
     switch (currentChallenge.badgeId) {
+      case 'calm_creator':
+        setRobotSpeech("Time to get creative! Head to Draw It Out and create a beautiful drawing that shows how you're feeling.");
+        break;
       case 'mood_mapper':
         setRobotSpeech("Time to explore your emotions! Head to Daily Check-In and track how you're feeling today.");
         break;
@@ -46,6 +61,9 @@ function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) 
       case 'brave_voice':
         setRobotSpeech("Time to be brave and share your feelings! Use the word 'because' to explain how you're feeling.");
         break;
+      case 'boost_buddy':
+        setRobotSpeech("Let's try something fun! Go to What If and use the 'Read It to Me' button to hear a prompt out loud.");
+        break;
       default:
         setRobotSpeech("Great choice! Go explore and complete your challenge. I believe in you!");
     }
@@ -55,8 +73,6 @@ function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) 
   };
 
   const handleNextChallenge = () => {
-    // Cycle to next challenge
-    setCurrentChallengeIndex((prev) => (prev + 1) % challengeDetails.length);
     setCurrentScreen('next-challenge');
     setNewlyEarnedBadge(null);
     setRobotSpeech("Ready for a new challenge? Put on your thinking cap and give this one a try!");
@@ -72,7 +88,48 @@ function ChallengesSection({ onClose, setRobotSpeech }: ChallengesSectionProps) 
     setRobotSpeech("Ready for a new challenge? Put on your thinking cap and give this one a try!");
   };
 
-  const currentChallenge = challengeDetails[currentChallengeIndex];
+  // If all challenges are completed, show completion message
+  if (!currentChallenge) {
+    return (
+      <div className="challenges-section">
+        <div className="next-challenge-content">
+          <div className="next-challenge-header">
+            <h1 className="next-challenge-title">All Challenges Complete!</h1>
+            <button 
+              className="my-badges-button"
+              onClick={handleMyBadges}
+            >
+              <img src="/My_Badges_Button_Icon.png" alt="My Badges" className="button-icon" />
+              <span className="font-bold leading-none">My Badges</span>
+            </button>
+          </div>
+          
+          <div className="challenge-card">
+            <div className="challenge-content">
+              <h2 className="challenge-card-title">Congratulations!</h2>
+              <p className="challenge-card-description">
+                You've completed all available challenges! You're a true ReflectoBot champion.
+                Keep exploring and growing with your AI buddy!
+              </p>
+              <div className="challenge-buttons-container">
+                <button 
+                  className="start-challenge-button"
+                  onClick={handleMyBadges}
+                >
+                  View All Badges
+                </button>
+              </div>
+            </div>
+            <img 
+              src="/badges/SuperStar.png" 
+              alt="Super Star Badge"
+              className="challenge-badge"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="challenges-section">

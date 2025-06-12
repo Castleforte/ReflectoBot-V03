@@ -74,8 +74,8 @@ function NextChallengePage({ challenge, onStartChallenge, onMyBadges, progress }
         </div>
         
         <img 
-          src="/badges/MoodMapper.png" 
-          alt="Mood Mapper Badge"
+          src={`/badges/${challenge.badgeId.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}.png`}
+          alt={`${challenge.title} Badge`}
           className="challenge-badge"
         />
       </div>
