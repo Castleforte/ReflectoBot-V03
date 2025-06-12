@@ -1342,9 +1342,19 @@
 }
 
 .challenge-progress-text {
-  @apply inline-block bg-[#a4f61e] text-black px-4 py-2 rounded-full;
   @apply text-lg font-bold;
   font-family: "magistral", sans-serif;
+  color: #BFFF00;
+  border: 2px solid #BFFF00;
+  background: transparent;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  
+  @media (min-width: 1024px) {
+    font-size: 1.125rem;
+  }
 }
 
 .challenge-buttons-container {
