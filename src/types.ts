@@ -42,7 +42,7 @@ export interface ReflectoBotProgress {
   chatMessageCount: number;
   undoCount: number;
   returnDays: string[];
-  pdfExportCount: number;
+  pdfExportCount: 0;
   whatIfPromptViews: number;
   historyViews: number;
   drawingsSaved: number;
@@ -50,6 +50,9 @@ export interface ReflectoBotProgress {
   challengesCompleted: number;
   readItToMeUsed: number;
   focusedChallengeCompleted: boolean;
+  focusedChallengeActions: number;
+  focusedChallengeStartTime: number | null;
+  focusedChallengePage: string | null;
   lastVisitDate: string;
   challengeActive: boolean;
   currentChallengeIndex: number;

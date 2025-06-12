@@ -5,9 +5,10 @@ interface WhatIfSectionProps {
   onClose: () => void;
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
   onBadgeEarned: (badgeId: string) => void;
+  onMeaningfulAction: () => void;
 }
 
-function WhatIfSection({ onClose, setRobotSpeech, onBadgeEarned }: WhatIfSectionProps) {
+function WhatIfSection({ onClose, setRobotSpeech, onBadgeEarned, onMeaningfulAction }: WhatIfSectionProps) {
   const [currentPromptIndex, setCurrentPromptIndex] = useState<number>(0);
   const [isRefreshDisabled, setIsRefreshDisabled] = useState<boolean>(false);
   const [isReading, setIsReading] = useState<boolean>(false);
@@ -26,6 +27,9 @@ function WhatIfSection({ onClose, setRobotSpeech, onBadgeEarned }: WhatIfSection
     setTimeout(() => {
       setIsRefreshDisabled(false);
     }, 2000);
+
+    // Track meaningful action for Focus Finder
+    onMeaningfulAction();
 
     // Track badge progress for viewing What If prompts
     onBadgeEarned('what_if_explorer');
@@ -46,6 +50,9 @@ function WhatIfSection({ onClose, setRobotSpeech, onBadgeEarned }: WhatIfSection
       // Update robot speech to acknowledge the action
       setRobotSpeech("Listen up! I'm reading your What If prompt out loud. Let your imagination run wild!");
 
+      // Track meaningful action for Focus Finder
+      onMeaningfulAction();
+
       // Track badge progress for using Read It to Me
       onBadgeEarned('boost_buddy');
     }
@@ -58,6 +65,9 @@ function WhatIfSection({ onClose, setRobotSpeech, onBadgeEarned }: WhatIfSection
     // TODO: Save the response or handle it as needed
     // For now, we'll just show a confirmation in the robot speech
     setRobotSpeech("Wow! I love your creative thinking! That's such an imaginative answer. Want to try another What If question?");
+    
+    // Track meaningful action for Focus Finder
+    onMeaningfulAction();
     
     // Clear the input
     setWhatIfText('');

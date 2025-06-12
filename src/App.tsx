@@ -26,6 +26,11 @@ function App() {
     "Hey friend! I'm Reflekto, your AI buddy. Let's explore your thoughts together — and if you want to tweak anything, just tap my logo!"
   );
 
+  // Focus Finder tracking state
+  const [focusFinderMeaningfulActions, setFocusFinderMeaningfulActions] = useState(0);
+  const [focusFinderStartTime, setFocusFinderStartTime] = useState<number | null>(null);
+  const [focusFinderPage, setFocusFinderPage] = useState<string | null>(null);
+
   // Track daily visit on component mount
   useEffect(() => {
     const updatedProgress = trackDailyVisit();
@@ -49,7 +54,7 @@ function App() {
         updatedProgress.undoCount = Math.max(updatedProgress.undoCount, 3);
         break;
       case 'reflecto_rookie':
-        updatedProgress.chatMessageCount = Math.max(updatedProgress.chatMessageCount, 1);
+        updatedProgress.chatMessageCount = updatedProgress.chatMessageCount + 1;
         break;
       case 'stay_positive':
         updatedProgress.badges.stay_positive = true;
@@ -100,7 +105,30 @@ function App() {
     }
   };
 
+  const handleMeaningfulAction = () => {
+    const currentProgress = loadProgress();
+    if (currentProgress.challengeActive && focusFinderPage === currentScreen) {
+      setFocusFinderMeaningfulActions(prev => prev + 1);
+    }
+  };
+
+  const checkFocusFinderConditions = () => {
+    const currentProgress = loadProgress();
+    if (currentProgress.challengeActive && 
+        focusFinderStartTime && 
+        focusFinderPage === currentScreen &&
+        focusFinderMeaningfulActions >= 3) {
+      
+      const timeSpent = Date.now() - focusFinderStartTime;
+      if (timeSpent >= 90000) { // 90 seconds
+        handleBadgeEarned('focus_finder');
+      }
+    }
+  };
+
   const handleLogoClick = () => {
+    checkFocusFinderConditions(); // Check before navigation
+    
     if (currentScreen === 'settings') {
       setCurrentScreen('welcome');
       setRobotSpeech("Hey friend! I'm Reflekto, your AI buddy. Let's explore your thoughts together — and if you want to tweak anything, just tap my logo!");
@@ -108,10 +136,22 @@ function App() {
       setCurrentScreen('settings');
       setRobotSpeech("Tuning things just the way you like them? Smart move! You can save your session, adjust sounds-or even start fresh. Your ReflectoBot, your rules!");
     }
+    
+    // Reset Focus Finder tracking for new screen
+    setFocusFinderMeaningfulActions(0);
+    setFocusFinderStartTime(Date.now());
+    setFocusFinderPage(currentScreen === 'settings' ? 'welcome' : 'settings');
   };
 
   const handleNavButtonClick = (screen: 'welcome' | 'settings' | 'chat' | 'daily-checkin' | 'what-if' | 'draw-it-out' | 'challenges') => {
+    checkFocusFinderConditions(); // Check before navigation
+    
     setCurrentScreen(screen);
+    
+    // Reset Focus Finder tracking for new screen
+    setFocusFinderMeaningfulActions(0);
+    setFocusFinderStartTime(Date.now());
+    setFocusFinderPage(screen);
     
     switch (screen) {
       case 'chat':
@@ -148,6 +188,17 @@ function App() {
     setCurrentScreen('challenges');
     setNewlyEarnedBadge(null);
     setRobotSpeech(`Wow! You've already earned ${progress.badgeCount} badges! Just ${18 - progress.badgeCount} more to unlock the full set. Keep going!`);
+  };
+
+  const handleSectionClose = (sectionName: string) => {
+    checkFocusFinderConditions(); // Check before closing
+    setCurrentScreen('welcome');
+    setRobotSpeech("Hey friend! I'm Reflekto, your AI buddy. Let's explore your thoughts together — and if you want to tweak anything, just tap my logo!");
+    
+    // Reset Focus Finder tracking
+    setFocusFinderMeaningfulActions(0);
+    setFocusFinderStartTime(Date.now());
+    setFocusFinderPage('welcome');
   };
 
   return (
@@ -250,42 +301,46 @@ function App() {
         {/* Main Content Section */}
         {currentScreen === 'settings' ? (
           <SettingsSection 
-            onClose={() => setCurrentScreen('welcome')} 
+            onClose={() => handleSectionClose('settings')} 
             onShowGrownUpModal={() => setShowGrownUpModal(true)}
           />
         ) : currentScreen === 'chat' ? (
           <ChatSection 
-            onClose={() => setCurrentScreen('welcome')}
+            onClose={() => handleSectionClose('chat')}
             chatMessages={chatMessages}
             setChatMessages={setChatMessages}
             onShowChatHistory={() => setShowChatHistoryModal(true)}
             setRobotSpeech={setRobotSpeech}
             onBadgeEarned={handleBadgeEarned}
+            onMeaningfulAction={handleMeaningfulAction}
           />
         ) : currentScreen === 'daily-checkin' ? (
           <DailyCheckInSection 
-            onClose={() => setCurrentScreen('welcome')}
+            onClose={() => handleSectionClose('daily-checkin')}
             setRobotSpeech={setRobotSpeech}
             moodHistory={moodHistory}
             setMoodHistory={setMoodHistory}
             onShowMoodHistory={() => setShowMoodHistoryModal(true)}
             onBadgeEarned={handleBadgeEarned}
+            onMeaningfulAction={handleMeaningfulAction}
           />
         ) : currentScreen === 'what-if' ? (
           <WhatIfSection 
-            onClose={() => setCurrentScreen('welcome')}
+            onClose={() => handleSectionClose('what-if')}
             setRobotSpeech={setRobotSpeech}
             onBadgeEarned={handleBadgeEarned}
+            onMeaningfulAction={handleMeaningfulAction}
           />
         ) : currentScreen === 'draw-it-out' ? (
           <DrawItOutSection 
-            onClose={() => setCurrentScreen('welcome')}
+            onClose={() => handleSectionClose('draw-it-out')}
             setRobotSpeech={setRobotSpeech}
             onBadgeEarned={handleBadgeEarned}
+            onMeaningfulAction={handleMeaningfulAction}
           />
         ) : currentScreen === 'challenges' ? (
           <ChallengesSection 
-            onClose={() => setCurrentScreen('welcome')}
+            onClose={() => handleSectionClose('challenges')}
             setRobotSpeech={setRobotSpeech}
           />
         ) : currentScreen === 'challenge-complete' && newlyEarnedBadge ? (
