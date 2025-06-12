@@ -126,6 +126,7 @@ function App() {
         // Do NOT change screen or robot speech here. The display will be delayed.
       } else {
         // For all other badges (including Brave Voice), immediately show the complete page
+        console.log("Attempting to set screen to 'challenge-complete' for badge:", awardedBadgeId);
         setNewlyEarnedBadge(awardedBadgeId);
         setCurrentScreen('challenge-complete');
         setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
