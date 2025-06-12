@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import DrawingPreviewModal from './DrawingPreviewModal';
-import { loadProgress, updateProgress, checkAndUpdateBadges } from '../utils/progressManager';
 
 interface DrawItOutSectionProps {
   onClose: () => void;
   setRobotSpeech: React.Dispatch<React.SetStateAction<string>>;
-  onBadgeEarned: (badgeId: string) => void;
 }
 
 interface Point {
@@ -32,7 +30,7 @@ const colors = [
 
 const brushSizes = [2, 4, 8]; // Small, Medium, Large
 
-function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutSectionProps) {
+function DrawItOutSection({ onClose, setRobotSpeech }: DrawItOutSectionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentColor, setCurrentColor] = useState('#ff3333');
@@ -187,19 +185,7 @@ function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutS
     setStrokes(previousState);
     redrawCanvas(previousState);
 
-    // Track badge progress for undo
-    setTimeout(() => {
-      const progress = loadProgress();
-      const updatedProgress = updateProgress({
-        undoCount: progress.undoCount + 1
-      });
-
-      const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
-      
-      if (newBadges.length > 0) {
-        onBadgeEarned(newBadges[0]);
-      }
-    }, 100);
+    // Removed badge tracking logic
   };
 
   const handleRedo = () => {
@@ -238,23 +224,7 @@ function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutS
     setShowDrawingPreview(false);
     setRobotSpeech("Perfect! Your drawing has been saved to your device. You're such a talented artist!");
 
-    // Track badge progress for saving drawing (after download completes)
-    setTimeout(() => {
-      const progress = loadProgress();
-      const updatedProgress = updateProgress({
-        drawingsSaved: progress.drawingsSaved + 1,
-        colorsUsedInDrawing: Math.max(progress.colorsUsedInDrawing, usedColors.size)
-      });
-
-      const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
-      
-      if (newBadges.length > 0) {
-        onBadgeEarned(newBadges[0]);
-      }
-
-      // Reset used colors for next drawing
-      setUsedColors(new Set());
-    }, 500);
+    // Removed badge tracking logic
   };
 
   const handleColorChange = (color: string) => {
@@ -458,5 +428,3 @@ function DrawItOutSection({ onClose, setRobotSpeech, onBadgeEarned }: DrawItOutS
     </div>
   );
 }
-
-export default DrawItOutSection;

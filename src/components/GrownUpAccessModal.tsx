@@ -1,27 +1,14 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import { loadProgress, updateProgress, checkAndUpdateBadges } from '../utils/progressManager';
 
 interface GrownUpAccessModalProps {
   onClose: () => void;
-  onBadgeEarned: (badgeId: string) => void;
 }
 
-function GrownUpAccessModal({ onClose, onBadgeEarned }: GrownUpAccessModalProps) {
+function GrownUpAccessModal({ onClose }: GrownUpAccessModalProps) {
   const handleDownloadSessionSummary = () => {
-    // Track PDF export
-    const progress = loadProgress();
-    const updatedProgress = {
-      ...progress,
-      pdfExportCount: progress.pdfExportCount + 1
-    };
-
-    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
+    // Removed badge tracking logic
     
-    if (newBadges.length > 0) {
-      onBadgeEarned(newBadges[0]);
-    }
-
     // TODO: Implement actual session summary download
     console.log('Download session summary clicked');
   };
@@ -94,5 +81,3 @@ function GrownUpAccessModal({ onClose, onBadgeEarned }: GrownUpAccessModalProps)
     </div>
   );
 }
-
-export default GrownUpAccessModal;

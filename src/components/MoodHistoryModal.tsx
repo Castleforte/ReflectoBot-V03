@@ -3,49 +3,23 @@ import { X } from 'lucide-react';
 import { moodData } from '../moodData';
 import { generatePdf } from '../utils/pdfGenerator';
 import { MoodEntry } from '../types';
-import { loadProgress, updateProgress, checkAndUpdateBadges } from '../utils/progressManager';
 
 interface MoodHistoryModalProps {
   onClose: () => void;
   moodHistory: MoodEntry[];
-  onBadgeEarned: (badgeId: string) => void;
 }
 
-function MoodHistoryModal({ onClose, moodHistory, onBadgeEarned }: MoodHistoryModalProps) {
+function MoodHistoryModal({ onClose, moodHistory }: MoodHistoryModalProps) {
   const pdfContentRef = useRef<HTMLDivElement>(null);
 
-  // Track history view when modal opens
-  useEffect(() => {
-    const progress = loadProgress();
-    const updatedProgress = {
-      ...progress,
-      historyViews: progress.historyViews + 1
-    };
-
-    const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
-    
-    if (newBadges.length > 0) {
-      onBadgeEarned(newBadges[0]);
-    }
-  }, [onBadgeEarned]);
+  // Removed badge tracking logic
 
   const handleDownloadHistory = async () => {
     if (pdfContentRef.current) {
       try {
         await generatePdf(pdfContentRef.current, 'reflectobot-mood-history.pdf');
         
-        // Track PDF export
-        const progress = loadProgress();
-        const updatedProgress = {
-          ...progress,
-          pdfExportCount: progress.pdfExportCount + 1
-        };
-
-        const { progress: finalProgress, newBadges } = checkAndUpdateBadges(updatedProgress);
-        
-        if (newBadges.length > 0) {
-          onBadgeEarned(newBadges[0]);
-        }
+        // Removed badge tracking logic
       } catch (error) {
         console.error('Error generating PDF:', error);
       }
@@ -160,5 +134,3 @@ function MoodHistoryModal({ onClose, moodHistory, onBadgeEarned }: MoodHistoryMo
     </div>
   );
 }
-
-export default MoodHistoryModal;

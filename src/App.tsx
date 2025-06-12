@@ -32,11 +32,7 @@ function App() {
     setProgress(updatedProgress);
   }, []);
 
-  const handleBadgeEarned = (badgeId: string) => {
-    setNewlyEarnedBadge(badgeId);
-    setCurrentScreen('challenge-complete');
-    setRobotSpeech("Wow! You just earned a badge! That's amazing - you're doing such great work!");
-  };
+  // Removed handleBadgeEarned function - no longer needed
 
   const handleLogoClick = () => {
     if (currentScreen === 'settings') {
@@ -198,7 +194,6 @@ function App() {
             setChatMessages={setChatMessages}
             onShowChatHistory={() => setShowChatHistoryModal(true)}
             setRobotSpeech={setRobotSpeech}
-            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'daily-checkin' ? (
           <DailyCheckInSection 
@@ -207,19 +202,16 @@ function App() {
             moodHistory={moodHistory}
             setMoodHistory={setMoodHistory}
             onShowMoodHistory={() => setShowMoodHistoryModal(true)}
-            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'what-if' ? (
           <WhatIfSection 
             onClose={() => setCurrentScreen('welcome')}
             setRobotSpeech={setRobotSpeech}
-            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'draw-it-out' ? (
           <DrawItOutSection 
             onClose={() => setCurrentScreen('welcome')}
             setRobotSpeech={setRobotSpeech}
-            onBadgeEarned={handleBadgeEarned}
           />
         ) : currentScreen === 'challenges' ? (
           <ChallengesSection 
@@ -295,7 +287,6 @@ function App() {
       {showGrownUpModal && (
         <GrownUpAccessModal 
           onClose={() => setShowGrownUpModal(false)} 
-          onBadgeEarned={handleBadgeEarned}
         />
       )}
 
@@ -304,7 +295,6 @@ function App() {
         <ChatHistoryModal 
           onClose={() => setShowChatHistoryModal(false)} 
           chatHistory={chatMessages}
-          onBadgeEarned={handleBadgeEarned}
         />
       )}
 
@@ -313,7 +303,6 @@ function App() {
         <MoodHistoryModal 
           onClose={() => setShowMoodHistoryModal(false)} 
           moodHistory={moodHistory}
-          onBadgeEarned={handleBadgeEarned}
         />
       )}
     </div>
